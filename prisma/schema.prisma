@@ -6,10 +6,51 @@
 
 generator client {
   provider = "prisma-client"
-  output   = "../generated/prisma"
+  output   = "../src/generated/prisma"
 }
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+model DataSource {
+  id          String   @id @default(uuid())
+  name        String
+  type        String
+  connection  String
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  rawData     RawData[]
+}
+
+model RawData {
+  id            String   @id @default(uuid())
+  dataSourceId  String
+  payload       Json
+  status        String   @default("PENDING")
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  dataSource    DataSource @relation(fields: [dataSourceId], references: [id])
+  processedData ProcessedData[]
+}
+
+model ProcessedData {
+  id          String   @id @default(uuid())
+  rawDataId   String
+  result      Json
+  status      String   @default("SUCCESS")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  rawData     RawData @relation(fields: [rawDataId], references: [id])
+}
+
+model AuditLog {
+  id          String   @id @default(uuid())
+  action      String
+  entity      String
+  entityId    String?
+  message     String?
+  createdAt   DateTime @default(now())
 }
