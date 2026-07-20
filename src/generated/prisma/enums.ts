@@ -9,7 +9,10 @@
 * 🟢 You can import this file directly.
 */
 
+export const DataSourceType = {
+  REST_API: 'REST_API',
+  DATABASE: 'DATABASE',
+  FILE: 'FILE'
+} as const
 
-
-// This file is empty because there are no enums in the schema.
-export {}
+export type DataSourceType = (typeof DataSourceType)[keyof typeof DataSourceType]

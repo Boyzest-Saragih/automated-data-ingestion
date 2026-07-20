@@ -27,8 +27,9 @@ export type AggregateDataSource = {
 export type DataSourceMinAggregateOutputType = {
   id: string | null
   name: string | null
-  type: string | null
+  type: $Enums.DataSourceType | null
   connection: string | null
+  baseURL: string | null
   isActive: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -37,8 +38,9 @@ export type DataSourceMinAggregateOutputType = {
 export type DataSourceMaxAggregateOutputType = {
   id: string | null
   name: string | null
-  type: string | null
+  type: $Enums.DataSourceType | null
   connection: string | null
+  baseURL: string | null
   isActive: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -49,6 +51,7 @@ export type DataSourceCountAggregateOutputType = {
   name: number
   type: number
   connection: number
+  baseURL: number
   isActive: number
   createdAt: number
   updatedAt: number
@@ -61,6 +64,7 @@ export type DataSourceMinAggregateInputType = {
   name?: true
   type?: true
   connection?: true
+  baseURL?: true
   isActive?: true
   createdAt?: true
   updatedAt?: true
@@ -71,6 +75,7 @@ export type DataSourceMaxAggregateInputType = {
   name?: true
   type?: true
   connection?: true
+  baseURL?: true
   isActive?: true
   createdAt?: true
   updatedAt?: true
@@ -81,6 +86,7 @@ export type DataSourceCountAggregateInputType = {
   name?: true
   type?: true
   connection?: true
+  baseURL?: true
   isActive?: true
   createdAt?: true
   updatedAt?: true
@@ -162,8 +168,9 @@ export type DataSourceGroupByArgs<ExtArgs extends runtime.Types.Extensions.Inter
 export type DataSourceGroupByOutputType = {
   id: string
   name: string
-  type: string
-  connection: string
+  type: $Enums.DataSourceType
+  connection: string | null
+  baseURL: string | null
   isActive: boolean
   createdAt: Date
   updatedAt: Date
@@ -193,8 +200,9 @@ export type DataSourceWhereInput = {
   NOT?: Prisma.DataSourceWhereInput | Prisma.DataSourceWhereInput[]
   id?: Prisma.StringFilter<"DataSource"> | string
   name?: Prisma.StringFilter<"DataSource"> | string
-  type?: Prisma.StringFilter<"DataSource"> | string
-  connection?: Prisma.StringFilter<"DataSource"> | string
+  type?: Prisma.EnumDataSourceTypeFilter<"DataSource"> | $Enums.DataSourceType
+  connection?: Prisma.StringNullableFilter<"DataSource"> | string | null
+  baseURL?: Prisma.StringNullableFilter<"DataSource"> | string | null
   isActive?: Prisma.BoolFilter<"DataSource"> | boolean
   createdAt?: Prisma.DateTimeFilter<"DataSource"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"DataSource"> | Date | string
@@ -205,7 +213,8 @@ export type DataSourceOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   type?: Prisma.SortOrder
-  connection?: Prisma.SortOrder
+  connection?: Prisma.SortOrderInput | Prisma.SortOrder
+  baseURL?: Prisma.SortOrderInput | Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -218,8 +227,9 @@ export type DataSourceWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.DataSourceWhereInput[]
   NOT?: Prisma.DataSourceWhereInput | Prisma.DataSourceWhereInput[]
   name?: Prisma.StringFilter<"DataSource"> | string
-  type?: Prisma.StringFilter<"DataSource"> | string
-  connection?: Prisma.StringFilter<"DataSource"> | string
+  type?: Prisma.EnumDataSourceTypeFilter<"DataSource"> | $Enums.DataSourceType
+  connection?: Prisma.StringNullableFilter<"DataSource"> | string | null
+  baseURL?: Prisma.StringNullableFilter<"DataSource"> | string | null
   isActive?: Prisma.BoolFilter<"DataSource"> | boolean
   createdAt?: Prisma.DateTimeFilter<"DataSource"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"DataSource"> | Date | string
@@ -230,7 +240,8 @@ export type DataSourceOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   type?: Prisma.SortOrder
-  connection?: Prisma.SortOrder
+  connection?: Prisma.SortOrderInput | Prisma.SortOrder
+  baseURL?: Prisma.SortOrderInput | Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -245,8 +256,9 @@ export type DataSourceScalarWhereWithAggregatesInput = {
   NOT?: Prisma.DataSourceScalarWhereWithAggregatesInput | Prisma.DataSourceScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"DataSource"> | string
   name?: Prisma.StringWithAggregatesFilter<"DataSource"> | string
-  type?: Prisma.StringWithAggregatesFilter<"DataSource"> | string
-  connection?: Prisma.StringWithAggregatesFilter<"DataSource"> | string
+  type?: Prisma.EnumDataSourceTypeWithAggregatesFilter<"DataSource"> | $Enums.DataSourceType
+  connection?: Prisma.StringNullableWithAggregatesFilter<"DataSource"> | string | null
+  baseURL?: Prisma.StringNullableWithAggregatesFilter<"DataSource"> | string | null
   isActive?: Prisma.BoolWithAggregatesFilter<"DataSource"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"DataSource"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"DataSource"> | Date | string
@@ -255,8 +267,9 @@ export type DataSourceScalarWhereWithAggregatesInput = {
 export type DataSourceCreateInput = {
   id?: string
   name: string
-  type: string
-  connection: string
+  type: $Enums.DataSourceType
+  connection?: string | null
+  baseURL?: string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -266,8 +279,9 @@ export type DataSourceCreateInput = {
 export type DataSourceUncheckedCreateInput = {
   id?: string
   name: string
-  type: string
-  connection: string
+  type: $Enums.DataSourceType
+  connection?: string | null
+  baseURL?: string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -277,8 +291,9 @@ export type DataSourceUncheckedCreateInput = {
 export type DataSourceUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.StringFieldUpdateOperationsInput | string
-  connection?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumDataSourceTypeFieldUpdateOperationsInput | $Enums.DataSourceType
+  connection?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  baseURL?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -288,8 +303,9 @@ export type DataSourceUpdateInput = {
 export type DataSourceUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.StringFieldUpdateOperationsInput | string
-  connection?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumDataSourceTypeFieldUpdateOperationsInput | $Enums.DataSourceType
+  connection?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  baseURL?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -299,8 +315,9 @@ export type DataSourceUncheckedUpdateInput = {
 export type DataSourceCreateManyInput = {
   id?: string
   name: string
-  type: string
-  connection: string
+  type: $Enums.DataSourceType
+  connection?: string | null
+  baseURL?: string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -309,8 +326,9 @@ export type DataSourceCreateManyInput = {
 export type DataSourceUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.StringFieldUpdateOperationsInput | string
-  connection?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumDataSourceTypeFieldUpdateOperationsInput | $Enums.DataSourceType
+  connection?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  baseURL?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -319,8 +337,9 @@ export type DataSourceUpdateManyMutationInput = {
 export type DataSourceUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.StringFieldUpdateOperationsInput | string
-  connection?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumDataSourceTypeFieldUpdateOperationsInput | $Enums.DataSourceType
+  connection?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  baseURL?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -331,6 +350,7 @@ export type DataSourceCountOrderByAggregateInput = {
   name?: Prisma.SortOrder
   type?: Prisma.SortOrder
   connection?: Prisma.SortOrder
+  baseURL?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -341,6 +361,7 @@ export type DataSourceMaxOrderByAggregateInput = {
   name?: Prisma.SortOrder
   type?: Prisma.SortOrder
   connection?: Prisma.SortOrder
+  baseURL?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -351,6 +372,7 @@ export type DataSourceMinOrderByAggregateInput = {
   name?: Prisma.SortOrder
   type?: Prisma.SortOrder
   connection?: Prisma.SortOrder
+  baseURL?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -363,6 +385,14 @@ export type DataSourceScalarRelationFilter = {
 
 export type StringFieldUpdateOperationsInput = {
   set?: string
+}
+
+export type EnumDataSourceTypeFieldUpdateOperationsInput = {
+  set?: $Enums.DataSourceType
+}
+
+export type NullableStringFieldUpdateOperationsInput = {
+  set?: string | null
 }
 
 export type BoolFieldUpdateOperationsInput = {
@@ -390,8 +420,9 @@ export type DataSourceUpdateOneRequiredWithoutRawDataNestedInput = {
 export type DataSourceCreateWithoutRawDataInput = {
   id?: string
   name: string
-  type: string
-  connection: string
+  type: $Enums.DataSourceType
+  connection?: string | null
+  baseURL?: string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -400,8 +431,9 @@ export type DataSourceCreateWithoutRawDataInput = {
 export type DataSourceUncheckedCreateWithoutRawDataInput = {
   id?: string
   name: string
-  type: string
-  connection: string
+  type: $Enums.DataSourceType
+  connection?: string | null
+  baseURL?: string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -426,8 +458,9 @@ export type DataSourceUpdateToOneWithWhereWithoutRawDataInput = {
 export type DataSourceUpdateWithoutRawDataInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.StringFieldUpdateOperationsInput | string
-  connection?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumDataSourceTypeFieldUpdateOperationsInput | $Enums.DataSourceType
+  connection?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  baseURL?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -436,8 +469,9 @@ export type DataSourceUpdateWithoutRawDataInput = {
 export type DataSourceUncheckedUpdateWithoutRawDataInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.StringFieldUpdateOperationsInput | string
-  connection?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumDataSourceTypeFieldUpdateOperationsInput | $Enums.DataSourceType
+  connection?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  baseURL?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -479,6 +513,7 @@ export type DataSourceSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   name?: boolean
   type?: boolean
   connection?: boolean
+  baseURL?: boolean
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -491,6 +526,7 @@ export type DataSourceSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ex
   name?: boolean
   type?: boolean
   connection?: boolean
+  baseURL?: boolean
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -501,6 +537,7 @@ export type DataSourceSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
   name?: boolean
   type?: boolean
   connection?: boolean
+  baseURL?: boolean
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -511,12 +548,13 @@ export type DataSourceSelectScalar = {
   name?: boolean
   type?: boolean
   connection?: boolean
+  baseURL?: boolean
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type DataSourceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "type" | "connection" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["dataSource"]>
+export type DataSourceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "type" | "connection" | "baseURL" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["dataSource"]>
 export type DataSourceInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   rawData?: boolean | Prisma.DataSource$rawDataArgs<ExtArgs>
   _count?: boolean | Prisma.DataSourceCountOutputTypeDefaultArgs<ExtArgs>
@@ -532,8 +570,9 @@ export type $DataSourcePayload<ExtArgs extends runtime.Types.Extensions.Internal
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     name: string
-    type: string
-    connection: string
+    type: $Enums.DataSourceType
+    connection: string | null
+    baseURL: string | null
     isActive: boolean
     createdAt: Date
     updatedAt: Date
@@ -963,8 +1002,9 @@ export interface Prisma__DataSourceClient<T, Null = never, ExtArgs extends runti
 export interface DataSourceFieldRefs {
   readonly id: Prisma.FieldRef<"DataSource", 'String'>
   readonly name: Prisma.FieldRef<"DataSource", 'String'>
-  readonly type: Prisma.FieldRef<"DataSource", 'String'>
+  readonly type: Prisma.FieldRef<"DataSource", 'DataSourceType'>
   readonly connection: Prisma.FieldRef<"DataSource", 'String'>
+  readonly baseURL: Prisma.FieldRef<"DataSource", 'String'>
   readonly isActive: Prisma.FieldRef<"DataSource", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"DataSource", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"DataSource", 'DateTime'>
