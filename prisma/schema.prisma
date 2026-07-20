@@ -5,7 +5,7 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client"
+  provider = "prisma-client-js"
   output   = "../src/generated/prisma"
 }
 
@@ -14,11 +14,26 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum DataSourceType {
+  REST_API
+  DATABASE
+  FILE
+}
+
+enum RawDataStatus {
+  PENDING
+  SUCCESS
+  FAILED
+}
+
 model DataSource {
   id          String   @id @default(uuid())
   name        String
-  type        String
-  connection  String
+  type        DataSourceType
+
+  connection  String?
+  baseURL     String?
+
   isActive    Boolean  @default(true)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
@@ -29,7 +44,7 @@ model RawData {
   id            String   @id @default(uuid())
   dataSourceId  String
   payload       Json
-  status        String   @default("PENDING")
+  status        RawDataStatus
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
   dataSource    DataSource @relation(fields: [dataSourceId], references: [id])
