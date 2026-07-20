@@ -1,8 +1,15 @@
 import {
   PrismaClient,
-  type RawData,
+  type DataSource,
 } from "../../src/generated/prisma/client.js";
 import {DataSourceType} from '../generated/prisma/client.js';
+
+type createDataSourceDto = {
+    name:string
+    type:DataSourceType
+    connection?:string|null
+    baseURL?:string|null
+}
 
 export class RawRepository {
   private prisma: PrismaClient;
@@ -11,42 +18,18 @@ export class RawRepository {
     this.prisma = new PrismaClient();
   }
 
-  async create(name: String, type:String, rawData:any[], connection?:String, baseURL?:String): Promise <RawData>{
+  async create(data: createDataSourceDto): Promise <DataSource>{
     try {
-        const queryOptions:any={
-            name,
-            DataSourceType,
-            rawData,
-        }
-
-        return await this.prisma.rawData.create(queryOptions);
+        return await this.prisma.dataSource.create({data:{
+            name: data.name,
+            type:data.type,
+            connection:data.connection ?? null,
+            baseURL:data.baseURL ?? null
+        }});
         
     } catch (error) {
         console.log("Error createin raw data : ",error)
         throw error;
-    }
-  }
-
-
-  async findPending(limit?: number): Promise<RawData[]> {
-    try {
-      const queryOptions: any = {
-        where: {
-          status: "PENDING",
-        },
-        orderBy: {
-          createdAt: "asc",
-        },
-      };
-
-      if (limit !== undefined) {
-        queryOptions.take = limit;
-      }
-
-      return await this.prisma.rawData.findMany(queryOptions);
-    } catch (error) {
-      console.error("Error fetching pending raw data : ", error);
-      throw error;
     }
   }
 }
