@@ -10,7 +10,7 @@ import {
 
 
 
-export class DataIngestionService {
+export class YahooRawIngestionService {
   private yahooClient: YahooClientService;
   private rawRepository: RawRepository;
 
@@ -46,7 +46,7 @@ export class DataIngestionService {
     }
   }
 
-  // 2. Query Methods (Meneruskan dari Repository)
+  // 2. Query Methods 
   async getRawDataById(id: string) {
     return await this.rawRepository.findById(id);
   }
