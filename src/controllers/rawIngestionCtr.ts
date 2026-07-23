@@ -1,28 +1,32 @@
 import type { Request, Response } from "express";
-import { YahooRawIngestionService } from "../services/yahoo-ingestion.service.js";
+import {
+  RawDataIngestionService,
+  type ProviderType,
+} from "../services/raw-data-ingestion.service.js";
 import { RawDataStatus } from "../generated/prisma/index.js";
 
 export class RawIngestionCtr {
-  private ingestionService: YahooRawIngestionService;
+  private ingestionService: RawDataIngestionService;
 
-  constructor(ingestionService = new YahooRawIngestionService()) {
+  constructor(ingestionService = new RawDataIngestionService()) {
     this.ingestionService = ingestionService;
   }
 
   // POST /api/ingest/yahoo
-  ingestYahoo = async (req: Request, res: Response): Promise<void> => {
+  ingestData = async (req: Request, res: Response): Promise<void> => {
     try {
-      const { dataSourceId, symbol, interval, range } = req.body;
+      const { provider, dataSourceId, symbol, interval, range } = req.body;
 
-      if (!dataSourceId || !symbol) {
+      if (!provider || !dataSourceId || !symbol) {
         res.status(400).json({
           success: false,
-          message: "dataSourceId dan symbol wajib diisi.",
+          message: "provider, datasourceid dan symbol wajib diisi.",
         });
         return;
       }
 
-      const result = await this.ingestionService.ingestFromYahoo(
+      const result = await this.ingestionService.ingestData(
+        provider as ProviderType,
         dataSourceId,
         symbol,
         { interval, range },

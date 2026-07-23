@@ -1,4 +1,5 @@
 import axios, { type AxiosInstance } from "axios";
+import type { OHLCVProvider } from "../interfaces/ohlcv-provider.interface.js";
 
 export type OHLCV = {
   timestamp: string;
@@ -21,7 +22,7 @@ export type FetchOHLCVOptions = {
   range?: "1d" | "5d" | "1mo" | "3mo" | "6mo" | "1y" | "5y" | "max";
 };
 
-export class YahooClientService {
+export class YahooClientService implements OHLCVProvider {
   private client: AxiosInstance;
 
   constructor() {

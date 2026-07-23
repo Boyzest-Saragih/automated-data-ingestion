@@ -7,28 +7,35 @@ import {
   YahooClientService,
   type FetchOHLCVOptions,
 } from "./yahoo-client.service.js";
+import { BinanceClientService } from "./binance-client.service.js";
+import type { OHLCVProvider } from "../interfaces/ohlcv-provider.interface.js";
 
+export type ProviderType = "yahoo" | "binance";
 
-
-export class YahooRawIngestionService {
-  private yahooClient: YahooClientService;
+export class RawDataIngestionService {
+  private providers: Record<ProviderType, OHLCVProvider>;
   private rawRepository: RawRepository;
 
-  constructor(
-    yahooClient = new YahooClientService(),
-    rawRepository = new RawRepository(),
-  ) {
-    this.yahooClient = yahooClient;
+  constructor(rawRepository = new RawRepository()) {
     this.rawRepository = rawRepository;
+    this.providers = {
+      yahoo: new YahooClientService(),
+      binance: new BinanceClientService(),
+    };
   }
 
-  async ingestFromYahoo(
+  async ingestData(
+    providerName: ProviderType,
     dataSourceId: string,
     symbol: string,
     options: FetchOHLCVOptions = {},
   ) {
+    const provider = this.providers[providerName];
+    if (!provider) {
+      throw new Error(`Provider '${providerName}' tidak didukung.`);
+    }
     try {
-      const ohlcvData = await this.yahooClient.getOHLCV(symbol, options);
+      const ohlcvData = await provider.getOHLCV(symbol, options);
 
       const rawRecord = await this.rawRepository.create({
         datasourceId: dataSourceId,
@@ -46,7 +53,7 @@ export class YahooRawIngestionService {
     }
   }
 
-  // 2. Query Methods 
+  // 2. Query Methods
   async getRawDataById(id: string) {
     return await this.rawRepository.findById(id);
   }

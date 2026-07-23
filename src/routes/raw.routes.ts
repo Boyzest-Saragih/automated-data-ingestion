@@ -5,7 +5,7 @@ const router = Router();
 const controller = new RawIngestionCtr();
 
 // Trigger Ingestion
-router.post("/ingest/yahoo", controller.ingestYahoo);
+router.post("/ingestRawData", controller.ingestData);
 
 // Read Raw Data
 router.get("/raw", controller.getAllRawData);
