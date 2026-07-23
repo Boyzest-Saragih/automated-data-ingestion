@@ -21,7 +21,7 @@ export type FetchOHLCVOptions = {
   range?: "1d" | "5d" | "1mo" | "3mo" | "6mo" | "1y" | "5y" | "max";
 };
 
-export class YahooService {
+export class YahooClientService {
   private client: AxiosInstance;
 
   constructor() {
