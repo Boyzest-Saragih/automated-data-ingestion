@@ -134,9 +134,7 @@ export class RawRepository {
     }
   }
 
-  async findWithPagination(
-    options: PaginationOptions,
-  ): Promise<PaginatedResult<RawData>> {
+  async findWithPagination(options: PaginationOptions,): Promise<PaginatedResult<RawData>> {
     try {
       const { page, limit } = options;
       const skip = (page - 1) * limit;
