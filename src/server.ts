@@ -5,5 +5,5 @@ dotenv.config();
 
 const PORT = process.env.PORT;
 app.listen(PORT, () => {
-    console.log(`Ingestion API running on port ${PORT}`);
+    console.log(`Ingestion API running on port http://localhost:${PORT}`);
 });

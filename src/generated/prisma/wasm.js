@@ -184,7 +184,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "/home/boyzset/Desktop/automated-data-ingestion/src/generated/prisma",
+      "value": "D:\\automated-data-ingestion\\src\\generated\\prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -193,12 +193,16 @@ const config = {
     "binaryTargets": [
       {
         "fromEnvVar": null,
-        "value": "debian-openssl-3.0.x",
+        "value": "windows",
         "native": true
+      },
+      {
+        "fromEnvVar": null,
+        "value": "debian-openssl-3.0.x"
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "/home/boyzset/Desktop/automated-data-ingestion/prisma/schema.prisma",
+    "sourceFilePath": "D:\\automated-data-ingestion\\prisma\\schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
@@ -221,8 +225,8 @@ const config = {
       }
     }
   },
-  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nenum DataSourceType {\n  REST_API\n  DATABASE\n  FILE\n}\n\nenum RawDataStatus {\n  PENDING\n  SUCCESS\n  FAILED\n}\n\nmodel DataSource {\n  id   String         @id @default(uuid())\n  name String\n  type DataSourceType\n\n  connection String?\n  baseURL    String?\n\n  isActive  Boolean   @default(true)\n  createdAt DateTime  @default(now())\n  updatedAt DateTime  @updatedAt\n  rawData   RawData[]\n}\n\nmodel RawData {\n  id            String          @id @default(uuid())\n  dataSourceId  String\n  payload       Json\n  status        RawDataStatus\n  createdAt     DateTime        @default(now())\n  updatedAt     DateTime        @updatedAt\n  dataSource    DataSource      @relation(fields: [dataSourceId], references: [id])\n  processedData ProcessedData[]\n}\n\nmodel ProcessedData {\n  id        String   @id @default(uuid())\n  rawDataId String\n  result    Json\n  status    String   @default(\"SUCCESS\")\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n  rawData   RawData  @relation(fields: [rawDataId], references: [id])\n}\n\nmodel AuditLog {\n  id        String   @id @default(uuid())\n  action    String\n  entity    String\n  entityId  String?\n  message   String?\n  createdAt DateTime @default(now())\n}\n",
-  "inlineSchemaHash": "3720f3f6a26524728427fd852d46c1965a598de3efe1baca6720b6c89f3c48df",
+  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider      = \"prisma-client-js\"\n  binaryTargets = [\"native\", \"debian-openssl-3.0.x\"]\n  output        = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nenum DataSourceType {\n  REST_API\n  DATABASE\n  FILE\n}\n\nenum RawDataStatus {\n  PENDING\n  SUCCESS\n  FAILED\n}\n\nmodel DataSource {\n  id   String         @id @default(uuid())\n  name String\n  type DataSourceType\n\n  connection String?\n  baseURL    String?\n\n  isActive  Boolean   @default(true)\n  createdAt DateTime  @default(now())\n  updatedAt DateTime  @updatedAt\n  rawData   RawData[]\n}\n\nmodel RawData {\n  id            String          @id @default(uuid())\n  dataSourceId  String\n  payload       Json\n  status        RawDataStatus\n  createdAt     DateTime        @default(now())\n  updatedAt     DateTime        @updatedAt\n  dataSource    DataSource      @relation(fields: [dataSourceId], references: [id])\n  processedData ProcessedData[]\n}\n\nmodel ProcessedData {\n  id        String   @id @default(uuid())\n  rawDataId String\n  result    Json\n  status    String   @default(\"SUCCESS\")\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n  rawData   RawData  @relation(fields: [rawDataId], references: [id])\n}\n\nmodel AuditLog {\n  id        String   @id @default(uuid())\n  action    String\n  entity    String\n  entityId  String?\n  message   String?\n  createdAt DateTime @default(now())\n}\n",
+  "inlineSchemaHash": "a9c88e5e1f1990ee072ceb966280cad0bc1ed1973e190f2862bd10ce717cabf3",
   "copyEngine": true
 }
 config.dirname = '/'

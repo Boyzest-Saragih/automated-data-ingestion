@@ -1,19 +1,10 @@
-import express from 'express';
-import type { Request, Response } from 'express';
+import express, { type Application } from "express";
+import ingestionRawDataRouter from "./routes/raw.routes.js";
 
-const app = express();
+const app: Application = express();
 
-app.use(express.json())
+app.use(express.json());
 
-app.get('/', (req: Request, res: Response) => {
-    res.json({
-        "message": "Automated Data Ingestion API"
-    });
-});
-
-app.get('/health', (req:Request, res:Response)=>{
-    res.json({"status":"OK"})
-})
-
+app.use("/api", ingestionRawDataRouter);
 
 export default app;
