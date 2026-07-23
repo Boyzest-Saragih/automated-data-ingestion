@@ -2,7 +2,7 @@ import type { Request, Response } from "express";
 import { YahooRawIngestionService } from "../services/yahoo-ingestion.service.js";
 import { RawDataStatus } from "../generated/prisma/index.js";
 
-export class RawIngestionController {
+export class RawIngestionCtr {
   private ingestionService: YahooRawIngestionService;
 
   constructor(ingestionService = new YahooRawIngestionService()) {
