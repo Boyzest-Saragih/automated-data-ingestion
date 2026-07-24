@@ -53,13 +53,27 @@ model RawData {
 }
 
 model ProcessedData {
-  id        String   @id @default(uuid())
+  id        String @id @default(uuid())
   rawDataId String
-  result    Json
-  status    String   @default("SUCCESS")
+
+  symbol      String
+  granularity String
+  timestamp   DateTime
+
+  open   Float
+  high   Float
+  low    Float
+  close  Float
+  volume Float
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  rawData   RawData  @relation(fields: [rawDataId], references: [id])
+
+  rawData RawData @relation(fields: [rawDataId], references: [id])
+  // rawData   RawData  @relation(fields: [rawDataId], references: [id])
+
+  @@unique([symbol, granularity, timestamp])
+  @@index([symbol, granularity, timestamp])
 }
 
 model AuditLog {
