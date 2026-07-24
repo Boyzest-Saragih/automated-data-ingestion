@@ -6,7 +6,7 @@ import type {
 import type {
   OHLCV,
   FetchOHLCVOptions,
-  YahooOHLCVRes,
+  OHLCVRes,
 } from "../types/types.js";
 
 export class YahooClientService implements OHLCVProvider {
@@ -29,7 +29,7 @@ export class YahooClientService implements OHLCVProvider {
     symbol: string,
     options: FetchOHLCVOptions = {},
     config: ProviderConfig,
-  ): Promise<YahooOHLCVRes> {
+  ): Promise<OHLCVRes> {
     const { interval = "1d", range = "1mo" } = options;
     const client = this.createClient(config?.baseURL);
 
@@ -62,7 +62,7 @@ export class YahooClientService implements OHLCVProvider {
    * menjadi array object candle yang rapi.
    */
 
-  private mapToOHLCV(result: any, interval: string): YahooOHLCVRes {
+  private mapToOHLCV(result: any, interval: string): OHLCVRes {
     const meta = result.meta;
     const timestamps: number[] = result.timestamp || [];
     const quote = result.indicators?.quote?.[0] || {};

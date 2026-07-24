@@ -32,7 +32,7 @@ export class RawIngestionCtr {
 
       res.status(201).json({
         success: true,
-        message: "Data berhasil di-ingest dari Yahoo Finance",
+        message: `Data berhasil di-ingest dari ${provider} Finance`,
         data: result,
       });
     } catch (error: any) {
