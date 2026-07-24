@@ -1,5 +1,6 @@
 import { DataSourceType } from "../generated/prisma/index.js";
 import { DataSourceRepository } from "../repositories/data-source.repository.js";
+import type { ProviderType } from "../types/types.js";
 
 export class DataSourceService {
   private dataSourceRepository: DataSourceRepository;
@@ -11,6 +12,7 @@ export class DataSourceService {
   async create(
     name: string,
     type: DataSourceType,
+    provider:ProviderType,
     connection: string,
     baseURL: string,
   ) {
@@ -18,6 +20,7 @@ export class DataSourceService {
       const dataSourceRecord = await this.dataSourceRepository.create({
         name: name,
         type: type,
+        provider:provider,
         connection: connection,
         baseURL: baseURL,
       });

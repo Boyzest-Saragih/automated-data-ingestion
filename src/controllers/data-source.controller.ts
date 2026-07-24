@@ -10,7 +10,7 @@ export class DataSourceCtr {
 
   createDataSource = async (req: Request, res: Response): Promise<void> => {
     try {
-      const { name, type, connection, baseURL } = req.body;
+      const { name, type, provider, connection, baseURL } = req.body;
 
       if (!name || !type || !baseURL) {
         res.status(400).json({
@@ -23,6 +23,7 @@ export class DataSourceCtr {
       const result = await this.dataSourceService.create(
         name,
         type,
+        provider,
         connection,
         baseURL,
       );

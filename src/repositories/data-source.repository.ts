@@ -1,10 +1,12 @@
 import { type DataSource } from "../generated/prisma/index.js";
 import { DataSourceType } from "../generated/prisma/index.js";
 import { prisma } from "../config/prisma.js";
+import type { ProviderType } from "../types/types.js";
 
 type createDataSourceDto = {
   name: string;
   type: DataSourceType;
+  provider:ProviderType;
   connection?: string | null;
   baseURL: string;
 };
@@ -16,6 +18,7 @@ export class DataSourceRepository {
         data: {
           name: data.name,
           type: data.type,
+          provider:data.provider,
           connection: data.connection ?? null,
           baseURL: data.baseURL,
         },
