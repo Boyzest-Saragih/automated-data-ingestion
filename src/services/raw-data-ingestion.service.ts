@@ -9,15 +9,21 @@ import {
 } from "./yahoo-client.service.js";
 import { BinanceClientService } from "./binance-client.service.js";
 import type { OHLCVProvider } from "../interfaces/ohlcv-provider.interface.js";
+import { DataSourceRepository } from "../repositories/data-source.repository.js";
 
 export type ProviderType = "yahoo" | "binance";
 
 export class RawDataIngestionService {
   private providers: Record<ProviderType, OHLCVProvider>;
   private rawRepository: RawRepository;
+  private dataSourceRepository: DataSourceRepository;
 
-  constructor(rawRepository = new RawRepository()) {
+  constructor(
+    rawRepository = new RawRepository(),
+    dataSourceRepository = new DataSourceRepository(),
+  ) {
     this.rawRepository = rawRepository;
+    this.dataSourceRepository = dataSourceRepository;
     this.providers = {
       yahoo: new YahooClientService(),
       binance: new BinanceClientService(),
@@ -30,10 +36,22 @@ export class RawDataIngestionService {
     symbol: string,
     options: FetchOHLCVOptions = {},
   ) {
+    const dataSource = await this.dataSourceRepository.findById(dataSourceId);
     const provider = this.providers[providerName];
+
+    if (!dataSource) {
+      throw new Error(`DataSource dengan ID ${dataSourceId} tidak ditemukan.`);
+    }
+
+    if (!dataSource.isActive) {
+      throw new Error(
+        `DataSource '${dataSource.name}' (ID: ${dataSourceId}) sedang tidak aktif / dinonaktifkan.`,
+      );
+    }
     if (!provider) {
       throw new Error(`Provider '${providerName}' tidak didukung.`);
     }
+
     try {
       const ohlcvData = await provider.getOHLCV(symbol, options);
 

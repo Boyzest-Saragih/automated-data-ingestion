@@ -10,7 +10,6 @@ type createDataSourceDto = {
 };
 
 export class DataSourceRepository {
-
   async create(data: createDataSourceDto): Promise<DataSource> {
     try {
       return await prisma.dataSource.create({
@@ -32,6 +31,17 @@ export class DataSourceRepository {
       return await prisma.dataSource.findMany();
     } catch (error) {
       console.error("Error fetching all data source : ", error);
+      throw error;
+    }
+  }
+
+  async findById(id: string): Promise<DataSource | null> {
+    try {
+      return await prisma.dataSource.findFirst({
+        where: { id },
+      });
+    } catch (error) {
+      console.error("Error get data source by id: ", error);
       throw error;
     }
   }
