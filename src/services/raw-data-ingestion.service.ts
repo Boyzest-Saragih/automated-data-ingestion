@@ -95,11 +95,4 @@ export class RawDataIngestionService {
 
     return await this.rawRepository.updateStatus(id, status);
   }
-
-  async deleteRawData(id: string) {
-    const exists = await this.rawRepository.exists(id);
-    if (!exists) throw new Error(`RawData dengan ID ${id} tidak ditemukan`);
-
-    return await this.rawRepository.deleteRawData(id);
-  }
 }

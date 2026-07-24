@@ -79,10 +79,4 @@ export class SymbolRepository {
       data: { isActive },
     });
   }
-
-  async delete(id: string): Promise<Symbol> {
-    return await prisma.symbol.delete({
-      where: { id },
-    });
-  }
 }

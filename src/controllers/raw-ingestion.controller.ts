@@ -157,30 +157,4 @@ export class RawIngestionCtr {
     }
   };
 
-  // DELETE /api/raw/:id
-  deleteRawData = async (req: Request, res: Response): Promise<void> => {
-    try {
-      const { id } = req.params;
-
-      if (!id || typeof id !== "string") {
-        res.status(400).json({
-          success: false,
-          message: "ID tidak valid atau tidak ditemukan",
-        });
-        return;
-      }
-
-      await this.ingestionService.deleteRawData(id);
-
-      res.status(200).json({
-        success: true,
-        message: `RawData ${id} berhasil dihapus`,
-      });
-    } catch (error: any) {
-      res.status(500).json({
-        success: false,
-        message: error?.message || "Gagal menghapus raw data",
-      });
-    }
-  };
 }

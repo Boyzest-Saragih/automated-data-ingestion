@@ -71,13 +71,4 @@ export class DataSourceRepository {
       throw error;
     }
   }
-
-  async delete(id: string): Promise<DataSource> {
-    try {
-      return await prisma.dataSource.delete({ where: { id } });
-    } catch (error) {
-      console.error("Error delete data source: ", error);
-      throw error;
-    }
-  }
 }

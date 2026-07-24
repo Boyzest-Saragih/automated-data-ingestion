@@ -39,15 +39,16 @@ export class DataSourceService {
     return await this.dataSourceRepository.findAll();
   }
 
+  
+    async getDataSourcesById(id: string) {
+    return await this.dataSourceRepository.findById(id);
+  }
+
   async getDataSourcesByName(name: string) {
     return await this.dataSourceRepository.findByName(name);
   }
 
   async updateDataSources(id: string, isActive: boolean) {
     return await this.dataSourceRepository.update(id, isActive);
-  }
-
-  async deleteDataSources(id: string) {
-    return await this.dataSourceRepository.delete(id);
   }
 }

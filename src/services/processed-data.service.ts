@@ -3,6 +3,7 @@ import { RawRepository } from "../repositories/raw.repository.js";
 import {
   ProcessedDataRepository,
   type CreateProcessedDataDto,
+  type FindCandlesQuery,
 } from "../repositories/processed-data.repository.js";
 import type { OHLCVRes } from "../types/types.js";
 import { AuditLogService } from "./audit-log.service.js";
@@ -91,5 +92,16 @@ export class ProcessedDataService {
       );
       throw error;
     }
+  }
+
+  async getCandles(query: FindCandlesQuery) {
+    return await this.processedDataRepository.findCandles(query);
+  }
+
+  async getLatestCandle(symbol: string, granularity: string) {
+    return await this.processedDataRepository.findLatestCandle(
+      symbol,
+      granularity,
+    );
   }
 }

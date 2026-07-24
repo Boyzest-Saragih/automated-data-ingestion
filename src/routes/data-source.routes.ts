@@ -6,8 +6,8 @@ const controller = new DataSourceCtr();
 
 router.post("/dataSource", controller.createDataSource);
 router.get("/dataSource", controller.getAllDataSources);
+router.get("/dataSource/search/:id", controller.getDataSourcesById);
 router.get("/dataSource/search", controller.getDataSourcesByName);
 router.patch("/dataSource/:id", controller.updateDataSources);
-router.delete("/dataSource/:id", controller.deleteDataSources);
 
 export default router;

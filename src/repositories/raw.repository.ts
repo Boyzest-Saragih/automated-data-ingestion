@@ -202,17 +202,6 @@ export class RawRepository {
     }
   }
 
-  async deleteRawData(id: string): Promise<RawData> {
-    try {
-      return await prisma.rawData.delete({
-        where: { id },
-      });
-    } catch (error) {
-      console.error("Error delete raw data : ", error);
-      throw error;
-    }
-  }
-
   async exists(id: string): Promise<boolean> {
     try {
       const count = await prisma.rawData.count({

@@ -7,5 +7,6 @@ const controller = new ProcessedDataCtr();
 
 // Read Raw Data
 router.get("/processedData", controller.getCandles);
+router.get("/processedData/latest", controller.getLatestCandle);
 
 export default router;

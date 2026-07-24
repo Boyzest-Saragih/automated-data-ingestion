@@ -58,6 +58,33 @@ export class DataSourceCtr {
     }
   };
 
+  getDataSourcesById = async (req: Request, res: Response) => {
+    try {
+      const id = req.params.id as string;
+
+      if (!id) {
+        return res.status(400).json({
+          success: false,
+          message: "Query parameter 'id' wajib diisi",
+        });
+      }
+
+      const dataSource = await this.dataSourceService.getDataSourcesById(id);
+
+      return res.status(200).json({
+        success: true,
+        message: `Berhasil mengambil data source dengan id: ${id}`,
+        data: dataSource,
+      });
+    } catch (error: any) {
+      return res.status(500).json({
+        success: false,
+        message: "Gagal mengambil data source berdasarkan id",
+        error: error.message,
+      });
+    }
+  };
+
   // GET /api/data-sources/search?name=xyz
   getDataSourcesByName = async (req: Request, res: Response) => {
     try {
@@ -123,36 +150,6 @@ export class DataSourceCtr {
       return res.status(500).json({
         success: false,
         message: "Gagal mengupdate data source",
-        error: error.message,
-      });
-    }
-  };
-
-  // DELETE /api/data-sources/:id
-  deleteDataSources = async (req: Request, res: Response) => {
-    try {
-      const { id } = req.params;
-
-      if (!id || typeof id !== "string") {
-        res.status(400).json({
-          success: false,
-          message: "ID tidak valid atau tidak ditemukan",
-        });
-        return;
-      }
-
-      const deletedDataSource =
-        await this.dataSourceService.deleteDataSources(id);
-
-      return res.status(200).json({
-        success: true,
-        message: "Data source berhasil dihapus",
-        data: deletedDataSource,
-      });
-    } catch (error: any) {
-      return res.status(500).json({
-        success: false,
-        message: "Gagal menghapus data source",
         error: error.message,
       });
     }
