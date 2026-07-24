@@ -2,12 +2,18 @@ import type { Request, Response } from "express";
 import { RawDataIngestionService } from "../services/raw-data-ingestion.service.js";
 import { RawDataStatus } from "../generated/prisma/index.js";
 import type { ProviderType } from "../types/types.js";
+import { SymbolRepository } from "../repositories/symbol.repository.js";
 
 export class RawIngestionCtr {
   private ingestionService: RawDataIngestionService;
+  private symbolRepository: SymbolRepository;
 
-  constructor(ingestionService = new RawDataIngestionService()) {
+  constructor(
+    ingestionService = new RawDataIngestionService(),
+    symbolRepository = new SymbolRepository(),
+  ) {
     this.ingestionService = ingestionService;
+    this.symbolRepository = symbolRepository;
   }
 
   // POST /api/ingest/yahoo
@@ -15,12 +21,24 @@ export class RawIngestionCtr {
     try {
       const { provider, dataSourceId, symbol, interval, range } = req.body;
 
+      const symbolRecord =
+        await this.symbolRepository.findByDataSourceAndTicker(
+          dataSourceId,
+          symbol,
+        );
+
       if (!provider || !dataSourceId || !symbol) {
         res.status(400).json({
           success: false,
           message: "provider, datasourceid dan symbol wajib diisi.",
         });
         return;
+      }
+
+      if (!symbolRecord || !symbolRecord.isActive) {
+        throw new Error(
+          `Symbol '${symbol}' tidak ditemukan atau sedang non-aktif pada DataSource ini.`,
+        );
       }
 
       const result = await this.ingestionService.ingestData(

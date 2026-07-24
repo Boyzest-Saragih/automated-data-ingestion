@@ -34,6 +34,16 @@ export class SymbolRepository {
     });
   }
 
+  async findByDataSourceAndTicker(
+    dataSourceId: string,
+    symbol: string,
+  ): Promise<Symbol | null> {
+    return await prisma.symbol.findFirst({
+      where: { dataSourceId, symbol },
+      orderBy: { ticker: "asc" },
+    });
+  }
+
   /**
    * ⚡ QUERY UTAMA UNTUK SCHEDULER:
    * Mengambil semua Symbol yang AKTIF berserta DataSource-nya yang juga AKTIF.
