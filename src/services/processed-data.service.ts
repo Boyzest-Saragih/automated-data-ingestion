@@ -5,17 +5,21 @@ import {
   type CreateProcessedDataDto,
 } from "../repositories/processed-data.repository.js";
 import type { OHLCVRes } from "../types/types.js";
+import { AuditLogService } from "./audit-log.service.js";
 
 export class ProcessedDataService {
   private rawRepository: RawRepository;
   private processedDataRepository: ProcessedDataRepository;
+  private auditLogService: AuditLogService;
 
   constructor(
     rawRepository = new RawRepository(),
     processedDataRepository = new ProcessedDataRepository(),
+    auditLogService = new AuditLogService(),
   ) {
     this.rawRepository = rawRepository;
     this.processedDataRepository = processedDataRepository;
+    this.auditLogService = auditLogService;
   }
 
   async processRawData(rawDataId: string) {
@@ -55,6 +59,18 @@ export class ProcessedDataService {
         RawDataStatus.SUCCESS,
       );
 
+      await this.auditLogService.logSuccess(
+        "PROCESS_RAW_DATA",
+        "ProcessedData",
+        `Berhasil memproses ${result.length} candle untuk ${payload.symbol}`,
+        {
+          symbol: payload.symbol,
+          count: result.length,
+          granularity: payload.granularity,
+        },
+        rawRecord.id,
+      );
+
       return {
         success: true,
         rawDataId: rawRecord.id,
@@ -65,6 +81,13 @@ export class ProcessedDataService {
       console.error(
         `[DataProcessorService] Gagal memproses RawData ID ${rawDataId}:`,
         error,
+      );
+      await this.auditLogService.logError(
+        "PROCESS_RAW_DATA",
+        "RawData",
+        `Gagal memproses RawData ID: ${rawDataId}`,
+        error,
+        rawDataId,
       );
       throw error;
     }
