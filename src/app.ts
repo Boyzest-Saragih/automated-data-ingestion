@@ -5,8 +5,13 @@ import SymbolRouter from "./routes/symbol.route.js";
 import ProcessedData from "./routes/processed-data.route.js";
 import AuditLog from "./routes/audit-log.route.js";
 
+import helmet from "helmet";
+import rateLimit from "express-rate-limit";
+
 const app: Application = express();
 
+app.use(helmet());
+app.use(rateLimit({ windowMs: 15 * 60 * 1000, max: 100 }));
 app.use(express.json());
 
 app.use("/api", ingestionRawDataRouter);
