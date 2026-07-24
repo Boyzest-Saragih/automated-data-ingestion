@@ -1,4 +1,4 @@
-import { Prisma, type RawData } from "../../src/generated/prisma/client.js";
+import { Prisma, type RawData } from "../../src/generated/prisma/index.js";
 import { prisma } from "../config/prisma.js";
 import { RawDataStatus } from "../generated/prisma/index.js";
 
@@ -124,8 +124,13 @@ export class RawRepository {
 
   async findLatest(dataSourceId?: string): Promise<RawData | null> {
     try {
+      // return await prisma.rawData.findFirst({
+      //   where: dataSourceId ? { dataSourceId: dataSourceId } : undefined ,
+      //   orderBy: { createdAt: "desc" },
+      // });
+
       return await prisma.rawData.findFirst({
-        where: dataSourceId ? { dataSourceId: dataSourceId } : { undefined },
+        ...(dataSourceId && { where: { dataSourceId } }),
         orderBy: { createdAt: "desc" },
       });
     } catch (error) {
@@ -134,7 +139,9 @@ export class RawRepository {
     }
   }
 
-  async findWithPagination(options: PaginationOptions,): Promise<PaginatedResult<RawData>> {
+  async findWithPagination(
+    options: PaginationOptions,
+  ): Promise<PaginatedResult<RawData>> {
     try {
       const { page, limit } = options;
       const skip = (page - 1) * limit;

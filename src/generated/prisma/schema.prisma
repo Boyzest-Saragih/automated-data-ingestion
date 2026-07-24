@@ -33,7 +33,7 @@ model DataSource {
   type DataSourceType
 
   connection String?
-  baseURL    String?
+  baseURL    String
 
   isActive  Boolean   @default(true)
   createdAt DateTime  @default(now())

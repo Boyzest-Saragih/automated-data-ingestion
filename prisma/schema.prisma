@@ -5,9 +5,9 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
   binaryTargets = ["native", "debian-openssl-3.0.x"]
-  output   = "../src/generated/prisma"
+  output        = "../src/generated/prisma"
 }
 
 datasource db {
@@ -28,45 +28,45 @@ enum RawDataStatus {
 }
 
 model DataSource {
-  id          String   @id @default(uuid())
-  name        String
-  type        DataSourceType
+  id   String         @id @default(uuid())
+  name String
+  type DataSourceType
 
-  connection  String?
-  baseURL     String?
+  connection String?
+  baseURL    String
 
-  isActive    Boolean  @default(true)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  rawData     RawData[]
+  isActive  Boolean   @default(true)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  rawData   RawData[]
 }
 
 model RawData {
-  id            String   @id @default(uuid())
+  id            String          @id @default(uuid())
   dataSourceId  String
   payload       Json
   status        RawDataStatus
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-  dataSource    DataSource @relation(fields: [dataSourceId], references: [id])
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  dataSource    DataSource      @relation(fields: [dataSourceId], references: [id])
   processedData ProcessedData[]
 }
 
 model ProcessedData {
-  id          String   @id @default(uuid())
-  rawDataId   String
-  result      Json
-  status      String   @default("SUCCESS")
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  rawData     RawData @relation(fields: [rawDataId], references: [id])
+  id        String   @id @default(uuid())
+  rawDataId String
+  result    Json
+  status    String   @default("SUCCESS")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  rawData   RawData  @relation(fields: [rawDataId], references: [id])
 }
 
 model AuditLog {
-  id          String   @id @default(uuid())
-  action      String
-  entity      String
-  entityId    String?
-  message     String?
-  createdAt   DateTime @default(now())
+  id        String   @id @default(uuid())
+  action    String
+  entity    String
+  entityId  String?
+  message   String?
+  createdAt DateTime @default(now())
 }

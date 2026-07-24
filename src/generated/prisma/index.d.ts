@@ -1382,7 +1382,7 @@ export namespace Prisma {
     name: string
     type: $Enums.DataSourceType
     connection: string | null
-    baseURL: string | null
+    baseURL: string
     isActive: boolean
     createdAt: Date
     updatedAt: Date
@@ -1469,7 +1469,7 @@ export namespace Prisma {
       name: string
       type: $Enums.DataSourceType
       connection: string | null
-      baseURL: string | null
+      baseURL: string
       isActive: boolean
       createdAt: Date
       updatedAt: Date
@@ -5718,7 +5718,7 @@ export namespace Prisma {
     name?: StringFilter<"DataSource"> | string
     type?: EnumDataSourceTypeFilter<"DataSource"> | $Enums.DataSourceType
     connection?: StringNullableFilter<"DataSource"> | string | null
-    baseURL?: StringNullableFilter<"DataSource"> | string | null
+    baseURL?: StringFilter<"DataSource"> | string
     isActive?: BoolFilter<"DataSource"> | boolean
     createdAt?: DateTimeFilter<"DataSource"> | Date | string
     updatedAt?: DateTimeFilter<"DataSource"> | Date | string
@@ -5730,7 +5730,7 @@ export namespace Prisma {
     name?: SortOrder
     type?: SortOrder
     connection?: SortOrderInput | SortOrder
-    baseURL?: SortOrderInput | SortOrder
+    baseURL?: SortOrder
     isActive?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -5745,7 +5745,7 @@ export namespace Prisma {
     name?: StringFilter<"DataSource"> | string
     type?: EnumDataSourceTypeFilter<"DataSource"> | $Enums.DataSourceType
     connection?: StringNullableFilter<"DataSource"> | string | null
-    baseURL?: StringNullableFilter<"DataSource"> | string | null
+    baseURL?: StringFilter<"DataSource"> | string
     isActive?: BoolFilter<"DataSource"> | boolean
     createdAt?: DateTimeFilter<"DataSource"> | Date | string
     updatedAt?: DateTimeFilter<"DataSource"> | Date | string
@@ -5757,7 +5757,7 @@ export namespace Prisma {
     name?: SortOrder
     type?: SortOrder
     connection?: SortOrderInput | SortOrder
-    baseURL?: SortOrderInput | SortOrder
+    baseURL?: SortOrder
     isActive?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -5774,7 +5774,7 @@ export namespace Prisma {
     name?: StringWithAggregatesFilter<"DataSource"> | string
     type?: EnumDataSourceTypeWithAggregatesFilter<"DataSource"> | $Enums.DataSourceType
     connection?: StringNullableWithAggregatesFilter<"DataSource"> | string | null
-    baseURL?: StringNullableWithAggregatesFilter<"DataSource"> | string | null
+    baseURL?: StringWithAggregatesFilter<"DataSource"> | string
     isActive?: BoolWithAggregatesFilter<"DataSource"> | boolean
     createdAt?: DateTimeWithAggregatesFilter<"DataSource"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"DataSource"> | Date | string
@@ -5965,7 +5965,7 @@ export namespace Prisma {
     name: string
     type: $Enums.DataSourceType
     connection?: string | null
-    baseURL?: string | null
+    baseURL: string
     isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -5977,7 +5977,7 @@ export namespace Prisma {
     name: string
     type: $Enums.DataSourceType
     connection?: string | null
-    baseURL?: string | null
+    baseURL: string
     isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -5989,7 +5989,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     type?: EnumDataSourceTypeFieldUpdateOperationsInput | $Enums.DataSourceType
     connection?: NullableStringFieldUpdateOperationsInput | string | null
-    baseURL?: NullableStringFieldUpdateOperationsInput | string | null
+    baseURL?: StringFieldUpdateOperationsInput | string
     isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -6001,7 +6001,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     type?: EnumDataSourceTypeFieldUpdateOperationsInput | $Enums.DataSourceType
     connection?: NullableStringFieldUpdateOperationsInput | string | null
-    baseURL?: NullableStringFieldUpdateOperationsInput | string | null
+    baseURL?: StringFieldUpdateOperationsInput | string
     isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -6013,7 +6013,7 @@ export namespace Prisma {
     name: string
     type: $Enums.DataSourceType
     connection?: string | null
-    baseURL?: string | null
+    baseURL: string
     isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -6024,7 +6024,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     type?: EnumDataSourceTypeFieldUpdateOperationsInput | $Enums.DataSourceType
     connection?: NullableStringFieldUpdateOperationsInput | string | null
-    baseURL?: NullableStringFieldUpdateOperationsInput | string | null
+    baseURL?: StringFieldUpdateOperationsInput | string
     isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -6035,7 +6035,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     type?: EnumDataSourceTypeFieldUpdateOperationsInput | $Enums.DataSourceType
     connection?: NullableStringFieldUpdateOperationsInput | string | null
-    baseURL?: NullableStringFieldUpdateOperationsInput | string | null
+    baseURL?: StringFieldUpdateOperationsInput | string
     isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -6940,7 +6940,7 @@ export namespace Prisma {
     name: string
     type: $Enums.DataSourceType
     connection?: string | null
-    baseURL?: string | null
+    baseURL: string
     isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -6951,7 +6951,7 @@ export namespace Prisma {
     name: string
     type: $Enums.DataSourceType
     connection?: string | null
-    baseURL?: string | null
+    baseURL: string
     isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -7004,7 +7004,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     type?: EnumDataSourceTypeFieldUpdateOperationsInput | $Enums.DataSourceType
     connection?: NullableStringFieldUpdateOperationsInput | string | null
-    baseURL?: NullableStringFieldUpdateOperationsInput | string | null
+    baseURL?: StringFieldUpdateOperationsInput | string
     isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -7015,7 +7015,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     type?: EnumDataSourceTypeFieldUpdateOperationsInput | $Enums.DataSourceType
     connection?: NullableStringFieldUpdateOperationsInput | string | null
-    baseURL?: NullableStringFieldUpdateOperationsInput | string | null
+    baseURL?: StringFieldUpdateOperationsInput | string
     isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string

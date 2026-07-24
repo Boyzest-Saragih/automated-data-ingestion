@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { RawIngestionCtr } from "../controllers/rawIngestionCtr.js";
+import { RawIngestionCtr } from "../controllers/raw-ingestion.controller.js";
 
 const router = Router();
 const controller = new RawIngestionCtr();
