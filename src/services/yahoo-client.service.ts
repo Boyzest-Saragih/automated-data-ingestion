@@ -3,27 +3,11 @@ import type {
   OHLCVProvider,
   ProviderConfig,
 } from "../interfaces/ohlcv-provider.interface.js";
-
-export type OHLCV = {
-  timestamp: string;
-  open: number;
-  low: number;
-  high: number;
-  close: number;
-  volume: number;
-};
-
-export type YahooOHLCVRes = {
-  symbol: string;
-  currency: string;
-  granularity: string;
-  candles: OHLCV[];
-};
-
-export type FetchOHLCVOptions = {
-  interval?: "1m" | "5m" | "15m" | "1h" | "1d" | "1wk" | "1mo";
-  range?: "1d" | "5d" | "1mo" | "3mo" | "6mo" | "1y" | "5y" | "max";
-};
+import type {
+  OHLCV,
+  FetchOHLCVOptions,
+  YahooOHLCVRes,
+} from "../types/types.js";
 
 export class YahooClientService implements OHLCVProvider {
   private DEFAULT_BASE_URL =

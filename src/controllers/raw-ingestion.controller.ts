@@ -1,9 +1,7 @@
 import type { Request, Response } from "express";
-import {
-  RawDataIngestionService,
-  type ProviderType,
-} from "../services/raw-data-ingestion.service.js";
+import { RawDataIngestionService } from "../services/raw-data-ingestion.service.js";
 import { RawDataStatus } from "../generated/prisma/index.js";
+import type { ProviderType } from "../types/types.js";
 
 export class RawIngestionCtr {
   private ingestionService: RawDataIngestionService;

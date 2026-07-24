@@ -1,7 +1,4 @@
-import type {
-  FetchOHLCVOptions,
-  YahooOHLCVRes,
-} from "../services/yahoo-client.service.js";
+import type { FetchOHLCVOptions, YahooOHLCVRes } from "../types/types.js";
 
 export type ProviderConfig = {
   baseURL?: string | null;

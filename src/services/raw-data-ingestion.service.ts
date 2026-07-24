@@ -3,15 +3,11 @@ import {
   RawRepository,
   type PaginationOptions,
 } from "../repositories/raw.repository.js";
-import {
-  YahooClientService,
-  type FetchOHLCVOptions,
-} from "./yahoo-client.service.js";
+import { YahooClientService } from "./yahoo-client.service.js";
 import { BinanceClientService } from "./binance-client.service.js";
 import type { OHLCVProvider } from "../interfaces/ohlcv-provider.interface.js";
 import { DataSourceRepository } from "../repositories/data-source.repository.js";
-
-export type ProviderType = "yahoo" | "binance";
+import type { FetchOHLCVOptions, ProviderType } from "../types/types.js";
 
 export class RawDataIngestionService {
   private providers: Record<ProviderType, OHLCVProvider>;
@@ -75,7 +71,6 @@ export class RawDataIngestionService {
     }
   }
 
-  // 2. Query Methods
   async getRawDataById(id: string) {
     return await this.rawRepository.findById(id);
   }
