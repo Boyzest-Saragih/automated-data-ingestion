@@ -17,7 +17,7 @@ export class SymbolRepository {
           dataSourceId: data.dataSourceId,
           ticker: data.ticker.toUpperCase(),
           name: data.name ?? null,
-          defaultInterval: data.defaultInterval || "1d",
+          defaultInterval: data.defaultInterval || "15m",
           isActive: data.isActive ?? true,
         },
       });
@@ -25,6 +25,12 @@ export class SymbolRepository {
       console.error("[SymbolRepository] Error creating symbol:", error);
       throw error;
     }
+  }
+
+  async getAllSymbol(): Promise<Symbol[]> {
+    return await prisma.symbol.findMany({
+      orderBy: { ticker: "asc" },
+    });
   }
 
   async findByDataSource(dataSourceId: string): Promise<Symbol[]> {
@@ -36,10 +42,10 @@ export class SymbolRepository {
 
   async findByDataSourceAndTicker(
     dataSourceId: string,
-    symbol: string,
+    ticker: string,
   ): Promise<Symbol | null> {
     return await prisma.symbol.findFirst({
-      where: { dataSourceId, symbol },
+      where: { dataSourceId, ticker },
       orderBy: { ticker: "asc" },
     });
   }

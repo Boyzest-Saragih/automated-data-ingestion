@@ -41,6 +41,23 @@ export class SymbolCtr {
     }
   };
 
+  getAllSymbols = async (req: Request, res: Response): Promise<void> => {
+    try {
+      const symbols = await this.symbolService.getAllSymbol();
+
+      res.status(200).json({
+        success: true,
+        count: symbols.length,
+        data: symbols,
+      });
+    } catch (error: any) {
+      res.status(500).json({
+        success: false,
+        message: error?.message || "Gagal mengambil daftar symbol",
+      });
+    }
+  };
+
   getSymbolsByDataSource = async (
     req: Request,
     res: Response,

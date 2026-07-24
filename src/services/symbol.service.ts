@@ -1,4 +1,7 @@
-import { SymbolRepository, type CreateSymbolDto } from "../repositories/symbol.repository.js";
+import {
+  SymbolRepository,
+  type CreateSymbolDto,
+} from "../repositories/symbol.repository.js";
 import { DataSourceRepository } from "../repositories/data-source.repository.js";
 import { AuditLogService } from "./audit-log.service.js";
 
@@ -10,7 +13,7 @@ export class SymbolService {
   constructor(
     symbolRepo = new SymbolRepository(),
     dataSourceRepo = new DataSourceRepository(),
-    auditLogService = new AuditLogService()
+    auditLogService = new AuditLogService(),
   ) {
     this.symbolRepo = symbolRepo;
     this.dataSourceRepo = dataSourceRepo;
@@ -22,11 +25,15 @@ export class SymbolService {
     const dataSource = await this.dataSourceRepo.findById(data.dataSourceId);
 
     if (!dataSource) {
-      throw new Error(`DataSource dengan ID '${data.dataSourceId}' tidak ditemukan.`);
+      throw new Error(
+        `DataSource dengan ID '${data.dataSourceId}' tidak ditemukan.`,
+      );
     }
 
     if (!dataSource.isActive) {
-      throw new Error(`Tidak bisa menambahkan symbol. DataSource '${dataSource.name}' sedang non-aktif.`);
+      throw new Error(
+        `Tidak bisa menambahkan symbol. DataSource '${dataSource.name}' sedang non-aktif.`,
+      );
     }
 
     // 2. Simpan Symbol via Repository
@@ -38,10 +45,14 @@ export class SymbolService {
       "Symbol",
       `Symbol ${newSymbol.ticker} berhasil didaftarkan pada DataSource ${dataSource.name}`,
       { ticker: newSymbol.ticker, dataSourceId: dataSource.id },
-      newSymbol.id
+      newSymbol.id,
     );
 
     return newSymbol;
+  }
+
+  async getAllSymbol() {
+    return await this.symbolRepo.getAllSymbol();
   }
 
   async getSymbolsByDataSource(dataSourceId: string) {
@@ -56,7 +67,7 @@ export class SymbolService {
       "Symbol",
       `Status symbol ${updated.ticker} diubah menjadi ${isActive ? "ACTIVE" : "INACTIVE"}`,
       { ticker: updated.ticker, isActive },
-      updated.id
+      updated.id,
     );
 
     return updated;

@@ -6,8 +6,9 @@ const controller = new SymbolCtr();
 
 router.post("/symbol", controller.createSymbol);
 
-router.get("/symbol", controller.getSymbolsByDataSource);
+router.get("/symbol", controller.getAllSymbols);
+router.get("/symbolByDataSource", controller.getSymbolsByDataSource);
 
-router.patch("/symbol/:id/isActive", controller.toggleStatus);
+router.patch("/symbol/:id", controller.toggleStatus);
 
 export default router;
