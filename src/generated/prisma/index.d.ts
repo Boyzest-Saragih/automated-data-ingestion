@@ -3438,14 +3438,39 @@ export namespace Prisma {
 
   export type AggregateProcessedData = {
     _count: ProcessedDataCountAggregateOutputType | null
+    _avg: ProcessedDataAvgAggregateOutputType | null
+    _sum: ProcessedDataSumAggregateOutputType | null
     _min: ProcessedDataMinAggregateOutputType | null
     _max: ProcessedDataMaxAggregateOutputType | null
+  }
+
+  export type ProcessedDataAvgAggregateOutputType = {
+    open: number | null
+    high: number | null
+    low: number | null
+    close: number | null
+    volume: number | null
+  }
+
+  export type ProcessedDataSumAggregateOutputType = {
+    open: number | null
+    high: number | null
+    low: number | null
+    close: number | null
+    volume: number | null
   }
 
   export type ProcessedDataMinAggregateOutputType = {
     id: string | null
     rawDataId: string | null
-    status: string | null
+    symbol: string | null
+    granularity: string | null
+    timestamp: Date | null
+    open: number | null
+    high: number | null
+    low: number | null
+    close: number | null
+    volume: number | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -3453,7 +3478,14 @@ export namespace Prisma {
   export type ProcessedDataMaxAggregateOutputType = {
     id: string | null
     rawDataId: string | null
-    status: string | null
+    symbol: string | null
+    granularity: string | null
+    timestamp: Date | null
+    open: number | null
+    high: number | null
+    low: number | null
+    close: number | null
+    volume: number | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -3461,18 +3493,47 @@ export namespace Prisma {
   export type ProcessedDataCountAggregateOutputType = {
     id: number
     rawDataId: number
-    result: number
-    status: number
+    symbol: number
+    granularity: number
+    timestamp: number
+    open: number
+    high: number
+    low: number
+    close: number
+    volume: number
     createdAt: number
     updatedAt: number
     _all: number
   }
 
 
+  export type ProcessedDataAvgAggregateInputType = {
+    open?: true
+    high?: true
+    low?: true
+    close?: true
+    volume?: true
+  }
+
+  export type ProcessedDataSumAggregateInputType = {
+    open?: true
+    high?: true
+    low?: true
+    close?: true
+    volume?: true
+  }
+
   export type ProcessedDataMinAggregateInputType = {
     id?: true
     rawDataId?: true
-    status?: true
+    symbol?: true
+    granularity?: true
+    timestamp?: true
+    open?: true
+    high?: true
+    low?: true
+    close?: true
+    volume?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -3480,7 +3541,14 @@ export namespace Prisma {
   export type ProcessedDataMaxAggregateInputType = {
     id?: true
     rawDataId?: true
-    status?: true
+    symbol?: true
+    granularity?: true
+    timestamp?: true
+    open?: true
+    high?: true
+    low?: true
+    close?: true
+    volume?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -3488,8 +3556,14 @@ export namespace Prisma {
   export type ProcessedDataCountAggregateInputType = {
     id?: true
     rawDataId?: true
-    result?: true
-    status?: true
+    symbol?: true
+    granularity?: true
+    timestamp?: true
+    open?: true
+    high?: true
+    low?: true
+    close?: true
+    volume?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -3533,6 +3607,18 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
+     * Select which fields to average
+    **/
+    _avg?: ProcessedDataAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ProcessedDataSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
      * Select which fields to find the minimum value
     **/
     _min?: ProcessedDataMinAggregateInputType
@@ -3563,6 +3649,8 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: ProcessedDataCountAggregateInputType | true
+    _avg?: ProcessedDataAvgAggregateInputType
+    _sum?: ProcessedDataSumAggregateInputType
     _min?: ProcessedDataMinAggregateInputType
     _max?: ProcessedDataMaxAggregateInputType
   }
@@ -3570,11 +3658,19 @@ export namespace Prisma {
   export type ProcessedDataGroupByOutputType = {
     id: string
     rawDataId: string
-    result: JsonValue
-    status: string
+    symbol: string
+    granularity: string
+    timestamp: Date
+    open: number
+    high: number
+    low: number
+    close: number
+    volume: number
     createdAt: Date
     updatedAt: Date
     _count: ProcessedDataCountAggregateOutputType | null
+    _avg: ProcessedDataAvgAggregateOutputType | null
+    _sum: ProcessedDataSumAggregateOutputType | null
     _min: ProcessedDataMinAggregateOutputType | null
     _max: ProcessedDataMaxAggregateOutputType | null
   }
@@ -3596,8 +3692,14 @@ export namespace Prisma {
   export type ProcessedDataSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     rawDataId?: boolean
-    result?: boolean
-    status?: boolean
+    symbol?: boolean
+    granularity?: boolean
+    timestamp?: boolean
+    open?: boolean
+    high?: boolean
+    low?: boolean
+    close?: boolean
+    volume?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     rawData?: boolean | RawDataDefaultArgs<ExtArgs>
@@ -3606,8 +3708,14 @@ export namespace Prisma {
   export type ProcessedDataSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     rawDataId?: boolean
-    result?: boolean
-    status?: boolean
+    symbol?: boolean
+    granularity?: boolean
+    timestamp?: boolean
+    open?: boolean
+    high?: boolean
+    low?: boolean
+    close?: boolean
+    volume?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     rawData?: boolean | RawDataDefaultArgs<ExtArgs>
@@ -3616,8 +3724,14 @@ export namespace Prisma {
   export type ProcessedDataSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     rawDataId?: boolean
-    result?: boolean
-    status?: boolean
+    symbol?: boolean
+    granularity?: boolean
+    timestamp?: boolean
+    open?: boolean
+    high?: boolean
+    low?: boolean
+    close?: boolean
+    volume?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     rawData?: boolean | RawDataDefaultArgs<ExtArgs>
@@ -3626,13 +3740,19 @@ export namespace Prisma {
   export type ProcessedDataSelectScalar = {
     id?: boolean
     rawDataId?: boolean
-    result?: boolean
-    status?: boolean
+    symbol?: boolean
+    granularity?: boolean
+    timestamp?: boolean
+    open?: boolean
+    high?: boolean
+    low?: boolean
+    close?: boolean
+    volume?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type ProcessedDataOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "rawDataId" | "result" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["processedData"]>
+  export type ProcessedDataOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "rawDataId" | "symbol" | "granularity" | "timestamp" | "open" | "high" | "low" | "close" | "volume" | "createdAt" | "updatedAt", ExtArgs["result"]["processedData"]>
   export type ProcessedDataInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     rawData?: boolean | RawDataDefaultArgs<ExtArgs>
   }
@@ -3651,8 +3771,14 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: string
       rawDataId: string
-      result: Prisma.JsonValue
-      status: string
+      symbol: string
+      granularity: string
+      timestamp: Date
+      open: number
+      high: number
+      low: number
+      close: number
+      volume: number
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["processedData"]>
@@ -4081,8 +4207,14 @@ export namespace Prisma {
   interface ProcessedDataFieldRefs {
     readonly id: FieldRef<"ProcessedData", 'String'>
     readonly rawDataId: FieldRef<"ProcessedData", 'String'>
-    readonly result: FieldRef<"ProcessedData", 'Json'>
-    readonly status: FieldRef<"ProcessedData", 'String'>
+    readonly symbol: FieldRef<"ProcessedData", 'String'>
+    readonly granularity: FieldRef<"ProcessedData", 'String'>
+    readonly timestamp: FieldRef<"ProcessedData", 'DateTime'>
+    readonly open: FieldRef<"ProcessedData", 'Float'>
+    readonly high: FieldRef<"ProcessedData", 'Float'>
+    readonly low: FieldRef<"ProcessedData", 'Float'>
+    readonly close: FieldRef<"ProcessedData", 'Float'>
+    readonly volume: FieldRef<"ProcessedData", 'Float'>
     readonly createdAt: FieldRef<"ProcessedData", 'DateTime'>
     readonly updatedAt: FieldRef<"ProcessedData", 'DateTime'>
   }
@@ -5550,8 +5682,14 @@ export namespace Prisma {
   export const ProcessedDataScalarFieldEnum: {
     id: 'id',
     rawDataId: 'rawDataId',
-    result: 'result',
-    status: 'status',
+    symbol: 'symbol',
+    granularity: 'granularity',
+    timestamp: 'timestamp',
+    open: 'open',
+    high: 'high',
+    low: 'low',
+    close: 'close',
+    volume: 'volume',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -5690,6 +5828,20 @@ export namespace Prisma {
    * Reference to a field of type 'RawDataStatus[]'
    */
   export type ListEnumRawDataStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'RawDataStatus[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'Float'
+   */
+  export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
+    
+
+
+  /**
+   * Reference to a field of type 'Float[]'
+   */
+  export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
     
 
 
@@ -5849,8 +6001,14 @@ export namespace Prisma {
     NOT?: ProcessedDataWhereInput | ProcessedDataWhereInput[]
     id?: StringFilter<"ProcessedData"> | string
     rawDataId?: StringFilter<"ProcessedData"> | string
-    result?: JsonFilter<"ProcessedData">
-    status?: StringFilter<"ProcessedData"> | string
+    symbol?: StringFilter<"ProcessedData"> | string
+    granularity?: StringFilter<"ProcessedData"> | string
+    timestamp?: DateTimeFilter<"ProcessedData"> | Date | string
+    open?: FloatFilter<"ProcessedData"> | number
+    high?: FloatFilter<"ProcessedData"> | number
+    low?: FloatFilter<"ProcessedData"> | number
+    close?: FloatFilter<"ProcessedData"> | number
+    volume?: FloatFilter<"ProcessedData"> | number
     createdAt?: DateTimeFilter<"ProcessedData"> | Date | string
     updatedAt?: DateTimeFilter<"ProcessedData"> | Date | string
     rawData?: XOR<RawDataScalarRelationFilter, RawDataWhereInput>
@@ -5859,8 +6017,14 @@ export namespace Prisma {
   export type ProcessedDataOrderByWithRelationInput = {
     id?: SortOrder
     rawDataId?: SortOrder
-    result?: SortOrder
-    status?: SortOrder
+    symbol?: SortOrder
+    granularity?: SortOrder
+    timestamp?: SortOrder
+    open?: SortOrder
+    high?: SortOrder
+    low?: SortOrder
+    close?: SortOrder
+    volume?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     rawData?: RawDataOrderByWithRelationInput
@@ -5868,27 +6032,42 @@ export namespace Prisma {
 
   export type ProcessedDataWhereUniqueInput = Prisma.AtLeast<{
     id?: string
+    symbol_granularity_timestamp?: ProcessedDataSymbolGranularityTimestampCompoundUniqueInput
     AND?: ProcessedDataWhereInput | ProcessedDataWhereInput[]
     OR?: ProcessedDataWhereInput[]
     NOT?: ProcessedDataWhereInput | ProcessedDataWhereInput[]
     rawDataId?: StringFilter<"ProcessedData"> | string
-    result?: JsonFilter<"ProcessedData">
-    status?: StringFilter<"ProcessedData"> | string
+    symbol?: StringFilter<"ProcessedData"> | string
+    granularity?: StringFilter<"ProcessedData"> | string
+    timestamp?: DateTimeFilter<"ProcessedData"> | Date | string
+    open?: FloatFilter<"ProcessedData"> | number
+    high?: FloatFilter<"ProcessedData"> | number
+    low?: FloatFilter<"ProcessedData"> | number
+    close?: FloatFilter<"ProcessedData"> | number
+    volume?: FloatFilter<"ProcessedData"> | number
     createdAt?: DateTimeFilter<"ProcessedData"> | Date | string
     updatedAt?: DateTimeFilter<"ProcessedData"> | Date | string
     rawData?: XOR<RawDataScalarRelationFilter, RawDataWhereInput>
-  }, "id">
+  }, "id" | "symbol_granularity_timestamp">
 
   export type ProcessedDataOrderByWithAggregationInput = {
     id?: SortOrder
     rawDataId?: SortOrder
-    result?: SortOrder
-    status?: SortOrder
+    symbol?: SortOrder
+    granularity?: SortOrder
+    timestamp?: SortOrder
+    open?: SortOrder
+    high?: SortOrder
+    low?: SortOrder
+    close?: SortOrder
+    volume?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: ProcessedDataCountOrderByAggregateInput
+    _avg?: ProcessedDataAvgOrderByAggregateInput
     _max?: ProcessedDataMaxOrderByAggregateInput
     _min?: ProcessedDataMinOrderByAggregateInput
+    _sum?: ProcessedDataSumOrderByAggregateInput
   }
 
   export type ProcessedDataScalarWhereWithAggregatesInput = {
@@ -5897,8 +6076,14 @@ export namespace Prisma {
     NOT?: ProcessedDataScalarWhereWithAggregatesInput | ProcessedDataScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"ProcessedData"> | string
     rawDataId?: StringWithAggregatesFilter<"ProcessedData"> | string
-    result?: JsonWithAggregatesFilter<"ProcessedData">
-    status?: StringWithAggregatesFilter<"ProcessedData"> | string
+    symbol?: StringWithAggregatesFilter<"ProcessedData"> | string
+    granularity?: StringWithAggregatesFilter<"ProcessedData"> | string
+    timestamp?: DateTimeWithAggregatesFilter<"ProcessedData"> | Date | string
+    open?: FloatWithAggregatesFilter<"ProcessedData"> | number
+    high?: FloatWithAggregatesFilter<"ProcessedData"> | number
+    low?: FloatWithAggregatesFilter<"ProcessedData"> | number
+    close?: FloatWithAggregatesFilter<"ProcessedData"> | number
+    volume?: FloatWithAggregatesFilter<"ProcessedData"> | number
     createdAt?: DateTimeWithAggregatesFilter<"ProcessedData"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"ProcessedData"> | Date | string
   }
@@ -6109,8 +6294,14 @@ export namespace Prisma {
 
   export type ProcessedDataCreateInput = {
     id?: string
-    result: JsonNullValueInput | InputJsonValue
-    status?: string
+    symbol: string
+    granularity: string
+    timestamp: Date | string
+    open: number
+    high: number
+    low: number
+    close: number
+    volume: number
     createdAt?: Date | string
     updatedAt?: Date | string
     rawData: RawDataCreateNestedOneWithoutProcessedDataInput
@@ -6119,16 +6310,28 @@ export namespace Prisma {
   export type ProcessedDataUncheckedCreateInput = {
     id?: string
     rawDataId: string
-    result: JsonNullValueInput | InputJsonValue
-    status?: string
+    symbol: string
+    granularity: string
+    timestamp: Date | string
+    open: number
+    high: number
+    low: number
+    close: number
+    volume: number
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
   export type ProcessedDataUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    result?: JsonNullValueInput | InputJsonValue
-    status?: StringFieldUpdateOperationsInput | string
+    symbol?: StringFieldUpdateOperationsInput | string
+    granularity?: StringFieldUpdateOperationsInput | string
+    timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
+    open?: FloatFieldUpdateOperationsInput | number
+    high?: FloatFieldUpdateOperationsInput | number
+    low?: FloatFieldUpdateOperationsInput | number
+    close?: FloatFieldUpdateOperationsInput | number
+    volume?: FloatFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     rawData?: RawDataUpdateOneRequiredWithoutProcessedDataNestedInput
@@ -6137,8 +6340,14 @@ export namespace Prisma {
   export type ProcessedDataUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     rawDataId?: StringFieldUpdateOperationsInput | string
-    result?: JsonNullValueInput | InputJsonValue
-    status?: StringFieldUpdateOperationsInput | string
+    symbol?: StringFieldUpdateOperationsInput | string
+    granularity?: StringFieldUpdateOperationsInput | string
+    timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
+    open?: FloatFieldUpdateOperationsInput | number
+    high?: FloatFieldUpdateOperationsInput | number
+    low?: FloatFieldUpdateOperationsInput | number
+    close?: FloatFieldUpdateOperationsInput | number
+    volume?: FloatFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -6146,16 +6355,28 @@ export namespace Prisma {
   export type ProcessedDataCreateManyInput = {
     id?: string
     rawDataId: string
-    result: JsonNullValueInput | InputJsonValue
-    status?: string
+    symbol: string
+    granularity: string
+    timestamp: Date | string
+    open: number
+    high: number
+    low: number
+    close: number
+    volume: number
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
   export type ProcessedDataUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
-    result?: JsonNullValueInput | InputJsonValue
-    status?: StringFieldUpdateOperationsInput | string
+    symbol?: StringFieldUpdateOperationsInput | string
+    granularity?: StringFieldUpdateOperationsInput | string
+    timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
+    open?: FloatFieldUpdateOperationsInput | number
+    high?: FloatFieldUpdateOperationsInput | number
+    low?: FloatFieldUpdateOperationsInput | number
+    close?: FloatFieldUpdateOperationsInput | number
+    volume?: FloatFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -6163,8 +6384,14 @@ export namespace Prisma {
   export type ProcessedDataUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     rawDataId?: StringFieldUpdateOperationsInput | string
-    result?: JsonNullValueInput | InputJsonValue
-    status?: StringFieldUpdateOperationsInput | string
+    symbol?: StringFieldUpdateOperationsInput | string
+    granularity?: StringFieldUpdateOperationsInput | string
+    timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
+    open?: FloatFieldUpdateOperationsInput | number
+    high?: FloatFieldUpdateOperationsInput | number
+    low?: FloatFieldUpdateOperationsInput | number
+    close?: FloatFieldUpdateOperationsInput | number
+    volume?: FloatFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -6507,24 +6734,62 @@ export namespace Prisma {
     _max?: NestedEnumRawDataStatusFilter<$PrismaModel>
   }
 
+  export type FloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
+  }
+
   export type RawDataScalarRelationFilter = {
     is?: RawDataWhereInput
     isNot?: RawDataWhereInput
   }
 
+  export type ProcessedDataSymbolGranularityTimestampCompoundUniqueInput = {
+    symbol: string
+    granularity: string
+    timestamp: Date | string
+  }
+
   export type ProcessedDataCountOrderByAggregateInput = {
     id?: SortOrder
     rawDataId?: SortOrder
-    result?: SortOrder
-    status?: SortOrder
+    symbol?: SortOrder
+    granularity?: SortOrder
+    timestamp?: SortOrder
+    open?: SortOrder
+    high?: SortOrder
+    low?: SortOrder
+    close?: SortOrder
+    volume?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+  }
+
+  export type ProcessedDataAvgOrderByAggregateInput = {
+    open?: SortOrder
+    high?: SortOrder
+    low?: SortOrder
+    close?: SortOrder
+    volume?: SortOrder
   }
 
   export type ProcessedDataMaxOrderByAggregateInput = {
     id?: SortOrder
     rawDataId?: SortOrder
-    status?: SortOrder
+    symbol?: SortOrder
+    granularity?: SortOrder
+    timestamp?: SortOrder
+    open?: SortOrder
+    high?: SortOrder
+    low?: SortOrder
+    close?: SortOrder
+    volume?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -6532,9 +6797,40 @@ export namespace Prisma {
   export type ProcessedDataMinOrderByAggregateInput = {
     id?: SortOrder
     rawDataId?: SortOrder
-    status?: SortOrder
+    symbol?: SortOrder
+    granularity?: SortOrder
+    timestamp?: SortOrder
+    open?: SortOrder
+    high?: SortOrder
+    low?: SortOrder
+    close?: SortOrder
+    volume?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+  }
+
+  export type ProcessedDataSumOrderByAggregateInput = {
+    open?: SortOrder
+    high?: SortOrder
+    low?: SortOrder
+    close?: SortOrder
+    volume?: SortOrder
+  }
+
+  export type FloatWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedFloatFilter<$PrismaModel>
+    _min?: NestedFloatFilter<$PrismaModel>
+    _max?: NestedFloatFilter<$PrismaModel>
   }
 
   export type AuditLogCountOrderByAggregateInput = {
@@ -6690,6 +6986,14 @@ export namespace Prisma {
     create?: XOR<RawDataCreateWithoutProcessedDataInput, RawDataUncheckedCreateWithoutProcessedDataInput>
     connectOrCreate?: RawDataCreateOrConnectWithoutProcessedDataInput
     connect?: RawDataWhereUniqueInput
+  }
+
+  export type FloatFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
   }
 
   export type RawDataUpdateOneRequiredWithoutProcessedDataNestedInput = {
@@ -6879,6 +7183,33 @@ export namespace Prisma {
     _max?: NestedEnumRawDataStatusFilter<$PrismaModel>
   }
 
+  export type NestedFloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
+  }
+
+  export type NestedFloatWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedFloatFilter<$PrismaModel>
+    _min?: NestedFloatFilter<$PrismaModel>
+    _max?: NestedFloatFilter<$PrismaModel>
+  }
+
   export type RawDataCreateWithoutDataSourceInput = {
     id?: string
     payload: JsonNullValueInput | InputJsonValue
@@ -6964,16 +7295,28 @@ export namespace Prisma {
 
   export type ProcessedDataCreateWithoutRawDataInput = {
     id?: string
-    result: JsonNullValueInput | InputJsonValue
-    status?: string
+    symbol: string
+    granularity: string
+    timestamp: Date | string
+    open: number
+    high: number
+    low: number
+    close: number
+    volume: number
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
   export type ProcessedDataUncheckedCreateWithoutRawDataInput = {
     id?: string
-    result: JsonNullValueInput | InputJsonValue
-    status?: string
+    symbol: string
+    granularity: string
+    timestamp: Date | string
+    open: number
+    high: number
+    low: number
+    close: number
+    volume: number
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -7043,8 +7386,14 @@ export namespace Prisma {
     NOT?: ProcessedDataScalarWhereInput | ProcessedDataScalarWhereInput[]
     id?: StringFilter<"ProcessedData"> | string
     rawDataId?: StringFilter<"ProcessedData"> | string
-    result?: JsonFilter<"ProcessedData">
-    status?: StringFilter<"ProcessedData"> | string
+    symbol?: StringFilter<"ProcessedData"> | string
+    granularity?: StringFilter<"ProcessedData"> | string
+    timestamp?: DateTimeFilter<"ProcessedData"> | Date | string
+    open?: FloatFilter<"ProcessedData"> | number
+    high?: FloatFilter<"ProcessedData"> | number
+    low?: FloatFilter<"ProcessedData"> | number
+    close?: FloatFilter<"ProcessedData"> | number
+    volume?: FloatFilter<"ProcessedData"> | number
     createdAt?: DateTimeFilter<"ProcessedData"> | Date | string
     updatedAt?: DateTimeFilter<"ProcessedData"> | Date | string
   }
@@ -7137,32 +7486,56 @@ export namespace Prisma {
 
   export type ProcessedDataCreateManyRawDataInput = {
     id?: string
-    result: JsonNullValueInput | InputJsonValue
-    status?: string
+    symbol: string
+    granularity: string
+    timestamp: Date | string
+    open: number
+    high: number
+    low: number
+    close: number
+    volume: number
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
   export type ProcessedDataUpdateWithoutRawDataInput = {
     id?: StringFieldUpdateOperationsInput | string
-    result?: JsonNullValueInput | InputJsonValue
-    status?: StringFieldUpdateOperationsInput | string
+    symbol?: StringFieldUpdateOperationsInput | string
+    granularity?: StringFieldUpdateOperationsInput | string
+    timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
+    open?: FloatFieldUpdateOperationsInput | number
+    high?: FloatFieldUpdateOperationsInput | number
+    low?: FloatFieldUpdateOperationsInput | number
+    close?: FloatFieldUpdateOperationsInput | number
+    volume?: FloatFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type ProcessedDataUncheckedUpdateWithoutRawDataInput = {
     id?: StringFieldUpdateOperationsInput | string
-    result?: JsonNullValueInput | InputJsonValue
-    status?: StringFieldUpdateOperationsInput | string
+    symbol?: StringFieldUpdateOperationsInput | string
+    granularity?: StringFieldUpdateOperationsInput | string
+    timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
+    open?: FloatFieldUpdateOperationsInput | number
+    high?: FloatFieldUpdateOperationsInput | number
+    low?: FloatFieldUpdateOperationsInput | number
+    close?: FloatFieldUpdateOperationsInput | number
+    volume?: FloatFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type ProcessedDataUncheckedUpdateManyWithoutRawDataInput = {
     id?: StringFieldUpdateOperationsInput | string
-    result?: JsonNullValueInput | InputJsonValue
-    status?: StringFieldUpdateOperationsInput | string
+    symbol?: StringFieldUpdateOperationsInput | string
+    granularity?: StringFieldUpdateOperationsInput | string
+    timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
+    open?: FloatFieldUpdateOperationsInput | number
+    high?: FloatFieldUpdateOperationsInput | number
+    low?: FloatFieldUpdateOperationsInput | number
+    close?: FloatFieldUpdateOperationsInput | number
+    volume?: FloatFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

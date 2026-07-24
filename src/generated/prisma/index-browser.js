@@ -144,8 +144,14 @@ exports.Prisma.RawDataScalarFieldEnum = {
 exports.Prisma.ProcessedDataScalarFieldEnum = {
   id: 'id',
   rawDataId: 'rawDataId',
-  result: 'result',
-  status: 'status',
+  symbol: 'symbol',
+  granularity: 'granularity',
+  timestamp: 'timestamp',
+  open: 'open',
+  high: 'high',
+  low: 'low',
+  close: 'close',
+  volume: 'volume',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
