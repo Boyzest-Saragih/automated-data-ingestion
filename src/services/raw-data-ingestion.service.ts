@@ -8,18 +8,22 @@ import { BinanceClientService } from "./binance-client.service.js";
 import type { OHLCVProvider } from "../interfaces/ohlcv-provider.interface.js";
 import { DataSourceRepository } from "../repositories/data-source.repository.js";
 import type { FetchOHLCVOptions, ProviderType } from "../types/types.js";
+import { ProcessedDataService } from "./processed-data.service.js";
 
 export class RawDataIngestionService {
   private providers: Record<ProviderType, OHLCVProvider>;
   private rawRepository: RawRepository;
   private dataSourceRepository: DataSourceRepository;
+  private processedDataService: ProcessedDataService;
 
   constructor(
     rawRepository = new RawRepository(),
     dataSourceRepository = new DataSourceRepository(),
+    processedDataService = new ProcessedDataService(),
   ) {
     this.rawRepository = rawRepository;
     this.dataSourceRepository = dataSourceRepository;
+    this.processedDataService = processedDataService;
     this.providers = {
       yahoo: new YahooClientService(),
       binance: new BinanceClientService(),
@@ -60,6 +64,8 @@ export class RawDataIngestionService {
         payload: ohlcvData as any,
         status: RawDataStatus.PENDING,
       });
+
+      await this.processedDataService.processRawData(rawRecord.id);
 
       return rawRecord;
     } catch (error) {

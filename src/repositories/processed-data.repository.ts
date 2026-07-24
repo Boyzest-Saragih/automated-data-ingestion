@@ -16,9 +16,9 @@ export type CreateProcessedDataDto = {
 export type FindCandlesQuery = {
   symbol: string;
   granularity: string;
-  from?: Date;
-  to?: Date;
-  limit?: number;
+  from?: Date | undefined;
+  to?: Date | undefined;
+  limit?: number | undefined;
 };
 
 export class ProcessedDataRepository {
