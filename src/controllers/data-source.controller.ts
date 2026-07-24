@@ -39,4 +39,121 @@ export class DataSourceCtr {
       });
     }
   };
+
+  getAllDataSources = async (req: Request, res: Response) => {
+    try {
+      const dataSources = await this.dataSourceService.getAllDataSources();
+      return res.status(200).json({
+        success: true,
+        message: "Berhasil mengambil semua data source",
+        data: dataSources,
+      });
+    } catch (error: any) {
+      return res.status(500).json({
+        success: false,
+        message: "Gagal mengambil data source",
+        error: error.message,
+      });
+    }
+  };
+
+  // GET /api/data-sources/search?name=xyz
+  getDataSourcesByName = async (req: Request, res: Response) => {
+    try {
+      const name = req.query.name as string;
+
+      if (!name) {
+        return res.status(400).json({
+          success: false,
+          message: "Query parameter 'name' wajib diisi",
+        });
+      }
+
+      const dataSource =
+        await this.dataSourceService.getDataSourcesByName(name);
+
+      return res.status(200).json({
+        success: true,
+        message: `Berhasil mengambil data source dengan nama: ${name}`,
+        data: dataSource,
+      });
+    } catch (error: any) {
+      return res.status(500).json({
+        success: false,
+        message: "Gagal mengambil data source berdasarkan nama",
+        error: error.message,
+      });
+    }
+  };
+
+  // PATCH /api/data-sources/:id
+  updateDataSources = async (req: Request, res: Response) => {
+    try {
+      const { id } = req.params;
+      const { isActive } = req.body;
+
+      if (typeof isActive !== "boolean") {
+        return res.status(400).json({
+          success: false,
+          message:
+            "Body parameter 'isActive' harus bertipe boolean (true/false)",
+        });
+      }
+
+      if (!id || typeof id !== "string") {
+        res.status(400).json({
+          success: false,
+          message: "ID tidak valid atau tidak ditemukan",
+        });
+        return;
+      }
+
+      const updatedDataSource = await this.dataSourceService.updateDataSources(
+        id,
+        isActive,
+      );
+
+      return res.status(200).json({
+        success: true,
+        message: "Status data source berhasil diperbarui",
+        data: updatedDataSource,
+      });
+    } catch (error: any) {
+      return res.status(500).json({
+        success: false,
+        message: "Gagal mengupdate data source",
+        error: error.message,
+      });
+    }
+  };
+
+  // DELETE /api/data-sources/:id
+  deleteDataSources = async (req: Request, res: Response) => {
+    try {
+      const { id } = req.params;
+
+      if (!id || typeof id !== "string") {
+        res.status(400).json({
+          success: false,
+          message: "ID tidak valid atau tidak ditemukan",
+        });
+        return;
+      }
+
+      const deletedDataSource =
+        await this.dataSourceService.deleteDataSources(id);
+
+      return res.status(200).json({
+        success: true,
+        message: "Data source berhasil dihapus",
+        data: deletedDataSource,
+      });
+    } catch (error: any) {
+      return res.status(500).json({
+        success: false,
+        message: "Gagal menghapus data source",
+        error: error.message,
+      });
+    }
+  };
 }
