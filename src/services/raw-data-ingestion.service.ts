@@ -48,12 +48,16 @@ export class RawDataIngestionService {
         `DataSource '${dataSource.name}' (ID: ${dataSourceId}) sedang tidak aktif / dinonaktifkan.`,
       );
     }
+
     if (!provider) {
       throw new Error(`Provider '${providerName}' tidak didukung.`);
     }
 
     try {
-      const ohlcvData = await provider.getOHLCV(symbol, options);
+      const ohlcvData = await provider.getOHLCV(symbol, options, {
+        baseURL: dataSource.baseURL,
+        connection: dataSource.connection,
+      });
 
       const rawRecord = await this.rawRepository.create({
         datasourceId: dataSourceId,

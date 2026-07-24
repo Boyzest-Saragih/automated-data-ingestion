@@ -1,5 +1,8 @@
 import axios, { type AxiosInstance } from "axios";
-import type { OHLCVProvider } from "../interfaces/ohlcv-provider.interface.js";
+import type {
+  OHLCVProvider,
+  ProviderConfig,
+} from "../interfaces/ohlcv-provider.interface.js";
 
 export type OHLCV = {
   timestamp: string;
@@ -23,11 +26,12 @@ export type FetchOHLCVOptions = {
 };
 
 export class YahooClientService implements OHLCVProvider {
-  private client: AxiosInstance;
+  private DEFAULT_BASE_URL =
+    "https://query1.finance.yahoo.com/v8/finance/chart";
 
-  constructor() {
-    this.client = axios.create({
-      baseURL: "https://query1.finance.yahoo.com/v8/finance/chart",
+  private createClient(baseURL?: string | null): AxiosInstance {
+    return axios.create({
+      baseURL: baseURL || this.DEFAULT_BASE_URL,
       timeout: 10000,
       headers: {
         "User-Agent":
@@ -40,11 +44,13 @@ export class YahooClientService implements OHLCVProvider {
   async getOHLCV(
     symbol: string,
     options: FetchOHLCVOptions = {},
+    config: ProviderConfig,
   ): Promise<YahooOHLCVRes> {
     const { interval = "1d", range = "1mo" } = options;
+    const client = this.createClient(config?.baseURL);
 
     try {
-      const response = await this.client.get(`/${symbol.toUpperCase()}`, {
+      const response = await client.get(`/${symbol.toUpperCase()}`, {
         params: {
           interval,
           range,
