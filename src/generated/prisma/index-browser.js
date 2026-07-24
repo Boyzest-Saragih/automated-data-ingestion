@@ -125,6 +125,7 @@ exports.Prisma.DataSourceScalarFieldEnum = {
   id: 'id',
   name: 'name',
   type: 'type',
+  provider: 'provider',
   connection: 'connection',
   baseURL: 'baseURL',
   isActive: 'isActive',

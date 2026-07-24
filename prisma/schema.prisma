@@ -38,6 +38,7 @@ model DataSource {
   id   String         @id @default(uuid())
   name String
   type DataSourceType
+  provider   String
 
   connection String?
   baseURL    String

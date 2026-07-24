@@ -1354,6 +1354,7 @@ export namespace Prisma {
     id: string | null
     name: string | null
     type: $Enums.DataSourceType | null
+    provider: string | null
     connection: string | null
     baseURL: string | null
     isActive: boolean | null
@@ -1365,6 +1366,7 @@ export namespace Prisma {
     id: string | null
     name: string | null
     type: $Enums.DataSourceType | null
+    provider: string | null
     connection: string | null
     baseURL: string | null
     isActive: boolean | null
@@ -1376,6 +1378,7 @@ export namespace Prisma {
     id: number
     name: number
     type: number
+    provider: number
     connection: number
     baseURL: number
     isActive: number
@@ -1389,6 +1392,7 @@ export namespace Prisma {
     id?: true
     name?: true
     type?: true
+    provider?: true
     connection?: true
     baseURL?: true
     isActive?: true
@@ -1400,6 +1404,7 @@ export namespace Prisma {
     id?: true
     name?: true
     type?: true
+    provider?: true
     connection?: true
     baseURL?: true
     isActive?: true
@@ -1411,6 +1416,7 @@ export namespace Prisma {
     id?: true
     name?: true
     type?: true
+    provider?: true
     connection?: true
     baseURL?: true
     isActive?: true
@@ -1495,6 +1501,7 @@ export namespace Prisma {
     id: string
     name: string
     type: $Enums.DataSourceType
+    provider: string
     connection: string | null
     baseURL: string
     isActive: boolean
@@ -1523,6 +1530,7 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     type?: boolean
+    provider?: boolean
     connection?: boolean
     baseURL?: boolean
     isActive?: boolean
@@ -1537,6 +1545,7 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     type?: boolean
+    provider?: boolean
     connection?: boolean
     baseURL?: boolean
     isActive?: boolean
@@ -1548,6 +1557,7 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     type?: boolean
+    provider?: boolean
     connection?: boolean
     baseURL?: boolean
     isActive?: boolean
@@ -1559,6 +1569,7 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     type?: boolean
+    provider?: boolean
     connection?: boolean
     baseURL?: boolean
     isActive?: boolean
@@ -1566,7 +1577,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type DataSourceOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "type" | "connection" | "baseURL" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["dataSource"]>
+  export type DataSourceOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "type" | "provider" | "connection" | "baseURL" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["dataSource"]>
   export type DataSourceInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     rawData?: boolean | DataSource$rawDataArgs<ExtArgs>
     symbol?: boolean | DataSource$symbolArgs<ExtArgs>
@@ -1585,6 +1596,7 @@ export namespace Prisma {
       id: string
       name: string
       type: $Enums.DataSourceType
+      provider: string
       connection: string | null
       baseURL: string
       isActive: boolean
@@ -2018,6 +2030,7 @@ export namespace Prisma {
     readonly id: FieldRef<"DataSource", 'String'>
     readonly name: FieldRef<"DataSource", 'String'>
     readonly type: FieldRef<"DataSource", 'DataSourceType'>
+    readonly provider: FieldRef<"DataSource", 'String'>
     readonly connection: FieldRef<"DataSource", 'String'>
     readonly baseURL: FieldRef<"DataSource", 'String'>
     readonly isActive: FieldRef<"DataSource", 'Boolean'>
@@ -6918,6 +6931,7 @@ export namespace Prisma {
     id: 'id',
     name: 'name',
     type: 'type',
+    provider: 'provider',
     connection: 'connection',
     baseURL: 'baseURL',
     isActive: 'isActive',
@@ -7168,6 +7182,7 @@ export namespace Prisma {
     id?: StringFilter<"DataSource"> | string
     name?: StringFilter<"DataSource"> | string
     type?: EnumDataSourceTypeFilter<"DataSource"> | $Enums.DataSourceType
+    provider?: StringFilter<"DataSource"> | string
     connection?: StringNullableFilter<"DataSource"> | string | null
     baseURL?: StringFilter<"DataSource"> | string
     isActive?: BoolFilter<"DataSource"> | boolean
@@ -7181,6 +7196,7 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     type?: SortOrder
+    provider?: SortOrder
     connection?: SortOrderInput | SortOrder
     baseURL?: SortOrder
     isActive?: SortOrder
@@ -7197,6 +7213,7 @@ export namespace Prisma {
     NOT?: DataSourceWhereInput | DataSourceWhereInput[]
     name?: StringFilter<"DataSource"> | string
     type?: EnumDataSourceTypeFilter<"DataSource"> | $Enums.DataSourceType
+    provider?: StringFilter<"DataSource"> | string
     connection?: StringNullableFilter<"DataSource"> | string | null
     baseURL?: StringFilter<"DataSource"> | string
     isActive?: BoolFilter<"DataSource"> | boolean
@@ -7210,6 +7227,7 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     type?: SortOrder
+    provider?: SortOrder
     connection?: SortOrderInput | SortOrder
     baseURL?: SortOrder
     isActive?: SortOrder
@@ -7227,6 +7245,7 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"DataSource"> | string
     name?: StringWithAggregatesFilter<"DataSource"> | string
     type?: EnumDataSourceTypeWithAggregatesFilter<"DataSource"> | $Enums.DataSourceType
+    provider?: StringWithAggregatesFilter<"DataSource"> | string
     connection?: StringNullableWithAggregatesFilter<"DataSource"> | string | null
     baseURL?: StringWithAggregatesFilter<"DataSource"> | string
     isActive?: BoolWithAggregatesFilter<"DataSource"> | boolean
@@ -7532,6 +7551,7 @@ export namespace Prisma {
     id?: string
     name: string
     type: $Enums.DataSourceType
+    provider: string
     connection?: string | null
     baseURL: string
     isActive?: boolean
@@ -7545,6 +7565,7 @@ export namespace Prisma {
     id?: string
     name: string
     type: $Enums.DataSourceType
+    provider: string
     connection?: string | null
     baseURL: string
     isActive?: boolean
@@ -7558,6 +7579,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     type?: EnumDataSourceTypeFieldUpdateOperationsInput | $Enums.DataSourceType
+    provider?: StringFieldUpdateOperationsInput | string
     connection?: NullableStringFieldUpdateOperationsInput | string | null
     baseURL?: StringFieldUpdateOperationsInput | string
     isActive?: BoolFieldUpdateOperationsInput | boolean
@@ -7571,6 +7593,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     type?: EnumDataSourceTypeFieldUpdateOperationsInput | $Enums.DataSourceType
+    provider?: StringFieldUpdateOperationsInput | string
     connection?: NullableStringFieldUpdateOperationsInput | string | null
     baseURL?: StringFieldUpdateOperationsInput | string
     isActive?: BoolFieldUpdateOperationsInput | boolean
@@ -7584,6 +7607,7 @@ export namespace Prisma {
     id?: string
     name: string
     type: $Enums.DataSourceType
+    provider: string
     connection?: string | null
     baseURL: string
     isActive?: boolean
@@ -7595,6 +7619,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     type?: EnumDataSourceTypeFieldUpdateOperationsInput | $Enums.DataSourceType
+    provider?: StringFieldUpdateOperationsInput | string
     connection?: NullableStringFieldUpdateOperationsInput | string | null
     baseURL?: StringFieldUpdateOperationsInput | string
     isActive?: BoolFieldUpdateOperationsInput | boolean
@@ -7606,6 +7631,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     type?: EnumDataSourceTypeFieldUpdateOperationsInput | $Enums.DataSourceType
+    provider?: StringFieldUpdateOperationsInput | string
     connection?: NullableStringFieldUpdateOperationsInput | string | null
     baseURL?: StringFieldUpdateOperationsInput | string
     isActive?: BoolFieldUpdateOperationsInput | boolean
@@ -7621,12 +7647,12 @@ export namespace Prisma {
     isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
-    dataSource: DataSourceCreateNestedOneWithoutSymbolInput | undefined
+    dataSource: DataSourceCreateNestedOneWithoutSymbolInput
   }
 
   export type SymbolUncheckedCreateInput = {
     id?: string
-    dataSourceId: string | undefined
+    dataSourceId: string
     ticker: string
     name?: string | null
     defaultInterval?: string
@@ -8018,6 +8044,7 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     type?: SortOrder
+    provider?: SortOrder
     connection?: SortOrder
     baseURL?: SortOrder
     isActive?: SortOrder
@@ -8029,6 +8056,7 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     type?: SortOrder
+    provider?: SortOrder
     connection?: SortOrder
     baseURL?: SortOrder
     isActive?: SortOrder
@@ -8040,6 +8068,7 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     type?: SortOrder
+    provider?: SortOrder
     connection?: SortOrder
     baseURL?: SortOrder
     isActive?: SortOrder
@@ -9025,6 +9054,7 @@ export namespace Prisma {
     id?: string
     name: string
     type: $Enums.DataSourceType
+    provider: string
     connection?: string | null
     baseURL: string
     isActive?: boolean
@@ -9037,6 +9067,7 @@ export namespace Prisma {
     id?: string
     name: string
     type: $Enums.DataSourceType
+    provider: string
     connection?: string | null
     baseURL: string
     isActive?: boolean
@@ -9065,6 +9096,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     type?: EnumDataSourceTypeFieldUpdateOperationsInput | $Enums.DataSourceType
+    provider?: StringFieldUpdateOperationsInput | string
     connection?: NullableStringFieldUpdateOperationsInput | string | null
     baseURL?: StringFieldUpdateOperationsInput | string
     isActive?: BoolFieldUpdateOperationsInput | boolean
@@ -9077,6 +9109,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     type?: EnumDataSourceTypeFieldUpdateOperationsInput | $Enums.DataSourceType
+    provider?: StringFieldUpdateOperationsInput | string
     connection?: NullableStringFieldUpdateOperationsInput | string | null
     baseURL?: StringFieldUpdateOperationsInput | string
     isActive?: BoolFieldUpdateOperationsInput | boolean
@@ -9089,6 +9122,7 @@ export namespace Prisma {
     id?: string
     name: string
     type: $Enums.DataSourceType
+    provider: string
     connection?: string | null
     baseURL: string
     isActive?: boolean
@@ -9101,6 +9135,7 @@ export namespace Prisma {
     id?: string
     name: string
     type: $Enums.DataSourceType
+    provider: string
     connection?: string | null
     baseURL: string
     isActive?: boolean
@@ -9167,6 +9202,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     type?: EnumDataSourceTypeFieldUpdateOperationsInput | $Enums.DataSourceType
+    provider?: StringFieldUpdateOperationsInput | string
     connection?: NullableStringFieldUpdateOperationsInput | string | null
     baseURL?: StringFieldUpdateOperationsInput | string
     isActive?: BoolFieldUpdateOperationsInput | boolean
@@ -9179,6 +9215,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     type?: EnumDataSourceTypeFieldUpdateOperationsInput | $Enums.DataSourceType
+    provider?: StringFieldUpdateOperationsInput | string
     connection?: NullableStringFieldUpdateOperationsInput | string | null
     baseURL?: StringFieldUpdateOperationsInput | string
     isActive?: BoolFieldUpdateOperationsInput | boolean
