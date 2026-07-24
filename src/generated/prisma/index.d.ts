@@ -19,6 +19,11 @@ export type PrismaPromise<T> = $Public.PrismaPromise<T>
  */
 export type DataSource = $Result.DefaultSelection<Prisma.$DataSourcePayload>
 /**
+ * Model Symbol
+ * 
+ */
+export type Symbol = $Result.DefaultSelection<Prisma.$SymbolPayload>
+/**
  * Model RawData
  * 
  */
@@ -206,6 +211,16 @@ export class PrismaClient<
     * ```
     */
   get dataSource(): Prisma.DataSourceDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.symbol`: Exposes CRUD operations for the **Symbol** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Symbols
+    * const symbols = await prisma.symbol.findMany()
+    * ```
+    */
+  get symbol(): Prisma.SymbolDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.rawData`: Exposes CRUD operations for the **RawData** model.
@@ -678,6 +693,7 @@ export namespace Prisma {
 
   export const ModelName: {
     DataSource: 'DataSource',
+    Symbol: 'Symbol',
     RawData: 'RawData',
     ProcessedData: 'ProcessedData',
     AuditLog: 'AuditLog'
@@ -699,7 +715,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "dataSource" | "rawData" | "processedData" | "auditLog"
+      modelProps: "dataSource" | "symbol" | "rawData" | "processedData" | "auditLog"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -774,6 +790,80 @@ export namespace Prisma {
           count: {
             args: Prisma.DataSourceCountArgs<ExtArgs>
             result: $Utils.Optional<DataSourceCountAggregateOutputType> | number
+          }
+        }
+      }
+      Symbol: {
+        payload: Prisma.$SymbolPayload<ExtArgs>
+        fields: Prisma.SymbolFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.SymbolFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SymbolPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.SymbolFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SymbolPayload>
+          }
+          findFirst: {
+            args: Prisma.SymbolFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SymbolPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.SymbolFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SymbolPayload>
+          }
+          findMany: {
+            args: Prisma.SymbolFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SymbolPayload>[]
+          }
+          create: {
+            args: Prisma.SymbolCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SymbolPayload>
+          }
+          createMany: {
+            args: Prisma.SymbolCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.SymbolCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SymbolPayload>[]
+          }
+          delete: {
+            args: Prisma.SymbolDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SymbolPayload>
+          }
+          update: {
+            args: Prisma.SymbolUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SymbolPayload>
+          }
+          deleteMany: {
+            args: Prisma.SymbolDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.SymbolUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.SymbolUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SymbolPayload>[]
+          }
+          upsert: {
+            args: Prisma.SymbolUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SymbolPayload>
+          }
+          aggregate: {
+            args: Prisma.SymbolAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateSymbol>
+          }
+          groupBy: {
+            args: Prisma.SymbolGroupByArgs<ExtArgs>
+            result: $Utils.Optional<SymbolGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.SymbolCountArgs<ExtArgs>
+            result: $Utils.Optional<SymbolCountAggregateOutputType> | number
           }
         }
       }
@@ -1096,6 +1186,7 @@ export namespace Prisma {
   }
   export type GlobalOmitConfig = {
     dataSource?: DataSourceOmit
+    symbol?: SymbolOmit
     rawData?: RawDataOmit
     processedData?: ProcessedDataOmit
     auditLog?: AuditLogOmit
@@ -1180,10 +1271,12 @@ export namespace Prisma {
 
   export type DataSourceCountOutputType = {
     rawData: number
+    symbol: number
   }
 
   export type DataSourceCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     rawData?: boolean | DataSourceCountOutputTypeCountRawDataArgs
+    symbol?: boolean | DataSourceCountOutputTypeCountSymbolArgs
   }
 
   // Custom InputTypes
@@ -1202,6 +1295,13 @@ export namespace Prisma {
    */
   export type DataSourceCountOutputTypeCountRawDataArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: RawDataWhereInput
+  }
+
+  /**
+   * DataSourceCountOutputType without action
+   */
+  export type DataSourceCountOutputTypeCountSymbolArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SymbolWhereInput
   }
 
 
@@ -1429,6 +1529,7 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     rawData?: boolean | DataSource$rawDataArgs<ExtArgs>
+    symbol?: boolean | DataSource$symbolArgs<ExtArgs>
     _count?: boolean | DataSourceCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["dataSource"]>
 
@@ -1468,6 +1569,7 @@ export namespace Prisma {
   export type DataSourceOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "type" | "connection" | "baseURL" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["dataSource"]>
   export type DataSourceInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     rawData?: boolean | DataSource$rawDataArgs<ExtArgs>
+    symbol?: boolean | DataSource$symbolArgs<ExtArgs>
     _count?: boolean | DataSourceCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type DataSourceIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -1477,6 +1579,7 @@ export namespace Prisma {
     name: "DataSource"
     objects: {
       rawData: Prisma.$RawDataPayload<ExtArgs>[]
+      symbol: Prisma.$SymbolPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -1882,6 +1985,7 @@ export namespace Prisma {
   export interface Prisma__DataSourceClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     rawData<T extends DataSource$rawDataArgs<ExtArgs> = {}>(args?: Subset<T, DataSource$rawDataArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RawDataPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    symbol<T extends DataSource$symbolArgs<ExtArgs> = {}>(args?: Subset<T, DataSource$symbolArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SymbolPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2331,6 +2435,30 @@ export namespace Prisma {
   }
 
   /**
+   * DataSource.symbol
+   */
+  export type DataSource$symbolArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Symbol
+     */
+    select?: SymbolSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Symbol
+     */
+    omit?: SymbolOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SymbolInclude<ExtArgs> | null
+    where?: SymbolWhereInput
+    orderBy?: SymbolOrderByWithRelationInput | SymbolOrderByWithRelationInput[]
+    cursor?: SymbolWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: SymbolScalarFieldEnum | SymbolScalarFieldEnum[]
+  }
+
+  /**
    * DataSource without action
    */
   export type DataSourceDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2346,6 +2474,1103 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: DataSourceInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Symbol
+   */
+
+  export type AggregateSymbol = {
+    _count: SymbolCountAggregateOutputType | null
+    _min: SymbolMinAggregateOutputType | null
+    _max: SymbolMaxAggregateOutputType | null
+  }
+
+  export type SymbolMinAggregateOutputType = {
+    id: string | null
+    dataSourceId: string | null
+    ticker: string | null
+    name: string | null
+    defaultInterval: string | null
+    isActive: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type SymbolMaxAggregateOutputType = {
+    id: string | null
+    dataSourceId: string | null
+    ticker: string | null
+    name: string | null
+    defaultInterval: string | null
+    isActive: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type SymbolCountAggregateOutputType = {
+    id: number
+    dataSourceId: number
+    ticker: number
+    name: number
+    defaultInterval: number
+    isActive: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type SymbolMinAggregateInputType = {
+    id?: true
+    dataSourceId?: true
+    ticker?: true
+    name?: true
+    defaultInterval?: true
+    isActive?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type SymbolMaxAggregateInputType = {
+    id?: true
+    dataSourceId?: true
+    ticker?: true
+    name?: true
+    defaultInterval?: true
+    isActive?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type SymbolCountAggregateInputType = {
+    id?: true
+    dataSourceId?: true
+    ticker?: true
+    name?: true
+    defaultInterval?: true
+    isActive?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type SymbolAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Symbol to aggregate.
+     */
+    where?: SymbolWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Symbols to fetch.
+     */
+    orderBy?: SymbolOrderByWithRelationInput | SymbolOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: SymbolWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Symbols from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Symbols.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Symbols
+    **/
+    _count?: true | SymbolCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: SymbolMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: SymbolMaxAggregateInputType
+  }
+
+  export type GetSymbolAggregateType<T extends SymbolAggregateArgs> = {
+        [P in keyof T & keyof AggregateSymbol]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateSymbol[P]>
+      : GetScalarType<T[P], AggregateSymbol[P]>
+  }
+
+
+
+
+  export type SymbolGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SymbolWhereInput
+    orderBy?: SymbolOrderByWithAggregationInput | SymbolOrderByWithAggregationInput[]
+    by: SymbolScalarFieldEnum[] | SymbolScalarFieldEnum
+    having?: SymbolScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: SymbolCountAggregateInputType | true
+    _min?: SymbolMinAggregateInputType
+    _max?: SymbolMaxAggregateInputType
+  }
+
+  export type SymbolGroupByOutputType = {
+    id: string
+    dataSourceId: string
+    ticker: string
+    name: string | null
+    defaultInterval: string
+    isActive: boolean
+    createdAt: Date
+    updatedAt: Date
+    _count: SymbolCountAggregateOutputType | null
+    _min: SymbolMinAggregateOutputType | null
+    _max: SymbolMaxAggregateOutputType | null
+  }
+
+  type GetSymbolGroupByPayload<T extends SymbolGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<SymbolGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof SymbolGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], SymbolGroupByOutputType[P]>
+            : GetScalarType<T[P], SymbolGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type SymbolSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    dataSourceId?: boolean
+    ticker?: boolean
+    name?: boolean
+    defaultInterval?: boolean
+    isActive?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    dataSource?: boolean | DataSourceDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["symbol"]>
+
+  export type SymbolSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    dataSourceId?: boolean
+    ticker?: boolean
+    name?: boolean
+    defaultInterval?: boolean
+    isActive?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    dataSource?: boolean | DataSourceDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["symbol"]>
+
+  export type SymbolSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    dataSourceId?: boolean
+    ticker?: boolean
+    name?: boolean
+    defaultInterval?: boolean
+    isActive?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    dataSource?: boolean | DataSourceDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["symbol"]>
+
+  export type SymbolSelectScalar = {
+    id?: boolean
+    dataSourceId?: boolean
+    ticker?: boolean
+    name?: boolean
+    defaultInterval?: boolean
+    isActive?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type SymbolOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "dataSourceId" | "ticker" | "name" | "defaultInterval" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["symbol"]>
+  export type SymbolInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    dataSource?: boolean | DataSourceDefaultArgs<ExtArgs>
+  }
+  export type SymbolIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    dataSource?: boolean | DataSourceDefaultArgs<ExtArgs>
+  }
+  export type SymbolIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    dataSource?: boolean | DataSourceDefaultArgs<ExtArgs>
+  }
+
+  export type $SymbolPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Symbol"
+    objects: {
+      dataSource: Prisma.$DataSourcePayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      dataSourceId: string
+      ticker: string
+      name: string | null
+      defaultInterval: string
+      isActive: boolean
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["symbol"]>
+    composites: {}
+  }
+
+  type SymbolGetPayload<S extends boolean | null | undefined | SymbolDefaultArgs> = $Result.GetResult<Prisma.$SymbolPayload, S>
+
+  type SymbolCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<SymbolFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: SymbolCountAggregateInputType | true
+    }
+
+  export interface SymbolDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Symbol'], meta: { name: 'Symbol' } }
+    /**
+     * Find zero or one Symbol that matches the filter.
+     * @param {SymbolFindUniqueArgs} args - Arguments to find a Symbol
+     * @example
+     * // Get one Symbol
+     * const symbol = await prisma.symbol.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends SymbolFindUniqueArgs>(args: SelectSubset<T, SymbolFindUniqueArgs<ExtArgs>>): Prisma__SymbolClient<$Result.GetResult<Prisma.$SymbolPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Symbol that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {SymbolFindUniqueOrThrowArgs} args - Arguments to find a Symbol
+     * @example
+     * // Get one Symbol
+     * const symbol = await prisma.symbol.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends SymbolFindUniqueOrThrowArgs>(args: SelectSubset<T, SymbolFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SymbolClient<$Result.GetResult<Prisma.$SymbolPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Symbol that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SymbolFindFirstArgs} args - Arguments to find a Symbol
+     * @example
+     * // Get one Symbol
+     * const symbol = await prisma.symbol.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends SymbolFindFirstArgs>(args?: SelectSubset<T, SymbolFindFirstArgs<ExtArgs>>): Prisma__SymbolClient<$Result.GetResult<Prisma.$SymbolPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Symbol that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SymbolFindFirstOrThrowArgs} args - Arguments to find a Symbol
+     * @example
+     * // Get one Symbol
+     * const symbol = await prisma.symbol.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends SymbolFindFirstOrThrowArgs>(args?: SelectSubset<T, SymbolFindFirstOrThrowArgs<ExtArgs>>): Prisma__SymbolClient<$Result.GetResult<Prisma.$SymbolPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Symbols that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SymbolFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Symbols
+     * const symbols = await prisma.symbol.findMany()
+     * 
+     * // Get first 10 Symbols
+     * const symbols = await prisma.symbol.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const symbolWithIdOnly = await prisma.symbol.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends SymbolFindManyArgs>(args?: SelectSubset<T, SymbolFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SymbolPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Symbol.
+     * @param {SymbolCreateArgs} args - Arguments to create a Symbol.
+     * @example
+     * // Create one Symbol
+     * const Symbol = await prisma.symbol.create({
+     *   data: {
+     *     // ... data to create a Symbol
+     *   }
+     * })
+     * 
+     */
+    create<T extends SymbolCreateArgs>(args: SelectSubset<T, SymbolCreateArgs<ExtArgs>>): Prisma__SymbolClient<$Result.GetResult<Prisma.$SymbolPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Symbols.
+     * @param {SymbolCreateManyArgs} args - Arguments to create many Symbols.
+     * @example
+     * // Create many Symbols
+     * const symbol = await prisma.symbol.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends SymbolCreateManyArgs>(args?: SelectSubset<T, SymbolCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Symbols and returns the data saved in the database.
+     * @param {SymbolCreateManyAndReturnArgs} args - Arguments to create many Symbols.
+     * @example
+     * // Create many Symbols
+     * const symbol = await prisma.symbol.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Symbols and only return the `id`
+     * const symbolWithIdOnly = await prisma.symbol.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends SymbolCreateManyAndReturnArgs>(args?: SelectSubset<T, SymbolCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SymbolPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Symbol.
+     * @param {SymbolDeleteArgs} args - Arguments to delete one Symbol.
+     * @example
+     * // Delete one Symbol
+     * const Symbol = await prisma.symbol.delete({
+     *   where: {
+     *     // ... filter to delete one Symbol
+     *   }
+     * })
+     * 
+     */
+    delete<T extends SymbolDeleteArgs>(args: SelectSubset<T, SymbolDeleteArgs<ExtArgs>>): Prisma__SymbolClient<$Result.GetResult<Prisma.$SymbolPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Symbol.
+     * @param {SymbolUpdateArgs} args - Arguments to update one Symbol.
+     * @example
+     * // Update one Symbol
+     * const symbol = await prisma.symbol.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends SymbolUpdateArgs>(args: SelectSubset<T, SymbolUpdateArgs<ExtArgs>>): Prisma__SymbolClient<$Result.GetResult<Prisma.$SymbolPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Symbols.
+     * @param {SymbolDeleteManyArgs} args - Arguments to filter Symbols to delete.
+     * @example
+     * // Delete a few Symbols
+     * const { count } = await prisma.symbol.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends SymbolDeleteManyArgs>(args?: SelectSubset<T, SymbolDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Symbols.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SymbolUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Symbols
+     * const symbol = await prisma.symbol.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends SymbolUpdateManyArgs>(args: SelectSubset<T, SymbolUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Symbols and returns the data updated in the database.
+     * @param {SymbolUpdateManyAndReturnArgs} args - Arguments to update many Symbols.
+     * @example
+     * // Update many Symbols
+     * const symbol = await prisma.symbol.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Symbols and only return the `id`
+     * const symbolWithIdOnly = await prisma.symbol.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends SymbolUpdateManyAndReturnArgs>(args: SelectSubset<T, SymbolUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SymbolPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Symbol.
+     * @param {SymbolUpsertArgs} args - Arguments to update or create a Symbol.
+     * @example
+     * // Update or create a Symbol
+     * const symbol = await prisma.symbol.upsert({
+     *   create: {
+     *     // ... data to create a Symbol
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Symbol we want to update
+     *   }
+     * })
+     */
+    upsert<T extends SymbolUpsertArgs>(args: SelectSubset<T, SymbolUpsertArgs<ExtArgs>>): Prisma__SymbolClient<$Result.GetResult<Prisma.$SymbolPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Symbols.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SymbolCountArgs} args - Arguments to filter Symbols to count.
+     * @example
+     * // Count the number of Symbols
+     * const count = await prisma.symbol.count({
+     *   where: {
+     *     // ... the filter for the Symbols we want to count
+     *   }
+     * })
+    **/
+    count<T extends SymbolCountArgs>(
+      args?: Subset<T, SymbolCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], SymbolCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Symbol.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SymbolAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends SymbolAggregateArgs>(args: Subset<T, SymbolAggregateArgs>): Prisma.PrismaPromise<GetSymbolAggregateType<T>>
+
+    /**
+     * Group by Symbol.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SymbolGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends SymbolGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: SymbolGroupByArgs['orderBy'] }
+        : { orderBy?: SymbolGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, SymbolGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSymbolGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Symbol model
+   */
+  readonly fields: SymbolFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Symbol.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__SymbolClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    dataSource<T extends DataSourceDefaultArgs<ExtArgs> = {}>(args?: Subset<T, DataSourceDefaultArgs<ExtArgs>>): Prisma__DataSourceClient<$Result.GetResult<Prisma.$DataSourcePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Symbol model
+   */
+  interface SymbolFieldRefs {
+    readonly id: FieldRef<"Symbol", 'String'>
+    readonly dataSourceId: FieldRef<"Symbol", 'String'>
+    readonly ticker: FieldRef<"Symbol", 'String'>
+    readonly name: FieldRef<"Symbol", 'String'>
+    readonly defaultInterval: FieldRef<"Symbol", 'String'>
+    readonly isActive: FieldRef<"Symbol", 'Boolean'>
+    readonly createdAt: FieldRef<"Symbol", 'DateTime'>
+    readonly updatedAt: FieldRef<"Symbol", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Symbol findUnique
+   */
+  export type SymbolFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Symbol
+     */
+    select?: SymbolSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Symbol
+     */
+    omit?: SymbolOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SymbolInclude<ExtArgs> | null
+    /**
+     * Filter, which Symbol to fetch.
+     */
+    where: SymbolWhereUniqueInput
+  }
+
+  /**
+   * Symbol findUniqueOrThrow
+   */
+  export type SymbolFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Symbol
+     */
+    select?: SymbolSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Symbol
+     */
+    omit?: SymbolOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SymbolInclude<ExtArgs> | null
+    /**
+     * Filter, which Symbol to fetch.
+     */
+    where: SymbolWhereUniqueInput
+  }
+
+  /**
+   * Symbol findFirst
+   */
+  export type SymbolFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Symbol
+     */
+    select?: SymbolSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Symbol
+     */
+    omit?: SymbolOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SymbolInclude<ExtArgs> | null
+    /**
+     * Filter, which Symbol to fetch.
+     */
+    where?: SymbolWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Symbols to fetch.
+     */
+    orderBy?: SymbolOrderByWithRelationInput | SymbolOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Symbols.
+     */
+    cursor?: SymbolWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Symbols from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Symbols.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Symbols.
+     */
+    distinct?: SymbolScalarFieldEnum | SymbolScalarFieldEnum[]
+  }
+
+  /**
+   * Symbol findFirstOrThrow
+   */
+  export type SymbolFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Symbol
+     */
+    select?: SymbolSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Symbol
+     */
+    omit?: SymbolOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SymbolInclude<ExtArgs> | null
+    /**
+     * Filter, which Symbol to fetch.
+     */
+    where?: SymbolWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Symbols to fetch.
+     */
+    orderBy?: SymbolOrderByWithRelationInput | SymbolOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Symbols.
+     */
+    cursor?: SymbolWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Symbols from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Symbols.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Symbols.
+     */
+    distinct?: SymbolScalarFieldEnum | SymbolScalarFieldEnum[]
+  }
+
+  /**
+   * Symbol findMany
+   */
+  export type SymbolFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Symbol
+     */
+    select?: SymbolSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Symbol
+     */
+    omit?: SymbolOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SymbolInclude<ExtArgs> | null
+    /**
+     * Filter, which Symbols to fetch.
+     */
+    where?: SymbolWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Symbols to fetch.
+     */
+    orderBy?: SymbolOrderByWithRelationInput | SymbolOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Symbols.
+     */
+    cursor?: SymbolWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Symbols from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Symbols.
+     */
+    skip?: number
+    distinct?: SymbolScalarFieldEnum | SymbolScalarFieldEnum[]
+  }
+
+  /**
+   * Symbol create
+   */
+  export type SymbolCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Symbol
+     */
+    select?: SymbolSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Symbol
+     */
+    omit?: SymbolOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SymbolInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Symbol.
+     */
+    data: XOR<SymbolCreateInput, SymbolUncheckedCreateInput>
+  }
+
+  /**
+   * Symbol createMany
+   */
+  export type SymbolCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Symbols.
+     */
+    data: SymbolCreateManyInput | SymbolCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Symbol createManyAndReturn
+   */
+  export type SymbolCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Symbol
+     */
+    select?: SymbolSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Symbol
+     */
+    omit?: SymbolOmit<ExtArgs> | null
+    /**
+     * The data used to create many Symbols.
+     */
+    data: SymbolCreateManyInput | SymbolCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SymbolIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Symbol update
+   */
+  export type SymbolUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Symbol
+     */
+    select?: SymbolSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Symbol
+     */
+    omit?: SymbolOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SymbolInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Symbol.
+     */
+    data: XOR<SymbolUpdateInput, SymbolUncheckedUpdateInput>
+    /**
+     * Choose, which Symbol to update.
+     */
+    where: SymbolWhereUniqueInput
+  }
+
+  /**
+   * Symbol updateMany
+   */
+  export type SymbolUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Symbols.
+     */
+    data: XOR<SymbolUpdateManyMutationInput, SymbolUncheckedUpdateManyInput>
+    /**
+     * Filter which Symbols to update
+     */
+    where?: SymbolWhereInput
+    /**
+     * Limit how many Symbols to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Symbol updateManyAndReturn
+   */
+  export type SymbolUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Symbol
+     */
+    select?: SymbolSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Symbol
+     */
+    omit?: SymbolOmit<ExtArgs> | null
+    /**
+     * The data used to update Symbols.
+     */
+    data: XOR<SymbolUpdateManyMutationInput, SymbolUncheckedUpdateManyInput>
+    /**
+     * Filter which Symbols to update
+     */
+    where?: SymbolWhereInput
+    /**
+     * Limit how many Symbols to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SymbolIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Symbol upsert
+   */
+  export type SymbolUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Symbol
+     */
+    select?: SymbolSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Symbol
+     */
+    omit?: SymbolOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SymbolInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Symbol to update in case it exists.
+     */
+    where: SymbolWhereUniqueInput
+    /**
+     * In case the Symbol found by the `where` argument doesn't exist, create a new Symbol with this data.
+     */
+    create: XOR<SymbolCreateInput, SymbolUncheckedCreateInput>
+    /**
+     * In case the Symbol was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<SymbolUpdateInput, SymbolUncheckedUpdateInput>
+  }
+
+  /**
+   * Symbol delete
+   */
+  export type SymbolDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Symbol
+     */
+    select?: SymbolSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Symbol
+     */
+    omit?: SymbolOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SymbolInclude<ExtArgs> | null
+    /**
+     * Filter which Symbol to delete.
+     */
+    where: SymbolWhereUniqueInput
+  }
+
+  /**
+   * Symbol deleteMany
+   */
+  export type SymbolDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Symbols to delete
+     */
+    where?: SymbolWhereInput
+    /**
+     * Limit how many Symbols to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Symbol without action
+   */
+  export type SymbolDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Symbol
+     */
+    select?: SymbolSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Symbol
+     */
+    omit?: SymbolOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SymbolInclude<ExtArgs> | null
   }
 
 
@@ -5703,6 +6928,20 @@ export namespace Prisma {
   export type DataSourceScalarFieldEnum = (typeof DataSourceScalarFieldEnum)[keyof typeof DataSourceScalarFieldEnum]
 
 
+  export const SymbolScalarFieldEnum: {
+    id: 'id',
+    dataSourceId: 'dataSourceId',
+    ticker: 'ticker',
+    name: 'name',
+    defaultInterval: 'defaultInterval',
+    isActive: 'isActive',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type SymbolScalarFieldEnum = (typeof SymbolScalarFieldEnum)[keyof typeof SymbolScalarFieldEnum]
+
+
   export const RawDataScalarFieldEnum: {
     id: 'id',
     dataSourceId: 'dataSourceId',
@@ -5935,6 +7174,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"DataSource"> | Date | string
     updatedAt?: DateTimeFilter<"DataSource"> | Date | string
     rawData?: RawDataListRelationFilter
+    symbol?: SymbolListRelationFilter
   }
 
   export type DataSourceOrderByWithRelationInput = {
@@ -5947,6 +7187,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     rawData?: RawDataOrderByRelationAggregateInput
+    symbol?: SymbolOrderByRelationAggregateInput
   }
 
   export type DataSourceWhereUniqueInput = Prisma.AtLeast<{
@@ -5962,6 +7203,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"DataSource"> | Date | string
     updatedAt?: DateTimeFilter<"DataSource"> | Date | string
     rawData?: RawDataListRelationFilter
+    symbol?: SymbolListRelationFilter
   }, "id">
 
   export type DataSourceOrderByWithAggregationInput = {
@@ -5990,6 +7232,77 @@ export namespace Prisma {
     isActive?: BoolWithAggregatesFilter<"DataSource"> | boolean
     createdAt?: DateTimeWithAggregatesFilter<"DataSource"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"DataSource"> | Date | string
+  }
+
+  export type SymbolWhereInput = {
+    AND?: SymbolWhereInput | SymbolWhereInput[]
+    OR?: SymbolWhereInput[]
+    NOT?: SymbolWhereInput | SymbolWhereInput[]
+    id?: StringFilter<"Symbol"> | string
+    dataSourceId?: StringFilter<"Symbol"> | string
+    ticker?: StringFilter<"Symbol"> | string
+    name?: StringNullableFilter<"Symbol"> | string | null
+    defaultInterval?: StringFilter<"Symbol"> | string
+    isActive?: BoolFilter<"Symbol"> | boolean
+    createdAt?: DateTimeFilter<"Symbol"> | Date | string
+    updatedAt?: DateTimeFilter<"Symbol"> | Date | string
+    dataSource?: XOR<DataSourceScalarRelationFilter, DataSourceWhereInput>
+  }
+
+  export type SymbolOrderByWithRelationInput = {
+    id?: SortOrder
+    dataSourceId?: SortOrder
+    ticker?: SortOrder
+    name?: SortOrderInput | SortOrder
+    defaultInterval?: SortOrder
+    isActive?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    dataSource?: DataSourceOrderByWithRelationInput
+  }
+
+  export type SymbolWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    dataSourceId_ticker?: SymbolDataSourceIdTickerCompoundUniqueInput
+    AND?: SymbolWhereInput | SymbolWhereInput[]
+    OR?: SymbolWhereInput[]
+    NOT?: SymbolWhereInput | SymbolWhereInput[]
+    dataSourceId?: StringFilter<"Symbol"> | string
+    ticker?: StringFilter<"Symbol"> | string
+    name?: StringNullableFilter<"Symbol"> | string | null
+    defaultInterval?: StringFilter<"Symbol"> | string
+    isActive?: BoolFilter<"Symbol"> | boolean
+    createdAt?: DateTimeFilter<"Symbol"> | Date | string
+    updatedAt?: DateTimeFilter<"Symbol"> | Date | string
+    dataSource?: XOR<DataSourceScalarRelationFilter, DataSourceWhereInput>
+  }, "id" | "dataSourceId_ticker">
+
+  export type SymbolOrderByWithAggregationInput = {
+    id?: SortOrder
+    dataSourceId?: SortOrder
+    ticker?: SortOrder
+    name?: SortOrderInput | SortOrder
+    defaultInterval?: SortOrder
+    isActive?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: SymbolCountOrderByAggregateInput
+    _max?: SymbolMaxOrderByAggregateInput
+    _min?: SymbolMinOrderByAggregateInput
+  }
+
+  export type SymbolScalarWhereWithAggregatesInput = {
+    AND?: SymbolScalarWhereWithAggregatesInput | SymbolScalarWhereWithAggregatesInput[]
+    OR?: SymbolScalarWhereWithAggregatesInput[]
+    NOT?: SymbolScalarWhereWithAggregatesInput | SymbolScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Symbol"> | string
+    dataSourceId?: StringWithAggregatesFilter<"Symbol"> | string
+    ticker?: StringWithAggregatesFilter<"Symbol"> | string
+    name?: StringNullableWithAggregatesFilter<"Symbol"> | string | null
+    defaultInterval?: StringWithAggregatesFilter<"Symbol"> | string
+    isActive?: BoolWithAggregatesFilter<"Symbol"> | boolean
+    createdAt?: DateTimeWithAggregatesFilter<"Symbol"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Symbol"> | Date | string
   }
 
   export type RawDataWhereInput = {
@@ -6225,6 +7538,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     rawData?: RawDataCreateNestedManyWithoutDataSourceInput
+    symbol?: SymbolCreateNestedManyWithoutDataSourceInput
   }
 
   export type DataSourceUncheckedCreateInput = {
@@ -6237,6 +7551,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     rawData?: RawDataUncheckedCreateNestedManyWithoutDataSourceInput
+    symbol?: SymbolUncheckedCreateNestedManyWithoutDataSourceInput
   }
 
   export type DataSourceUpdateInput = {
@@ -6249,6 +7564,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     rawData?: RawDataUpdateManyWithoutDataSourceNestedInput
+    symbol?: SymbolUpdateManyWithoutDataSourceNestedInput
   }
 
   export type DataSourceUncheckedUpdateInput = {
@@ -6261,6 +7577,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     rawData?: RawDataUncheckedUpdateManyWithoutDataSourceNestedInput
+    symbol?: SymbolUncheckedUpdateManyWithoutDataSourceNestedInput
   }
 
   export type DataSourceCreateManyInput = {
@@ -6291,6 +7608,82 @@ export namespace Prisma {
     type?: EnumDataSourceTypeFieldUpdateOperationsInput | $Enums.DataSourceType
     connection?: NullableStringFieldUpdateOperationsInput | string | null
     baseURL?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SymbolCreateInput = {
+    id?: string
+    ticker: string
+    name?: string | null
+    defaultInterval?: string
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    dataSource: DataSourceCreateNestedOneWithoutSymbolInput | undefined
+  }
+
+  export type SymbolUncheckedCreateInput = {
+    id?: string
+    dataSourceId: string | undefined
+    ticker: string
+    name?: string | null
+    defaultInterval?: string
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SymbolUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    ticker?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    defaultInterval?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    dataSource?: DataSourceUpdateOneRequiredWithoutSymbolNestedInput
+  }
+
+  export type SymbolUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    dataSourceId?: StringFieldUpdateOperationsInput | string
+    ticker?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    defaultInterval?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SymbolCreateManyInput = {
+    id?: string
+    dataSourceId: string
+    ticker: string
+    name?: string | null
+    defaultInterval?: string
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SymbolUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    ticker?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    defaultInterval?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SymbolUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    dataSourceId?: StringFieldUpdateOperationsInput | string
+    ticker?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    defaultInterval?: StringFieldUpdateOperationsInput | string
     isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -6602,12 +7995,22 @@ export namespace Prisma {
     none?: RawDataWhereInput
   }
 
+  export type SymbolListRelationFilter = {
+    every?: SymbolWhereInput
+    some?: SymbolWhereInput
+    none?: SymbolWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
   }
 
   export type RawDataOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type SymbolOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -6711,6 +8114,49 @@ export namespace Prisma {
     _min?: NestedDateTimeFilter<$PrismaModel>
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
+
+  export type DataSourceScalarRelationFilter = {
+    is?: DataSourceWhereInput
+    isNot?: DataSourceWhereInput
+  }
+
+  export type SymbolDataSourceIdTickerCompoundUniqueInput = {
+    dataSourceId: string
+    ticker: string
+  }
+
+  export type SymbolCountOrderByAggregateInput = {
+    id?: SortOrder
+    dataSourceId?: SortOrder
+    ticker?: SortOrder
+    name?: SortOrder
+    defaultInterval?: SortOrder
+    isActive?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type SymbolMaxOrderByAggregateInput = {
+    id?: SortOrder
+    dataSourceId?: SortOrder
+    ticker?: SortOrder
+    name?: SortOrder
+    defaultInterval?: SortOrder
+    isActive?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type SymbolMinOrderByAggregateInput = {
+    id?: SortOrder
+    dataSourceId?: SortOrder
+    ticker?: SortOrder
+    name?: SortOrder
+    defaultInterval?: SortOrder
+    isActive?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
   export type JsonFilter<$PrismaModel = never> =
     | PatchUndefined<
         Either<Required<JsonFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonFilterBase<$PrismaModel>>, 'path'>>,
@@ -6740,11 +8186,6 @@ export namespace Prisma {
     in?: $Enums.RawDataStatus[] | ListEnumRawDataStatusFieldRefInput<$PrismaModel>
     notIn?: $Enums.RawDataStatus[] | ListEnumRawDataStatusFieldRefInput<$PrismaModel>
     not?: NestedEnumRawDataStatusFilter<$PrismaModel> | $Enums.RawDataStatus
-  }
-
-  export type DataSourceScalarRelationFilter = {
-    is?: DataSourceWhereInput
-    isNot?: DataSourceWhereInput
   }
 
   export type ProcessedDataListRelationFilter = {
@@ -7021,11 +8462,25 @@ export namespace Prisma {
     connect?: RawDataWhereUniqueInput | RawDataWhereUniqueInput[]
   }
 
+  export type SymbolCreateNestedManyWithoutDataSourceInput = {
+    create?: XOR<SymbolCreateWithoutDataSourceInput, SymbolUncheckedCreateWithoutDataSourceInput> | SymbolCreateWithoutDataSourceInput[] | SymbolUncheckedCreateWithoutDataSourceInput[]
+    connectOrCreate?: SymbolCreateOrConnectWithoutDataSourceInput | SymbolCreateOrConnectWithoutDataSourceInput[]
+    createMany?: SymbolCreateManyDataSourceInputEnvelope
+    connect?: SymbolWhereUniqueInput | SymbolWhereUniqueInput[]
+  }
+
   export type RawDataUncheckedCreateNestedManyWithoutDataSourceInput = {
     create?: XOR<RawDataCreateWithoutDataSourceInput, RawDataUncheckedCreateWithoutDataSourceInput> | RawDataCreateWithoutDataSourceInput[] | RawDataUncheckedCreateWithoutDataSourceInput[]
     connectOrCreate?: RawDataCreateOrConnectWithoutDataSourceInput | RawDataCreateOrConnectWithoutDataSourceInput[]
     createMany?: RawDataCreateManyDataSourceInputEnvelope
     connect?: RawDataWhereUniqueInput | RawDataWhereUniqueInput[]
+  }
+
+  export type SymbolUncheckedCreateNestedManyWithoutDataSourceInput = {
+    create?: XOR<SymbolCreateWithoutDataSourceInput, SymbolUncheckedCreateWithoutDataSourceInput> | SymbolCreateWithoutDataSourceInput[] | SymbolUncheckedCreateWithoutDataSourceInput[]
+    connectOrCreate?: SymbolCreateOrConnectWithoutDataSourceInput | SymbolCreateOrConnectWithoutDataSourceInput[]
+    createMany?: SymbolCreateManyDataSourceInputEnvelope
+    connect?: SymbolWhereUniqueInput | SymbolWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -7062,6 +8517,20 @@ export namespace Prisma {
     deleteMany?: RawDataScalarWhereInput | RawDataScalarWhereInput[]
   }
 
+  export type SymbolUpdateManyWithoutDataSourceNestedInput = {
+    create?: XOR<SymbolCreateWithoutDataSourceInput, SymbolUncheckedCreateWithoutDataSourceInput> | SymbolCreateWithoutDataSourceInput[] | SymbolUncheckedCreateWithoutDataSourceInput[]
+    connectOrCreate?: SymbolCreateOrConnectWithoutDataSourceInput | SymbolCreateOrConnectWithoutDataSourceInput[]
+    upsert?: SymbolUpsertWithWhereUniqueWithoutDataSourceInput | SymbolUpsertWithWhereUniqueWithoutDataSourceInput[]
+    createMany?: SymbolCreateManyDataSourceInputEnvelope
+    set?: SymbolWhereUniqueInput | SymbolWhereUniqueInput[]
+    disconnect?: SymbolWhereUniqueInput | SymbolWhereUniqueInput[]
+    delete?: SymbolWhereUniqueInput | SymbolWhereUniqueInput[]
+    connect?: SymbolWhereUniqueInput | SymbolWhereUniqueInput[]
+    update?: SymbolUpdateWithWhereUniqueWithoutDataSourceInput | SymbolUpdateWithWhereUniqueWithoutDataSourceInput[]
+    updateMany?: SymbolUpdateManyWithWhereWithoutDataSourceInput | SymbolUpdateManyWithWhereWithoutDataSourceInput[]
+    deleteMany?: SymbolScalarWhereInput | SymbolScalarWhereInput[]
+  }
+
   export type RawDataUncheckedUpdateManyWithoutDataSourceNestedInput = {
     create?: XOR<RawDataCreateWithoutDataSourceInput, RawDataUncheckedCreateWithoutDataSourceInput> | RawDataCreateWithoutDataSourceInput[] | RawDataUncheckedCreateWithoutDataSourceInput[]
     connectOrCreate?: RawDataCreateOrConnectWithoutDataSourceInput | RawDataCreateOrConnectWithoutDataSourceInput[]
@@ -7074,6 +8543,34 @@ export namespace Prisma {
     update?: RawDataUpdateWithWhereUniqueWithoutDataSourceInput | RawDataUpdateWithWhereUniqueWithoutDataSourceInput[]
     updateMany?: RawDataUpdateManyWithWhereWithoutDataSourceInput | RawDataUpdateManyWithWhereWithoutDataSourceInput[]
     deleteMany?: RawDataScalarWhereInput | RawDataScalarWhereInput[]
+  }
+
+  export type SymbolUncheckedUpdateManyWithoutDataSourceNestedInput = {
+    create?: XOR<SymbolCreateWithoutDataSourceInput, SymbolUncheckedCreateWithoutDataSourceInput> | SymbolCreateWithoutDataSourceInput[] | SymbolUncheckedCreateWithoutDataSourceInput[]
+    connectOrCreate?: SymbolCreateOrConnectWithoutDataSourceInput | SymbolCreateOrConnectWithoutDataSourceInput[]
+    upsert?: SymbolUpsertWithWhereUniqueWithoutDataSourceInput | SymbolUpsertWithWhereUniqueWithoutDataSourceInput[]
+    createMany?: SymbolCreateManyDataSourceInputEnvelope
+    set?: SymbolWhereUniqueInput | SymbolWhereUniqueInput[]
+    disconnect?: SymbolWhereUniqueInput | SymbolWhereUniqueInput[]
+    delete?: SymbolWhereUniqueInput | SymbolWhereUniqueInput[]
+    connect?: SymbolWhereUniqueInput | SymbolWhereUniqueInput[]
+    update?: SymbolUpdateWithWhereUniqueWithoutDataSourceInput | SymbolUpdateWithWhereUniqueWithoutDataSourceInput[]
+    updateMany?: SymbolUpdateManyWithWhereWithoutDataSourceInput | SymbolUpdateManyWithWhereWithoutDataSourceInput[]
+    deleteMany?: SymbolScalarWhereInput | SymbolScalarWhereInput[]
+  }
+
+  export type DataSourceCreateNestedOneWithoutSymbolInput = {
+    create?: XOR<DataSourceCreateWithoutSymbolInput, DataSourceUncheckedCreateWithoutSymbolInput>
+    connectOrCreate?: DataSourceCreateOrConnectWithoutSymbolInput
+    connect?: DataSourceWhereUniqueInput
+  }
+
+  export type DataSourceUpdateOneRequiredWithoutSymbolNestedInput = {
+    create?: XOR<DataSourceCreateWithoutSymbolInput, DataSourceUncheckedCreateWithoutSymbolInput>
+    connectOrCreate?: DataSourceCreateOrConnectWithoutSymbolInput
+    upsert?: DataSourceUpsertWithoutSymbolInput
+    connect?: DataSourceWhereUniqueInput
+    update?: XOR<XOR<DataSourceUpdateToOneWithWhereWithoutSymbolInput, DataSourceUpdateWithoutSymbolInput>, DataSourceUncheckedUpdateWithoutSymbolInput>
   }
 
   export type DataSourceCreateNestedOneWithoutRawDataInput = {
@@ -7436,6 +8933,36 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type SymbolCreateWithoutDataSourceInput = {
+    id?: string
+    ticker: string
+    name?: string | null
+    defaultInterval?: string
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SymbolUncheckedCreateWithoutDataSourceInput = {
+    id?: string
+    ticker: string
+    name?: string | null
+    defaultInterval?: string
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SymbolCreateOrConnectWithoutDataSourceInput = {
+    where: SymbolWhereUniqueInput
+    create: XOR<SymbolCreateWithoutDataSourceInput, SymbolUncheckedCreateWithoutDataSourceInput>
+  }
+
+  export type SymbolCreateManyDataSourceInputEnvelope = {
+    data: SymbolCreateManyDataSourceInput | SymbolCreateManyDataSourceInput[]
+    skipDuplicates?: boolean
+  }
+
   export type RawDataUpsertWithWhereUniqueWithoutDataSourceInput = {
     where: RawDataWhereUniqueInput
     update: XOR<RawDataUpdateWithoutDataSourceInput, RawDataUncheckedUpdateWithoutDataSourceInput>
@@ -7464,6 +8991,100 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"RawData"> | Date | string
   }
 
+  export type SymbolUpsertWithWhereUniqueWithoutDataSourceInput = {
+    where: SymbolWhereUniqueInput
+    update: XOR<SymbolUpdateWithoutDataSourceInput, SymbolUncheckedUpdateWithoutDataSourceInput>
+    create: XOR<SymbolCreateWithoutDataSourceInput, SymbolUncheckedCreateWithoutDataSourceInput>
+  }
+
+  export type SymbolUpdateWithWhereUniqueWithoutDataSourceInput = {
+    where: SymbolWhereUniqueInput
+    data: XOR<SymbolUpdateWithoutDataSourceInput, SymbolUncheckedUpdateWithoutDataSourceInput>
+  }
+
+  export type SymbolUpdateManyWithWhereWithoutDataSourceInput = {
+    where: SymbolScalarWhereInput
+    data: XOR<SymbolUpdateManyMutationInput, SymbolUncheckedUpdateManyWithoutDataSourceInput>
+  }
+
+  export type SymbolScalarWhereInput = {
+    AND?: SymbolScalarWhereInput | SymbolScalarWhereInput[]
+    OR?: SymbolScalarWhereInput[]
+    NOT?: SymbolScalarWhereInput | SymbolScalarWhereInput[]
+    id?: StringFilter<"Symbol"> | string
+    dataSourceId?: StringFilter<"Symbol"> | string
+    ticker?: StringFilter<"Symbol"> | string
+    name?: StringNullableFilter<"Symbol"> | string | null
+    defaultInterval?: StringFilter<"Symbol"> | string
+    isActive?: BoolFilter<"Symbol"> | boolean
+    createdAt?: DateTimeFilter<"Symbol"> | Date | string
+    updatedAt?: DateTimeFilter<"Symbol"> | Date | string
+  }
+
+  export type DataSourceCreateWithoutSymbolInput = {
+    id?: string
+    name: string
+    type: $Enums.DataSourceType
+    connection?: string | null
+    baseURL: string
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    rawData?: RawDataCreateNestedManyWithoutDataSourceInput
+  }
+
+  export type DataSourceUncheckedCreateWithoutSymbolInput = {
+    id?: string
+    name: string
+    type: $Enums.DataSourceType
+    connection?: string | null
+    baseURL: string
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    rawData?: RawDataUncheckedCreateNestedManyWithoutDataSourceInput
+  }
+
+  export type DataSourceCreateOrConnectWithoutSymbolInput = {
+    where: DataSourceWhereUniqueInput
+    create: XOR<DataSourceCreateWithoutSymbolInput, DataSourceUncheckedCreateWithoutSymbolInput>
+  }
+
+  export type DataSourceUpsertWithoutSymbolInput = {
+    update: XOR<DataSourceUpdateWithoutSymbolInput, DataSourceUncheckedUpdateWithoutSymbolInput>
+    create: XOR<DataSourceCreateWithoutSymbolInput, DataSourceUncheckedCreateWithoutSymbolInput>
+    where?: DataSourceWhereInput
+  }
+
+  export type DataSourceUpdateToOneWithWhereWithoutSymbolInput = {
+    where?: DataSourceWhereInput
+    data: XOR<DataSourceUpdateWithoutSymbolInput, DataSourceUncheckedUpdateWithoutSymbolInput>
+  }
+
+  export type DataSourceUpdateWithoutSymbolInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    type?: EnumDataSourceTypeFieldUpdateOperationsInput | $Enums.DataSourceType
+    connection?: NullableStringFieldUpdateOperationsInput | string | null
+    baseURL?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    rawData?: RawDataUpdateManyWithoutDataSourceNestedInput
+  }
+
+  export type DataSourceUncheckedUpdateWithoutSymbolInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    type?: EnumDataSourceTypeFieldUpdateOperationsInput | $Enums.DataSourceType
+    connection?: NullableStringFieldUpdateOperationsInput | string | null
+    baseURL?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    rawData?: RawDataUncheckedUpdateManyWithoutDataSourceNestedInput
+  }
+
   export type DataSourceCreateWithoutRawDataInput = {
     id?: string
     name: string
@@ -7473,6 +9094,7 @@ export namespace Prisma {
     isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    symbol?: SymbolCreateNestedManyWithoutDataSourceInput
   }
 
   export type DataSourceUncheckedCreateWithoutRawDataInput = {
@@ -7484,6 +9106,7 @@ export namespace Prisma {
     isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    symbol?: SymbolUncheckedCreateNestedManyWithoutDataSourceInput
   }
 
   export type DataSourceCreateOrConnectWithoutRawDataInput = {
@@ -7549,6 +9172,7 @@ export namespace Prisma {
     isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    symbol?: SymbolUpdateManyWithoutDataSourceNestedInput
   }
 
   export type DataSourceUncheckedUpdateWithoutRawDataInput = {
@@ -7560,6 +9184,7 @@ export namespace Prisma {
     isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    symbol?: SymbolUncheckedUpdateManyWithoutDataSourceNestedInput
   }
 
   export type ProcessedDataUpsertWithWhereUniqueWithoutRawDataInput = {
@@ -7656,6 +9281,16 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
+  export type SymbolCreateManyDataSourceInput = {
+    id?: string
+    ticker: string
+    name?: string | null
+    defaultInterval?: string
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
   export type RawDataUpdateWithoutDataSourceInput = {
     id?: StringFieldUpdateOperationsInput | string
     payload?: JsonNullValueInput | InputJsonValue
@@ -7678,6 +9313,36 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     payload?: JsonNullValueInput | InputJsonValue
     status?: EnumRawDataStatusFieldUpdateOperationsInput | $Enums.RawDataStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SymbolUpdateWithoutDataSourceInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    ticker?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    defaultInterval?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SymbolUncheckedUpdateWithoutDataSourceInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    ticker?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    defaultInterval?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SymbolUncheckedUpdateManyWithoutDataSourceInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    ticker?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    defaultInterval?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

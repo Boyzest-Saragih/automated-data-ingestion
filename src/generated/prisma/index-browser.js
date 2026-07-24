@@ -132,6 +132,17 @@ exports.Prisma.DataSourceScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.SymbolScalarFieldEnum = {
+  id: 'id',
+  dataSourceId: 'dataSourceId',
+  ticker: 'ticker',
+  name: 'name',
+  defaultInterval: 'defaultInterval',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.RawDataScalarFieldEnum = {
   id: 'id',
   dataSourceId: 'dataSourceId',
@@ -217,6 +228,7 @@ exports.AuditStatus = exports.$Enums.AuditStatus = {
 
 exports.Prisma.ModelName = {
   DataSource: 'DataSource',
+  Symbol: 'Symbol',
   RawData: 'RawData',
   ProcessedData: 'ProcessedData',
   AuditLog: 'AuditLog'

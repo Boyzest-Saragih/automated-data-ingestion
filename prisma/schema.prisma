@@ -46,6 +46,23 @@ model DataSource {
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   rawData   RawData[]
+  symbol Symbol[]
+}
+
+model Symbol{
+  id              String     @id @default(uuid())
+  dataSourceId    String
+  ticker          String     // e.g. "BTCUSDT", "AAPL", "BBCA.JK"
+  name            String?    // e.g. "Bitcoin / Tether USD"
+  defaultInterval String     @default("15m") // e.g. "1m", "1h", "1d"
+  isActive        Boolean    @default(true)
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+
+  dataSource      DataSource @relation(fields: [dataSourceId], references: [id], onDelete: Cascade)
+
+  @@unique([dataSourceId, ticker])
+  @@index([ticker, isActive])
 }
 
 model RawData {
