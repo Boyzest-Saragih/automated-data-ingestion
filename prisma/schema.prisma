@@ -27,6 +27,13 @@ enum RawDataStatus {
   FAILED
 }
 
+enum AuditStatus {
+  SUCCESS
+  FAILED
+  WARNING
+  INFO
+}
+
 model DataSource {
   id   String         @id @default(uuid())
   name String
@@ -77,10 +84,16 @@ model ProcessedData {
 }
 
 model AuditLog {
-  id        String   @id @default(uuid())
-  action    String
-  entity    String
-  entityId  String?
-  message   String?
+  id       String      @id @default(uuid())
+  action   String // e.g., "INGEST_YAHOO", "PROCESS_DATA", "CRON_RUN"
+  entity   String // e.g., "RawData", "ProcessedData", "DataSource"
+  entityId String? // ID terkait (misal rawDataId)
+  status   AuditStatus @default(INFO)
+  message  String? // Deskripsi
+  details  Json? 
+
   createdAt DateTime @default(now())
+
+  @@index([action, entity])
+  @@index([createdAt])
 }

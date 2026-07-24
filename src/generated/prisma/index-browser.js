@@ -161,7 +161,9 @@ exports.Prisma.AuditLogScalarFieldEnum = {
   action: 'action',
   entity: 'entity',
   entityId: 'entityId',
+  status: 'status',
   message: 'message',
+  details: 'details',
   createdAt: 'createdAt'
 };
 
@@ -171,6 +173,11 @@ exports.Prisma.SortOrder = {
 };
 
 exports.Prisma.JsonNullValueInput = {
+  JsonNull: Prisma.JsonNull
+};
+
+exports.Prisma.NullableJsonNullValueInput = {
+  DbNull: Prisma.DbNull,
   JsonNull: Prisma.JsonNull
 };
 
@@ -199,6 +206,13 @@ exports.RawDataStatus = exports.$Enums.RawDataStatus = {
   PENDING: 'PENDING',
   SUCCESS: 'SUCCESS',
   FAILED: 'FAILED'
+};
+
+exports.AuditStatus = exports.$Enums.AuditStatus = {
+  SUCCESS: 'SUCCESS',
+  FAILED: 'FAILED',
+  WARNING: 'WARNING',
+  INFO: 'INFO'
 };
 
 exports.Prisma.ModelName = {

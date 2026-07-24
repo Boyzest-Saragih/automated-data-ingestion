@@ -55,6 +55,16 @@ export const RawDataStatus: {
 
 export type RawDataStatus = (typeof RawDataStatus)[keyof typeof RawDataStatus]
 
+
+export const AuditStatus: {
+  SUCCESS: 'SUCCESS',
+  FAILED: 'FAILED',
+  WARNING: 'WARNING',
+  INFO: 'INFO'
+};
+
+export type AuditStatus = (typeof AuditStatus)[keyof typeof AuditStatus]
+
 }
 
 export type DataSourceType = $Enums.DataSourceType
@@ -64,6 +74,10 @@ export const DataSourceType: typeof $Enums.DataSourceType
 export type RawDataStatus = $Enums.RawDataStatus
 
 export const RawDataStatus: typeof $Enums.RawDataStatus
+
+export type AuditStatus = $Enums.AuditStatus
+
+export const AuditStatus: typeof $Enums.AuditStatus
 
 /**
  * ##  Prisma Client ʲˢ
@@ -4646,6 +4660,7 @@ export namespace Prisma {
     action: string | null
     entity: string | null
     entityId: string | null
+    status: $Enums.AuditStatus | null
     message: string | null
     createdAt: Date | null
   }
@@ -4655,6 +4670,7 @@ export namespace Prisma {
     action: string | null
     entity: string | null
     entityId: string | null
+    status: $Enums.AuditStatus | null
     message: string | null
     createdAt: Date | null
   }
@@ -4664,7 +4680,9 @@ export namespace Prisma {
     action: number
     entity: number
     entityId: number
+    status: number
     message: number
+    details: number
     createdAt: number
     _all: number
   }
@@ -4675,6 +4693,7 @@ export namespace Prisma {
     action?: true
     entity?: true
     entityId?: true
+    status?: true
     message?: true
     createdAt?: true
   }
@@ -4684,6 +4703,7 @@ export namespace Prisma {
     action?: true
     entity?: true
     entityId?: true
+    status?: true
     message?: true
     createdAt?: true
   }
@@ -4693,7 +4713,9 @@ export namespace Prisma {
     action?: true
     entity?: true
     entityId?: true
+    status?: true
     message?: true
+    details?: true
     createdAt?: true
     _all?: true
   }
@@ -4775,7 +4797,9 @@ export namespace Prisma {
     action: string
     entity: string
     entityId: string | null
+    status: $Enums.AuditStatus
     message: string | null
+    details: JsonValue | null
     createdAt: Date
     _count: AuditLogCountAggregateOutputType | null
     _min: AuditLogMinAggregateOutputType | null
@@ -4801,7 +4825,9 @@ export namespace Prisma {
     action?: boolean
     entity?: boolean
     entityId?: boolean
+    status?: boolean
     message?: boolean
+    details?: boolean
     createdAt?: boolean
   }, ExtArgs["result"]["auditLog"]>
 
@@ -4810,7 +4836,9 @@ export namespace Prisma {
     action?: boolean
     entity?: boolean
     entityId?: boolean
+    status?: boolean
     message?: boolean
+    details?: boolean
     createdAt?: boolean
   }, ExtArgs["result"]["auditLog"]>
 
@@ -4819,7 +4847,9 @@ export namespace Prisma {
     action?: boolean
     entity?: boolean
     entityId?: boolean
+    status?: boolean
     message?: boolean
+    details?: boolean
     createdAt?: boolean
   }, ExtArgs["result"]["auditLog"]>
 
@@ -4828,11 +4858,13 @@ export namespace Prisma {
     action?: boolean
     entity?: boolean
     entityId?: boolean
+    status?: boolean
     message?: boolean
+    details?: boolean
     createdAt?: boolean
   }
 
-  export type AuditLogOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "action" | "entity" | "entityId" | "message" | "createdAt", ExtArgs["result"]["auditLog"]>
+  export type AuditLogOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "action" | "entity" | "entityId" | "status" | "message" | "details" | "createdAt", ExtArgs["result"]["auditLog"]>
 
   export type $AuditLogPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "AuditLog"
@@ -4842,7 +4874,9 @@ export namespace Prisma {
       action: string
       entity: string
       entityId: string | null
+      status: $Enums.AuditStatus
       message: string | null
+      details: Prisma.JsonValue | null
       createdAt: Date
     }, ExtArgs["result"]["auditLog"]>
     composites: {}
@@ -5271,7 +5305,9 @@ export namespace Prisma {
     readonly action: FieldRef<"AuditLog", 'String'>
     readonly entity: FieldRef<"AuditLog", 'String'>
     readonly entityId: FieldRef<"AuditLog", 'String'>
+    readonly status: FieldRef<"AuditLog", 'AuditStatus'>
     readonly message: FieldRef<"AuditLog", 'String'>
+    readonly details: FieldRef<"AuditLog", 'Json'>
     readonly createdAt: FieldRef<"AuditLog", 'DateTime'>
   }
     
@@ -5702,7 +5738,9 @@ export namespace Prisma {
     action: 'action',
     entity: 'entity',
     entityId: 'entityId',
+    status: 'status',
     message: 'message',
+    details: 'details',
     createdAt: 'createdAt'
   };
 
@@ -5722,6 +5760,14 @@ export namespace Prisma {
   };
 
   export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
+
+
+  export const NullableJsonNullValueInput: {
+    DbNull: typeof DbNull,
+    JsonNull: typeof JsonNull
+  };
+
+  export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
 
 
   export const QueryMode: {
@@ -5842,6 +5888,20 @@ export namespace Prisma {
    * Reference to a field of type 'Float[]'
    */
   export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'AuditStatus'
+   */
+  export type EnumAuditStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AuditStatus'>
+    
+
+
+  /**
+   * Reference to a field of type 'AuditStatus[]'
+   */
+  export type ListEnumAuditStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AuditStatus[]'>
     
 
 
@@ -6096,7 +6156,9 @@ export namespace Prisma {
     action?: StringFilter<"AuditLog"> | string
     entity?: StringFilter<"AuditLog"> | string
     entityId?: StringNullableFilter<"AuditLog"> | string | null
+    status?: EnumAuditStatusFilter<"AuditLog"> | $Enums.AuditStatus
     message?: StringNullableFilter<"AuditLog"> | string | null
+    details?: JsonNullableFilter<"AuditLog">
     createdAt?: DateTimeFilter<"AuditLog"> | Date | string
   }
 
@@ -6105,7 +6167,9 @@ export namespace Prisma {
     action?: SortOrder
     entity?: SortOrder
     entityId?: SortOrderInput | SortOrder
+    status?: SortOrder
     message?: SortOrderInput | SortOrder
+    details?: SortOrderInput | SortOrder
     createdAt?: SortOrder
   }
 
@@ -6117,7 +6181,9 @@ export namespace Prisma {
     action?: StringFilter<"AuditLog"> | string
     entity?: StringFilter<"AuditLog"> | string
     entityId?: StringNullableFilter<"AuditLog"> | string | null
+    status?: EnumAuditStatusFilter<"AuditLog"> | $Enums.AuditStatus
     message?: StringNullableFilter<"AuditLog"> | string | null
+    details?: JsonNullableFilter<"AuditLog">
     createdAt?: DateTimeFilter<"AuditLog"> | Date | string
   }, "id">
 
@@ -6126,7 +6192,9 @@ export namespace Prisma {
     action?: SortOrder
     entity?: SortOrder
     entityId?: SortOrderInput | SortOrder
+    status?: SortOrder
     message?: SortOrderInput | SortOrder
+    details?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     _count?: AuditLogCountOrderByAggregateInput
     _max?: AuditLogMaxOrderByAggregateInput
@@ -6141,7 +6209,9 @@ export namespace Prisma {
     action?: StringWithAggregatesFilter<"AuditLog"> | string
     entity?: StringWithAggregatesFilter<"AuditLog"> | string
     entityId?: StringNullableWithAggregatesFilter<"AuditLog"> | string | null
+    status?: EnumAuditStatusWithAggregatesFilter<"AuditLog"> | $Enums.AuditStatus
     message?: StringNullableWithAggregatesFilter<"AuditLog"> | string | null
+    details?: JsonNullableWithAggregatesFilter<"AuditLog">
     createdAt?: DateTimeWithAggregatesFilter<"AuditLog"> | Date | string
   }
 
@@ -6401,7 +6471,9 @@ export namespace Prisma {
     action: string
     entity: string
     entityId?: string | null
+    status?: $Enums.AuditStatus
     message?: string | null
+    details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
   }
 
@@ -6410,7 +6482,9 @@ export namespace Prisma {
     action: string
     entity: string
     entityId?: string | null
+    status?: $Enums.AuditStatus
     message?: string | null
+    details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
   }
 
@@ -6419,7 +6493,9 @@ export namespace Prisma {
     action?: StringFieldUpdateOperationsInput | string
     entity?: StringFieldUpdateOperationsInput | string
     entityId?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumAuditStatusFieldUpdateOperationsInput | $Enums.AuditStatus
     message?: NullableStringFieldUpdateOperationsInput | string | null
+    details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -6428,7 +6504,9 @@ export namespace Prisma {
     action?: StringFieldUpdateOperationsInput | string
     entity?: StringFieldUpdateOperationsInput | string
     entityId?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumAuditStatusFieldUpdateOperationsInput | $Enums.AuditStatus
     message?: NullableStringFieldUpdateOperationsInput | string | null
+    details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -6437,7 +6515,9 @@ export namespace Prisma {
     action: string
     entity: string
     entityId?: string | null
+    status?: $Enums.AuditStatus
     message?: string | null
+    details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
   }
 
@@ -6446,7 +6526,9 @@ export namespace Prisma {
     action?: StringFieldUpdateOperationsInput | string
     entity?: StringFieldUpdateOperationsInput | string
     entityId?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumAuditStatusFieldUpdateOperationsInput | $Enums.AuditStatus
     message?: NullableStringFieldUpdateOperationsInput | string | null
+    details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -6455,7 +6537,9 @@ export namespace Prisma {
     action?: StringFieldUpdateOperationsInput | string
     entity?: StringFieldUpdateOperationsInput | string
     entityId?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumAuditStatusFieldUpdateOperationsInput | $Enums.AuditStatus
     message?: NullableStringFieldUpdateOperationsInput | string | null
+    details?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -6833,12 +6917,44 @@ export namespace Prisma {
     _max?: NestedFloatFilter<$PrismaModel>
   }
 
+  export type EnumAuditStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.AuditStatus | EnumAuditStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.AuditStatus[] | ListEnumAuditStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.AuditStatus[] | ListEnumAuditStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumAuditStatusFilter<$PrismaModel> | $Enums.AuditStatus
+  }
+  export type JsonNullableFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonNullableFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonNullableFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonNullableFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonNullableFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonNullableFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  }
+
   export type AuditLogCountOrderByAggregateInput = {
     id?: SortOrder
     action?: SortOrder
     entity?: SortOrder
     entityId?: SortOrder
+    status?: SortOrder
     message?: SortOrder
+    details?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -6847,6 +6963,7 @@ export namespace Prisma {
     action?: SortOrder
     entity?: SortOrder
     entityId?: SortOrder
+    status?: SortOrder
     message?: SortOrder
     createdAt?: SortOrder
   }
@@ -6856,8 +6973,45 @@ export namespace Prisma {
     action?: SortOrder
     entity?: SortOrder
     entityId?: SortOrder
+    status?: SortOrder
     message?: SortOrder
     createdAt?: SortOrder
+  }
+
+  export type EnumAuditStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.AuditStatus | EnumAuditStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.AuditStatus[] | ListEnumAuditStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.AuditStatus[] | ListEnumAuditStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumAuditStatusWithAggregatesFilter<$PrismaModel> | $Enums.AuditStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumAuditStatusFilter<$PrismaModel>
+    _max?: NestedEnumAuditStatusFilter<$PrismaModel>
+  }
+  export type JsonNullableWithAggregatesFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonNullableWithAggregatesFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedJsonNullableFilter<$PrismaModel>
+    _max?: NestedJsonNullableFilter<$PrismaModel>
   }
 
   export type RawDataCreateNestedManyWithoutDataSourceInput = {
@@ -7002,6 +7156,10 @@ export namespace Prisma {
     upsert?: RawDataUpsertWithoutProcessedDataInput
     connect?: RawDataWhereUniqueInput
     update?: XOR<XOR<RawDataUpdateToOneWithWhereWithoutProcessedDataInput, RawDataUpdateWithoutProcessedDataInput>, RawDataUncheckedUpdateWithoutProcessedDataInput>
+  }
+
+  export type EnumAuditStatusFieldUpdateOperationsInput = {
+    set?: $Enums.AuditStatus
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -7208,6 +7366,46 @@ export namespace Prisma {
     _sum?: NestedFloatFilter<$PrismaModel>
     _min?: NestedFloatFilter<$PrismaModel>
     _max?: NestedFloatFilter<$PrismaModel>
+  }
+
+  export type NestedEnumAuditStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.AuditStatus | EnumAuditStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.AuditStatus[] | ListEnumAuditStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.AuditStatus[] | ListEnumAuditStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumAuditStatusFilter<$PrismaModel> | $Enums.AuditStatus
+  }
+
+  export type NestedEnumAuditStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.AuditStatus | EnumAuditStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.AuditStatus[] | ListEnumAuditStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.AuditStatus[] | ListEnumAuditStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumAuditStatusWithAggregatesFilter<$PrismaModel> | $Enums.AuditStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumAuditStatusFilter<$PrismaModel>
+    _max?: NestedEnumAuditStatusFilter<$PrismaModel>
+  }
+  export type NestedJsonNullableFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<NestedJsonNullableFilterBase<$PrismaModel>>, Exclude<keyof Required<NestedJsonNullableFilterBase<$PrismaModel>>, 'path'>>,
+        Required<NestedJsonNullableFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<NestedJsonNullableFilterBase<$PrismaModel>>, 'path'>>
+
+  export type NestedJsonNullableFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
   }
 
   export type RawDataCreateWithoutDataSourceInput = {
