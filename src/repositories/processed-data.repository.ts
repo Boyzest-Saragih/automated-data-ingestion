@@ -1,7 +1,7 @@
 import { prisma } from "../config/prisma.js";
 import { type ProcessedData } from "../generated/prisma/index.js";
 
-type createProcessedDataDto = {
+export type CreateProcessedDataDto = {
   rawDataId: string;
   symbol: string;
   granularity: string;
@@ -22,7 +22,7 @@ export type FindCandlesQuery = {
 };
 
 export class ProcessedDataRepository {
-  async upsertMany(datas: createProcessedDataDto[]): Promise<ProcessedData[]> {
+  async upsertMany(datas: CreateProcessedDataDto[]): Promise<ProcessedData[]> {
     try {
       const operations = datas.map((data) =>
         prisma.processedData.upsert({
