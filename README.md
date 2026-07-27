@@ -39,7 +39,8 @@ automated-data-ingestion/
 ├── src/
 │   ├── app.ts                      # Express Application setup & Route definitions
 │   ├── server.ts                   # Server entry point & Scheduler initialization
-│   ├── config/                     # Configuration (e.g., Prisma Client instance)
+│   ├── config/                     # Configuration (Prisma Client instance)
+│   │   └── prisma.ts
 │   ├── controllers/                # Request Handlers
 │   │   ├── audit-log.controller.ts
 │   │   ├── data-source.controller.ts
@@ -48,7 +49,7 @@ automated-data-ingestion/
 │   │   └── symbol.controller.ts
 │   ├── interfaces/                 # Core Interfaces
 │   │   └── ohlcv-provider.interface.ts
-│   ├── middlewares/                # Custom Express Middlewares
+│   ├── middlewares/                # ⚠️ Empty (Custom Express Middlewares)
 │   ├── repositories/               # Data Access Layer (Prisma queries)
 │   │   ├── audit-log.repository.ts
 │   │   ├── data-source.repository.ts
@@ -71,12 +72,59 @@ automated-data-ingestion/
 │   │   ├── raw-data-ingestion.service.ts
 │   │   ├── symbol.service.ts
 │   │   └── yahoo-client.service.ts
+│   ├── tests/                      # ⚠️ Empty (Unit & Integration Tests)
 │   ├── types/                      # TypeScript definitions & Enums
-│   └── utils/                      # Helper Functions & Utilities
+│   │   └── types.ts
+│   ├── utils/                      # ⚠️ Empty (Shared Helpers & Utilities)
+│   └── validators/                 # ⚠️ Empty (Request Payload Validation)
 ├── .env                            # Environment Variables Configuration
 ├── package.json
 └── tsconfig.json
 ```
+
+---
+
+## 📊 Feature Completeness & Codebase Status
+
+This section details what is currently implemented in the codebase versus what remains placeholder or missing.
+
+### ✅ Fully Implemented Features
+
+1. **ETL Pipeline & Ingestion Services**:
+   - Provider abstraction via [OHLCVProvider](file:///d:/automated-data-ingestion/src/interfaces/ohlcv-provider.interface.ts).
+   - Binance API integration ([BinanceClientService](file:///d:/automated-data-ingestion/src/services/binance-client.service.ts)) and Yahoo Finance integration ([YahooClientService](file:///d:/automated-data-ingestion/src/services/yahoo-client.service.ts)).
+   - Staging raw payloads to database (`RawData`) and transforming them into normalized candle data (`ProcessedData`).
+2. **Prisma ORM Data Access Layer**:
+   - Complete models defined in [schema.prisma](file:///d:/automated-data-ingestion/prisma/schema.prisma) (`DataSource`, `Symbol`, `RawData`, `ProcessedData`, `AuditLog`).
+   - Repository pattern implemented under `src/repositories/`.
+3. **Automated Background Scheduler**:
+   - Cron jobs configured in [IngestionScheduler](file:///d:/automated-data-ingestion/src/schedulers/ingestion.scheduler.ts) running 15-minute crypto ingestion and daily 07:00 WIB stock ingestion.
+4. **Audit Logging & System Monitoring**:
+   - Automatic execution & error logging to the `AuditLog` table using [AuditLogService](file:///d:/automated-data-ingestion/src/services/audit-log.service.ts).
+
+### ⚠️ Empty Folders & Unimplemented Infrastructure
+
+1. **`src/middlewares/` (Empty)**:
+   - No custom Express middleware is defined yet.
+   - **Security Middlewares Commented Out**: `helmet()` and `rateLimit()` are imported in [app.ts](file:///d:/automated-data-ingestion/src/app.ts) but commented out.
+   - **Global Error Handling**: No centralized Express error handler middleware `(err, req, res, next)` is currently configured.
+2. **`src/validators/` (Empty)**:
+   - Request bodies and query parameters are currently processed directly in controllers without validation libraries (such as Zod, Joi, or Express Validator).
+3. **`src/utils/` (Empty)**:
+   - Shared utility helpers (e.g., custom error classes, response formatters, date manipulators) are missing.
+4. **`src/tests/` (Empty)**:
+   - No test cases or test suites are written (`npm test` exits with `no test specified`).
+
+### 🚧 Planned / Incomplete Features
+
+1. **CSV & XLSX File Ingestion**:
+   - `csv-parser` and `xlsx` are installed in `package.json`, and `DataSourceType.FILE` exists in Prisma schema, but file uploading/parsing providers are not yet implemented.
+2. **Database Data Source Connector**:
+   - `DataSourceType.DATABASE` is declared in Prisma schema, but direct database extraction logic is pending.
+3. **API Authentication & Authorization**:
+   - All `/api/*` endpoints are currently publicly accessible without JWT or API Key authorization.
+4. **Automated Ingestion Retry Queue**:
+   - Failed raw data ingestion attempts are logged in `AuditLog`, but automated retry mechanism / exponential backoff is not implemented.
 
 ---
 
@@ -135,6 +183,8 @@ The PostgreSQL database schema consists of 5 core entities defined in [schema.pr
 ---
 
 ## 🔌 API Reference Endpoints
+
+> 🌐 **Interactive API Documentation**: [Fern API Docs](https://kelompok-3.docs.buildwithfern.com/new-collection/base-url-raw)
 
 All API endpoints are prefixed with `/api`.
 
