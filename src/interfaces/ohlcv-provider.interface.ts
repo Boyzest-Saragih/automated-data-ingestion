@@ -1,4 +1,4 @@
-import type { FetchOHLCVOptions, YahooOHLCVRes } from "../types/types.js";
+import type { FetchOHLCVOptions, OHLCVRes } from "../types/types.js";
 
 export type ProviderConfig = {
   baseURL?: string | null;
@@ -10,5 +10,5 @@ export interface OHLCVProvider {
     symbol: string,
     options?: FetchOHLCVOptions,
     config?: ProviderConfig,
-  ): Promise<YahooOHLCVRes>;
+  ): Promise<OHLCVRes>;
 }

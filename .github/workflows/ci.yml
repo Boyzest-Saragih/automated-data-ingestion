@@ -1,0 +1,47 @@
+name: Automated Data Ingestion CI
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [22.11.0] 
+
+    steps:
+      # 1. Checkout kode dari repository GitHub
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # 2. Setup environment Node.js
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm' 
+
+      # 3. Install Dependencies
+      - name: Install Dependencies
+        run: npm ci
+
+      # 4. Generate Prisma Client (Wajib agar tipe DB terbaca oleh TypeScript & Vitest)
+      - name: Generate Prisma Client
+        run: npx prisma generate
+
+      # 5. Run Type Check (TypeScript Compiler)
+      - name: Type Check
+        run: npx tsc --noEmit
+
+      # 6. Run Unit Tests (Vitest Single Run)
+      - name: Run Unit Tests
+        run: npm run test:run
+
+      # 7. Test Build Project
+      - name: Build Project
+        run: npm run build --if-present
