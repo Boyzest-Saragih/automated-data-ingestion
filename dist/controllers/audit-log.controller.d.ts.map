@@ -1,1 +1,0 @@
-{"version":3,"file":"audit-log.controller.d.ts","sourceRoot":"","sources":["../../src/controllers/audit-log.controller.ts"],"names":[],"mappings":"AAAA,OAAO,KAAK,EAAE,OAAO,EAAE,QAAQ,EAAE,MAAM,SAAS,CAAC;AAGjD,qBAAa,WAAW;IACtB,OAAO,CAAC,SAAS,CAA4B;IAG7C,aAAa,QAAe,OAAO,OAAO,QAAQ,mBAgBhD;CACH"}

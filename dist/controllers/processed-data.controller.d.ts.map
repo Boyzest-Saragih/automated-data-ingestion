@@ -1,1 +1,0 @@
-{"version":3,"file":"processed-data.controller.d.ts","sourceRoot":"","sources":["../../src/controllers/processed-data.controller.ts"],"names":[],"mappings":"AAAA,OAAO,KAAK,EAAE,OAAO,EAAE,QAAQ,EAAE,MAAM,SAAS,CAAC;AAGjD,qBAAa,gBAAgB;IAC3B,OAAO,CAAC,oBAAoB,CAA8B;IAG1D,UAAU,QAAe,OAAO,OAAO,QAAQ,mBA+B7C;IAGF,eAAe,QAAe,OAAO,OAAO,QAAQ,mBAmClD;CACH"}
