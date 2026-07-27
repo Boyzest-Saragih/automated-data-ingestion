@@ -4,7 +4,22 @@ A robust Node.js and TypeScript backend service designed for automated extractio
 
 ---
 
-## 🌟 Key Features
+## Table of Contents
+
+- [Key Features](#key-features)
+- [Tech Stack](#tech-stack)
+- [Project Structure](#project-structure)
+- [Feature Completeness & Codebase Status](#feature-completeness--codebase-status)
+- [Database Entity Architecture](#database-entity-architecture)
+- [Getting Started](#getting-started)
+- [API Reference Endpoints](#api-reference-endpoints)
+- [Cron Scheduler Configuration](#cron-scheduler-configuration)
+- [Adding a New Data Provider](#adding-a-new-data-provider)
+- [License](#license)
+
+---
+
+## Key Features
 
 - **Multi-Provider Data Ingestion**: Built-in support for fetching OHLCV (Open, High, Low, Close, Volume) data from external financial APIs including **Binance** (Cryptocurrency) and **Yahoo Finance** (Stocks & Equities).
 - **Extensible Architecture**: Modular provider interface ([OHLCVProvider](file:///d:/automated-data-ingestion/src/interfaces/ohlcv-provider.interface.ts)) allowing easy addition of custom data sources.
@@ -19,7 +34,7 @@ A robust Node.js and TypeScript backend service designed for automated extractio
 
 ---
 
-## 🏗️ Tech Stack
+## Tech Stack
 
 - **Runtime & Language**: [Node.js](https://nodejs.org/), [TypeScript](https://www.typescriptlang.org/)
 - **Web Framework**: [Express.js v5](https://expressjs.com/)
@@ -30,7 +45,7 @@ A robust Node.js and TypeScript backend service designed for automated extractio
 
 ---
 
-## 📂 Project Structure
+## Project Structure
 
 ```
 automated-data-ingestion/
@@ -49,7 +64,7 @@ automated-data-ingestion/
 │   │   └── symbol.controller.ts
 │   ├── interfaces/                 # Core Interfaces
 │   │   └── ohlcv-provider.interface.ts
-│   ├── middlewares/                # ⚠️ Empty (Custom Express Middlewares)
+│   ├── middlewares/                # Custom Express Middlewares
 │   ├── repositories/               # Data Access Layer (Prisma queries)
 │   │   ├── audit-log.repository.ts
 │   │   ├── data-source.repository.ts
@@ -72,11 +87,11 @@ automated-data-ingestion/
 │   │   ├── raw-data-ingestion.service.ts
 │   │   ├── symbol.service.ts
 │   │   └── yahoo-client.service.ts
-│   ├── tests/                      # ⚠️ Empty (Unit & Integration Tests)
+│   ├── tests/                      # Unit & Integration Tests
 │   ├── types/                      # TypeScript definitions & Enums
 │   │   └── types.ts
-│   ├── utils/                      # ⚠️ Empty (Shared Helpers & Utilities)
-│   └── validators/                 # ⚠️ Empty (Request Payload Validation)
+│   ├── utils/                      # Shared Helpers & Utilities
+│   └── validators/                 # Request Payload Validation
 ├── .env                            # Environment Variables Configuration
 ├── package.json
 └── tsconfig.json
@@ -84,11 +99,11 @@ automated-data-ingestion/
 
 ---
 
-## 📊 Feature Completeness & Codebase Status
+## Feature Completeness & Codebase Status
 
-This section details what is currently implemented in the codebase versus what remains placeholder or missing.
+This section details what is currently implemented in the codebase versus what remains pending or planned.
 
-### ✅ Fully Implemented Features
+### Fully Implemented Features
 
 1. **ETL Pipeline & Ingestion Services**:
    - Provider abstraction via [OHLCVProvider](file:///d:/automated-data-ingestion/src/interfaces/ohlcv-provider.interface.ts).
@@ -102,33 +117,33 @@ This section details what is currently implemented in the codebase versus what r
 4. **Audit Logging & System Monitoring**:
    - Automatic execution & error logging to the `AuditLog` table using [AuditLogService](file:///d:/automated-data-ingestion/src/services/audit-log.service.ts).
 
-### ⚠️ Empty Folders & Unimplemented Infrastructure
+### Pending Infrastructure
 
-1. **`src/middlewares/` (Empty)**:
+1. **`src/middlewares/`**:
    - No custom Express middleware is defined yet.
    - **Security Middlewares Commented Out**: `helmet()` and `rateLimit()` are imported in [app.ts](file:///d:/automated-data-ingestion/src/app.ts) but commented out.
    - **Global Error Handling**: No centralized Express error handler middleware `(err, req, res, next)` is currently configured.
-2. **`src/validators/` (Empty)**:
-   - Request bodies and query parameters are currently processed directly in controllers without validation libraries (such as Zod, Joi, or Express Validator).
-3. **`src/utils/` (Empty)**:
-   - Shared utility helpers (e.g., custom error classes, response formatters, date manipulators) are missing.
-4. **`src/tests/` (Empty)**:
-   - No test cases or test suites are written (`npm test` exits with `no test specified`).
+2. **`src/validators/`**:
+   - Request bodies and query parameters are processed directly in controllers without validation libraries.
+3. **`src/utils/`**:
+   - Shared utility helpers (e.g., custom error classes, response formatters, date manipulators) are pending.
+4. **`src/tests/`**:
+   - Test suites to be implemented.
 
-### 🚧 Planned / Incomplete Features
+### Planned Features
 
 1. **CSV & XLSX File Ingestion**:
-   - `csv-parser` and `xlsx` are installed in `package.json`, and `DataSourceType.FILE` exists in Prisma schema, but file uploading/parsing providers are not yet implemented.
+   - `csv-parser` and `xlsx` are installed in `package.json`, and `DataSourceType.FILE` exists in Prisma schema; file uploading/parsing providers to be added.
 2. **Database Data Source Connector**:
-   - `DataSourceType.DATABASE` is declared in Prisma schema, but direct database extraction logic is pending.
+   - `DataSourceType.DATABASE` is declared in Prisma schema; direct database extraction logic is pending.
 3. **API Authentication & Authorization**:
-   - All `/api/*` endpoints are currently publicly accessible without JWT or API Key authorization.
+   - Endpoint access control via JWT or API Keys.
 4. **Automated Ingestion Retry Queue**:
-   - Failed raw data ingestion attempts are logged in `AuditLog`, but automated retry mechanism / exponential backoff is not implemented.
+   - Failed raw data ingestion retry mechanism / exponential backoff queue.
 
 ---
 
-## 🗄️ Database Entity Architecture
+## Database Entity Architecture
 
 The PostgreSQL database schema consists of 5 core entities defined in [schema.prisma](file:///d:/automated-data-ingestion/prisma/schema.prisma):
 
@@ -140,7 +155,7 @@ The PostgreSQL database schema consists of 5 core entities defined in [schema.pr
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 
@@ -182,9 +197,9 @@ The PostgreSQL database schema consists of 5 core entities defined in [schema.pr
 
 ---
 
-## 🔌 API Reference Endpoints
+## API Reference Endpoints
 
-> 🌐 **Interactive API Documentation**: [Fern API Docs](https://kelompok-3.docs.buildwithfern.com/new-collection/base-url-raw)
+> **Interactive API Documentation**: [Fern API Docs](https://kelompok-3.docs.buildwithfern.com/new-collection/base-url-raw)
 
 All API endpoints are prefixed with `/api`.
 
@@ -216,7 +231,7 @@ All API endpoints are prefixed with `/api`.
 
 ---
 
-## ⏰ Cron Scheduler Configuration
+## Cron Scheduler Configuration
 
 Automated data collection is managed by [IngestionScheduler](file:///d:/automated-data-ingestion/src/schedulers/ingestion.scheduler.ts). It inspects active symbols in the database matching specific providers:
 
@@ -227,7 +242,7 @@ Automated data collection is managed by [IngestionScheduler](file:///d:/automate
 
 ---
 
-## 🛠️ Adding a New Data Provider
+## Adding a New Data Provider
 
 To introduce a new market provider (e.g., AlphaVantage, CoinGecko):
 
@@ -244,6 +259,6 @@ To introduce a new market provider (e.g., AlphaVantage, CoinGecko):
 
 ---
 
-## 📄 License
+## License
 
 This project is licensed under the **ISC License**.
