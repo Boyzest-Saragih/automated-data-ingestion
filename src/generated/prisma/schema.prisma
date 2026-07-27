@@ -27,10 +27,18 @@ enum RawDataStatus {
   FAILED
 }
 
+enum AuditStatus {
+  SUCCESS
+  FAILED
+  WARNING
+  INFO
+}
+
 model DataSource {
-  id   String         @id @default(uuid())
-  name String
-  type DataSourceType
+  id       String         @id @default(uuid())
+  name     String
+  type     DataSourceType
+  provider String
 
   connection String?
   baseURL    String
@@ -39,6 +47,23 @@ model DataSource {
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   rawData   RawData[]
+  symbol    Symbol[]
+}
+
+model Symbol {
+  id              String   @id @default(uuid())
+  dataSourceId    String
+  ticker          String // e.g. "BTCUSDT", "AAPL", "BBCA.JK"
+  name            String? // e.g. "Bitcoin / Tether USD"
+  defaultInterval String   @default("15m") // e.g. "1m", "1h", "1d"
+  isActive        Boolean  @default(true)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  dataSource DataSource @relation(fields: [dataSourceId], references: [id], onDelete: Cascade)
+
+  @@unique([dataSourceId, ticker])
+  @@index([ticker, isActive])
 }
 
 model RawData {
@@ -53,20 +78,40 @@ model RawData {
 }
 
 model ProcessedData {
-  id        String   @id @default(uuid())
+  id        String @id @default(uuid())
   rawDataId String
-  result    Json
-  status    String   @default("SUCCESS")
+
+  symbol      String
+  granularity String
+  timestamp   DateTime
+
+  open   Float
+  high   Float
+  low    Float
+  close  Float
+  volume Float
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  rawData   RawData  @relation(fields: [rawDataId], references: [id])
+
+  rawData RawData @relation(fields: [rawDataId], references: [id])
+  // rawData   RawData  @relation(fields: [rawDataId], references: [id])
+
+  @@unique([symbol, granularity, timestamp])
+  @@index([symbol, granularity, timestamp])
 }
 
 model AuditLog {
-  id        String   @id @default(uuid())
-  action    String
-  entity    String
-  entityId  String?
-  message   String?
+  id       String      @id @default(uuid())
+  action   String // e.g., "INGEST_YAHOO", "PROCESS_DATA", "CRON_RUN"
+  entity   String // e.g., "RawData", "ProcessedData", "DataSource"
+  entityId String? // ID terkait (misal rawDataId)
+  status   AuditStatus @default(INFO)
+  message  String? // Deskripsi
+  details  Json?
+
   createdAt DateTime @default(now())
+
+  @@index([action, entity])
+  @@index([createdAt])
 }
