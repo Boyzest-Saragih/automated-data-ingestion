@@ -2,6 +2,9 @@
 
 A robust Node.js and TypeScript backend service designed for automated extraction, transformation, loading (ETL), and management of financial market data (OHLCV candles). The system ingests raw market data from multiple data providers (such as Binance and Yahoo Finance), standardizes the raw payloads into processed financial candle data, and executes scheduled ingestion background jobs using `node-cron`.
 
+- 🖥️ **Frontend Live App**: [https://data-ingestion-pipeline.vercel.app/](https://data-ingestion-pipeline.vercel.app/)
+- 📦 **Frontend Repository**: [https://github.com/Boyzest-Saragih/data-ingestion-pipeline](https://github.com/Boyzest-Saragih/data-ingestion-pipeline)
+
 ---
 
 ## Table of Contents
@@ -31,6 +34,7 @@ A robust Node.js and TypeScript backend service designed for automated extractio
   - **Daily Stock Job**: Runs every morning at 07:00 WIB for Yahoo Finance market symbols.
 - **Data Source & Symbol Management**: Dynamic registration and toggling of data sources and active market tickers.
 - **Comprehensive Audit Logging**: Ingestion logs, cron execution results, and system error tracebacks stored in the `AuditLog` table for monitoring and auditability.
+- **CORS Configured**: Cross-Origin Resource Sharing (CORS) configured to support requests from the [Frontend Web Application](https://data-ingestion-pipeline.vercel.app/) ([GitHub Repository](https://github.com/Boyzest-Saragih/data-ingestion-pipeline)).
 
 ---
 
@@ -116,6 +120,8 @@ This section details what is currently implemented in the codebase versus what r
    - Cron jobs configured in [IngestionScheduler](file:///d:/automated-data-ingestion/src/schedulers/ingestion.scheduler.ts) running 15-minute crypto ingestion and daily 07:00 WIB stock ingestion.
 4. **Audit Logging & System Monitoring**:
    - Automatic execution & error logging to the `AuditLog` table using [AuditLogService](file:///d:/automated-data-ingestion/src/services/audit-log.service.ts).
+5. **CORS & Middleware Configuration**:
+   - Express `cors` middleware enabled allowing origins from `https://data-ingestion-pipeline.vercel.app/` (Frontend repository: [github.com/Boyzest-Saragih/data-ingestion-pipeline](https://github.com/Boyzest-Saragih/data-ingestion-pipeline)).
 
 ### Pending Infrastructure
 
@@ -144,6 +150,8 @@ This section details what is currently implemented in the codebase versus what r
 ---
 
 ## Database Entity Architecture
+
+![Entity Relationship Diagram](./ERD.png)
 
 The PostgreSQL database schema consists of 5 core entities defined in [schema.prisma](file:///d:/automated-data-ingestion/prisma/schema.prisma):
 
