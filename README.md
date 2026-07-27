@@ -1,464 +1,199 @@
-# Automated Data Ingestion & Reconciliation Pipeline
+# Automated Data Ingestion System
 
-Backend service for collecting, validating, processing, and storing data from multiple external sources (REST API, CSV, Database) into a centralized database using a layered architecture.
-
----
-
-## Overview
-
-This project simulates an enterprise data ingestion pipeline that automatically retrieves data from multiple data sources, validates and normalizes the incoming data, stores the raw payload for auditing, processes it into a structured format, and exposes the processed data through REST APIs.
-
-The project is built as a portfolio project to demonstrate backend software engineering practices including:
-
-- Layered Architecture
-- REST API Development
-- Database Design
-- SQL & ORM
-- Data Validation
-- Data Processing
-- Data Integrity Verification
-- Automated Testing
-- CI/CD
+A robust Node.js and TypeScript backend service designed for automated extraction, transformation, loading (ETL), and management of financial market data (OHLCV candles). The system ingests raw market data from multiple data providers (such as Binance and Yahoo Finance), standardizes the raw payloads into processed financial candle data, and executes scheduled ingestion background jobs using `node-cron`.
 
 ---
 
-## Tech Stack
+## 🌟 Key Features
 
-| Category | Technology |
-|-----------|------------|
-| Runtime | Node.js |
-| Language | TypeScript |
-| Framework | Express.js |
-| Database | PostgreSQL |
-| ORM | Prisma |
-| Security | Node.js Crypto (AES-256-GCM, SHA-256) |
-| Testing | Jest, Supertest |
-| Documentation | Swagger (Planned) |
-| CI/CD | GitHub Actions |
+- **Multi-Provider Data Ingestion**: Built-in support for fetching OHLCV (Open, High, Low, Close, Volume) data from external financial APIs including **Binance** (Cryptocurrency) and **Yahoo Finance** (Stocks & Equities).
+- **Extensible Architecture**: Modular provider interface ([OHLCVProvider](file:///d:/automated-data-ingestion/src/interfaces/ohlcv-provider.interface.ts)) allowing easy addition of custom data sources.
+- **Two-Stage Data Storage (ETL Pipeline)**:
+  - **Raw Ingestion**: Stores original API payload responses into `RawData` with execution status (`PENDING`, `SUCCESS`, `FAILED`).
+  - **Data Normalization**: Transforms raw JSON into standardized `ProcessedData` records containing structured candle time-series.
+- **Automated Cron Scheduler**: Background scheduling via [IngestionScheduler](file:///d:/automated-data-ingestion/src/schedulers/ingestion.scheduler.ts):
+  - **Real-Time Crypto Job**: Runs every 15 minutes for Binance market symbols.
+  - **Daily Stock Job**: Runs every morning at 07:00 WIB for Yahoo Finance market symbols.
+- **Data Source & Symbol Management**: Dynamic registration and toggling of data sources and active market tickers.
+- **Comprehensive Audit Logging**: Ingestion logs, cron execution results, and system error tracebacks stored in the `AuditLog` table for monitoring and auditability.
 
 ---
 
-## Architecture
+## 🏗️ Tech Stack
+
+- **Runtime & Language**: [Node.js](https://nodejs.org/), [TypeScript](https://www.typescriptlang.org/)
+- **Web Framework**: [Express.js v5](https://expressjs.com/)
+- **Database & ORM**: [PostgreSQL](https://www.postgresql.org/), [Prisma ORM v6](https://www.prisma.io/)
+- **Scheduler**: [node-cron](https://www.npmjs.com/package/node-cron)
+- **HTTP Client & Parsing**: [Axios](https://axios-http.com/), [csv-parser](https://www.npmjs.com/package/csv-parser), [xlsx](https://www.npmjs.com/package/xlsx)
+- **Dev Tools**: `tsx` (TypeScript Execution Engine), `dotenv`
+
+---
+
+## 📂 Project Structure
 
 ```
-                Client
-                   │
-                   ▼
-             Express Router
-                   │
-                   ▼
-             Controller Layer
-                   │
-                   ▼
-              Service Layer
-                   │
-                   ▼
-            Repository Layer
-                   │
-                   ▼
-                PostgreSQL
-```
-
----
-
-## Project Structure
-
-```
-src/
-
-├── config/
-├── controllers/
-├── middlewares/
-├── repositories/
-├── routes/
-├── services/
-├── utils/
-├── validators/
-├── generated/
-├── types/
-├── app.ts
-└── server.ts
-
-prisma/
-
-tests/
-
-docs/
-
-.github/
-
+automated-data-ingestion/
+├── prisma/
+│   └── schema.prisma               # Prisma Database Schema (DataSource, Symbol, RawData, ProcessedData, AuditLog)
+├── src/
+│   ├── app.ts                      # Express Application setup & Route definitions
+│   ├── server.ts                   # Server entry point & Scheduler initialization
+│   ├── config/                     # Configuration (e.g., Prisma Client instance)
+│   ├── controllers/                # Request Handlers
+│   │   ├── audit-log.controller.ts
+│   │   ├── data-source.controller.ts
+│   │   ├── processed-data.controller.ts
+│   │   ├── raw-ingestion.controller.ts
+│   │   └── symbol.controller.ts
+│   ├── interfaces/                 # Core Interfaces
+│   │   └── ohlcv-provider.interface.ts
+│   ├── middlewares/                # Custom Express Middlewares
+│   ├── repositories/               # Data Access Layer (Prisma queries)
+│   │   ├── audit-log.repository.ts
+│   │   ├── data-source.repository.ts
+│   │   ├── processed.repository.ts
+│   │   ├── raw.repository.ts
+│   │   └── symbol.repository.ts
+│   ├── routes/                     # API Route Definitions
+│   │   ├── audit-log.route.ts
+│   │   ├── data-source.routes.ts
+│   │   ├── processed-data.route.ts
+│   │   ├── raw.routes.ts
+│   │   └── symbol.route.ts
+│   ├── schedulers/                 # Automated Background Jobs
+│   │   └── ingestion.scheduler.ts
+│   ├── services/                   # Business Logic & ETL Processing
+│   │   ├── audit-log.service.ts
+│   │   ├── binance-client.service.ts
+│   │   ├── data-source.service.ts
+│   │   ├── processed-data.service.ts
+│   │   ├── raw-data-ingestion.service.ts
+│   │   ├── symbol.service.ts
+│   │   └── yahoo-client.service.ts
+│   ├── types/                      # TypeScript definitions & Enums
+│   └── utils/                      # Helper Functions & Utilities
+├── .env                            # Environment Variables Configuration
+├── package.json
+└── tsconfig.json
 ```
 
 ---
 
-# Data Flow
+## 🗄️ Database Entity Architecture
 
-```
-Create Data Source
-        │
-        ▼
-Save Configuration
-        │
-        ▼
-Collect Data
-        │
-        ▼
-External Source
-        │
-        ▼
-Raw Data
-        │
-        ▼
-Validation
-        │
-        ▼
-Data Processing
-        │
-        ▼
-Processed Data
-        │
-        ▼
-REST API
-```
+The PostgreSQL database schema consists of 5 core entities defined in [schema.prisma](file:///d:/automated-data-ingestion/prisma/schema.prisma):
+
+1. **`DataSource`**: Represents an external API provider configuration (e.g., Binance, Yahoo Finance).
+2. **`Symbol`**: Market tickers attached to a `DataSource` (e.g., `BTCUSDT`, `BBCA.JK`) with assigned intervals (e.g., `15m`, `1d`) and active status flags.
+3. **`RawData`**: Ingested JSON payloads stored prior to processing, linked to a specific `DataSource`.
+4. **`ProcessedData`**: Standardized OHLCV candles (`open`, `high`, `low`, `close`, `volume`, `timestamp`, `granularity`) derived from `RawData`.
+5. **`AuditLog`**: System log entries capturing actions, status (`SUCCESS`, `FAILED`, `WARNING`, `INFO`), messages, and JSON details.
 
 ---
 
-# Database
+## 🚀 Getting Started
 
-Current entities
+### Prerequisites
 
-- DataSource
-- RawData
-- ProcessedData
-- AuditLog
+- **Node.js**: v18 or higher
+- **npm**: v9 or higher
+- **PostgreSQL**: Running instance of PostgreSQL database
 
----
+### Installation & Setup
 
-# Features
+1. **Clone the Repository**:
+   ```bash
+   git clone https://github.com/Boyzest-Saragih/automated-data-ingestion.git
+   cd automated-data-ingestion
+   ```
 
-## Data Source Management
+2. **Install Dependencies**:
+   ```bash
+   npm install
+   ```
 
-- Create Data Source
-- Update Data Source
-- Delete Data Source
-- Activate / Deactivate Data Source
+3. **Configure Environment Variables**:
+   Create a `.env` file in the project root directory:
+   ```env
+   PORT=5000
+   DATABASE_URL="postgresql://<username>:<password>@localhost:5432/<database_name>?schema=public"
+   ```
 
-Supported source types
+4. **Run Database Migrations & Generate Prisma Client**:
+   ```bash
+   npx prisma migrate dev --name init
+   npx prisma generate
+   ```
 
-- REST API
-- Database
-- File (CSV / Excel)
-
----
-
-## Data Collection
-
-Current
-
-- REST API (Planned)
-
-Upcoming
-
-- Yahoo Finance
-- CoinGecko
-- CSV
-- Excel
-
----
-
-## Raw Data Storage
-
-Stores original payload received from external systems before any processing.
-
-Example
-
-```json
-{
-  "symbol": "BTC-USD",
-  "price": 118000,
-  "volume": 1838291
-}
-```
+5. **Start the Development Server**:
+   ```bash
+   npm run dev
+   ```
+   The API server will start on `http://localhost:5000` (or your configured `PORT`) and automatically launch the background [IngestionScheduler](file:///d:/automated-data-ingestion/src/schedulers/ingestion.scheduler.ts).
 
 ---
 
-## Data Processing
+## 🔌 API Reference Endpoints
 
-- Validation
-- Normalization
-- Data Cleaning
-- Transformation
+All API endpoints are prefixed with `/api`.
 
----
+### 1. Data Sources (`/api/dataSource`)
+- `POST /api/dataSource` - Create a new DataSource configuration.
+- `GET /api/dataSource` - Get all DataSources.
+- `GET /api/dataSource/search` - Search DataSources by name query.
+- `GET /api/dataSource/search/:id` - Get a DataSource by ID.
+- `PATCH /api/dataSource/:id` - Update a DataSource.
 
-## Audit Log
+### 2. Market Symbols (`/api/symbol`)
+- `POST /api/symbol` - Register a new ticker symbol for a DataSource.
+- `GET /api/symbol` - Retrieve all symbols.
+- `GET /api/symbol/:dataSourceId` - Retrieve symbols linked to a specific DataSource.
+- `PATCH /api/symbol/:id` - Toggle symbol active status (`isActive`).
 
-Tracks every important system activity.
+### 3. Raw Data Ingestion (`/api/ingestRawData`, `/api/raw`)
+- `POST /api/ingestRawData` - Trigger manual ingestion for a provider & symbol.
+- `GET /api/raw` - Retrieve paginated raw ingested datasets.
+- `GET /api/raw/:id` - Retrieve raw dataset details by ID.
+- `PATCH /api/raw/:id` - Update raw data status (`PENDING`, `SUCCESS`, `FAILED`).
 
-Examples
+### 4. Processed OHLCV Data (`/api/processedData`)
+- `GET /api/processedData` - Query processed candles filtered by `symbol`, `granularity`, start/end dates, and pagination limits.
+- `GET /api/processedData/latest` - Fetch the most recent processed candle for a symbol and granularity.
 
-- Create datasource
-- Collect data
-- Validation failed
-- Processing completed
-
----
-
-# API Documentation
-
-Swagger
-
-> Coming Soon
-
-Dummy URL
-
-```
-http://localhost:3000/api/docs
-```
-
-Production
-
-```
-https://api.example.com/docs
-```
+### 5. Audit Logs (`/api/auditLog`)
+- `GET /api/auditLog` - Fetch recent system audit logs.
 
 ---
 
-# Frontend
+## ⏰ Cron Scheduler Configuration
 
-Repository
+Automated data collection is managed by [IngestionScheduler](file:///d:/automated-data-ingestion/src/schedulers/ingestion.scheduler.ts). It inspects active symbols in the database matching specific providers:
 
-```
-https://github.com/your-username/automated-data-ingestion-frontend
-```
-
-Development
-
-```
-http://localhost:5173
-```
-
-Production
-
-```
-https://app.example.com
-```
+| Task Name | Cron Schedule | Target Provider | Action |
+| :--- | :--- | :--- | :--- |
+| **Realtime Crypto** | `*/15 * * * *` (Every 15 mins) | `binance` | Fetches active Binance symbol OHLCV data & processes candles |
+| **Daily Stocks** | `0 7 * * *` (Daily 07:00 WIB) | `yahoo` | Fetches active Yahoo Finance stock OHLCV data & processes candles |
 
 ---
 
-# Backend
+## 🛠️ Adding a New Data Provider
 
-Repository
+To introduce a new market provider (e.g., AlphaVantage, CoinGecko):
 
-```
-https://github.com/your-username/automated-data-ingestion-backend
-```
-
-Development
-
-```
-http://localhost:3000
-```
-
-Production
-
-```
-https://api.example.com
-```
+1. Create a service in `src/services/` that implements the [OHLCVProvider](file:///d:/automated-data-ingestion/src/interfaces/ohlcv-provider.interface.ts) interface:
+   ```typescript
+   export class CustomClientService implements OHLCVProvider {
+     async getOHLCV(symbol: string, options?: FetchOHLCVOptions, config?: ProviderConfig): Promise<NormalizedOHLCV[]> {
+       // Implementation logic...
+     }
+   }
+   ```
+2. Register the provider instance inside [RawDataIngestionService](file:///d:/automated-data-ingestion/src/services/raw-data-ingestion.service.ts).
+3. Add the provider key to the `ProviderType` union in `src/types/types.ts`.
 
 ---
 
-# REST API
+## 📄 License
 
-## Data Sources
-
-| Method | Endpoint |
-|---------|----------|
-| GET | /datasources |
-| GET | /datasources/:id |
-| POST | /datasources |
-| PUT | /datasources/:id |
-| DELETE | /datasources/:id |
-| POST | /datasources/:id/collect |
-
----
-
-## Raw Data
-
-| Method | Endpoint |
-|---------|----------|
-| GET | /raw-data |
-| GET | /raw-data/:id |
-
----
-
-## Processed Data
-
-| Method | Endpoint |
-|---------|----------|
-| GET | /processed-data |
-| GET | /processed-data/:id |
-
----
-
-## Audit Logs
-
-| Method | Endpoint |
-|---------|----------|
-| GET | /audit-logs |
-
----
-
-# Environment Variables
-
-Example
-
-```
-PORT=3000
-
-DATABASE_URL=
-
-JWT_SECRET=
-
-ENCRYPTION_KEY=
-
-NODE_ENV=development
-```
-
----
-
-# Installation
-
-Clone repository
-
-```bash
-git clone https://github.com/your-username/automated-data-ingestion-backend.git
-```
-
-Install dependencies
-
-```bash
-npm install
-```
-
-Setup environment
-
-```bash
-cp .env.example .env
-```
-
-Run Prisma Migration
-
-```bash
-npx prisma migrate dev
-```
-
-Generate Prisma Client
-
-```bash
-npx prisma generate
-```
-
-Start development server
-
-```bash
-npm run dev
-```
-
----
-
-# Running Tests
-
-Unit Test
-
-```bash
-npm test
-```
-
-Coverage
-
-```bash
-npm run test:coverage
-```
-
----
-
-# CI/CD
-
-Every push to GitHub automatically executes
-
-- Install Dependencies
-- Generate Prisma Client
-- Run Unit Tests
-- Build Project
-
-GitHub Actions
-
-```
-.github/workflows/backend.yml
-```
-
----
-
-# Roadmap
-
-## Phase 1
-
-- [x] Express Setup
-- [x] Prisma Setup
-- [x] Layered Architecture
-- [ ] Data Source CRUD
-- [ ] Raw Data CRUD
-
----
-
-## Phase 2
-
-- [ ] Yahoo Finance Collector
-- [ ] CSV Collector
-- [ ] Validation
-- [ ] Processing
-- [ ] SHA-256 Integrity Check
-
----
-
-## Phase 3
-
-- [ ] AES Encryption
-- [ ] Scheduler
-- [ ] Swagger
-- [ ] Dashboard Integration
-- [ ] Audit Improvements
-
----
-
-## Phase 4
-
-- [ ] Historical Data Collection
-- [ ] Multiple Data Sources
-- [ ] Data Reconciliation
-- [ ] Performance Optimization
-
----
-
-# License
-
-MIT License
-
----
-
-# Author
-
-Your Name
-
-GitHub
-
-```
-https://github.com/your-username
-```
-
-LinkedIn
-
-```
-https://linkedin.com/in/your-profile
-```
+This project is licensed under the **ISC License**.
