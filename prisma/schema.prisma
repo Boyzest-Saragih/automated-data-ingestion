@@ -11,8 +11,9 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 enum DataSourceType {
@@ -35,10 +36,10 @@ enum AuditStatus {
 }
 
 model DataSource {
-  id   String         @id @default(uuid())
-  name String
-  type DataSourceType
-  provider   String
+  id       String         @id @default(uuid())
+  name     String
+  type     DataSourceType
+  provider String
 
   connection String?
   baseURL    String
@@ -47,20 +48,20 @@ model DataSource {
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   rawData   RawData[]
-  symbol Symbol[]
+  symbol    Symbol[]
 }
 
-model Symbol{
-  id              String     @id @default(uuid())
+model Symbol {
+  id              String   @id @default(uuid())
   dataSourceId    String
-  ticker          String     // e.g. "BTCUSDT", "AAPL", "BBCA.JK"
-  name            String?    // e.g. "Bitcoin / Tether USD"
-  defaultInterval String     @default("15m") // e.g. "1m", "1h", "1d"
-  isActive        Boolean    @default(true)
-  createdAt       DateTime   @default(now())
-  updatedAt       DateTime   @updatedAt
+  ticker          String // e.g. "BTCUSDT", "AAPL", "BBCA.JK"
+  name            String? // e.g. "Bitcoin / Tether USD"
+  defaultInterval String   @default("15m") // e.g. "1m", "1h", "1d"
+  isActive        Boolean  @default(true)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
 
-  dataSource      DataSource @relation(fields: [dataSourceId], references: [id], onDelete: Cascade)
+  dataSource DataSource @relation(fields: [dataSourceId], references: [id], onDelete: Cascade)
 
   @@unique([dataSourceId, ticker])
   @@index([ticker, isActive])
@@ -108,7 +109,7 @@ model AuditLog {
   entityId String? // ID terkait (misal rawDataId)
   status   AuditStatus @default(INFO)
   message  String? // Deskripsi
-  details  Json? 
+  details  Json?
 
   createdAt DateTime @default(now())
 
