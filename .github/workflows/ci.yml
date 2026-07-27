@@ -34,6 +34,7 @@ jobs:
       - name: Generate Prisma Client
         env:
           DATABASE_URL: "postgresql://dummy:dummy@localhost:5432/dummy_db"
+          DIRECT_URL: "postgresql://dummy:dummy@localhost:5432/dummy_db"
         run: npx prisma generate
 
       # 5. Run Type Check (TypeScript Compiler)
