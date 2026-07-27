@@ -35,6 +35,7 @@ A robust Node.js and TypeScript backend service designed for automated extractio
 - **Data Source & Symbol Management**: Dynamic registration and toggling of data sources and active market tickers.
 - **Comprehensive Audit Logging**: Ingestion logs, cron execution results, and system error tracebacks stored in the `AuditLog` table for monitoring and auditability.
 - **CORS Configured**: Cross-Origin Resource Sharing (CORS) configured to support requests from the [Frontend Web Application](https://data-ingestion-pipeline.vercel.app/) ([GitHub Repository](https://github.com/Boyzest-Saragih/data-ingestion-pipeline)).
+- **Automated Testing & CI/CD**: 26 unit & integration tests built with Vitest & Supertest, integrated with GitHub Actions CI pipeline.
 
 ---
 
@@ -45,6 +46,7 @@ A robust Node.js and TypeScript backend service designed for automated extractio
 - **Database & ORM**: [PostgreSQL](https://www.postgresql.org/), [Prisma ORM v6](https://www.prisma.io/)
 - **Scheduler**: [node-cron](https://www.npmjs.com/package/node-cron)
 - **HTTP Client & Parsing**: [Axios](https://axios-http.com/), [csv-parser](https://www.npmjs.com/package/csv-parser), [xlsx](https://www.npmjs.com/package/xlsx)
+- **Testing Framework & CI/CD**: [Vitest](https://vitest.dev/), [Supertest](https://github.com/ladjs/supertest), GitHub Actions CI
 - **Dev Tools**: `tsx` (TypeScript Execution Engine), `dotenv`
 
 ---
@@ -122,6 +124,14 @@ This section details what is currently implemented in the codebase versus what r
    - Automatic execution & error logging to the `AuditLog` table using [AuditLogService](file:///d:/automated-data-ingestion/src/services/audit-log.service.ts).
 5. **CORS & Middleware Configuration**:
    - Express `cors` middleware enabled allowing origins from `https://data-ingestion-pipeline.vercel.app/` (Frontend repository: [github.com/Boyzest-Saragih/data-ingestion-pipeline](https://github.com/Boyzest-Saragih/data-ingestion-pipeline)).
+6. **Automated Testing Suite**:
+   - Complete unit and integration testing built using [Vitest](https://vitest.dev/) and `supertest` in `src/tests/`.
+   - 26 tests across 4 test suites:
+     - `data-source.test.ts` (6 tests): Operations on Data Sources (CRUD, search, validation).
+     - `symbol.test.ts` (4 tests): Market ticker symbol operations and status toggles.
+     - `processed-data.test.ts` (6 tests): Processed OHLCV queries, time-range filtering, and pagination.
+     - `raw-data.test.ts` (10 tests): Raw data ingestion triggers, status updates, and error handling.
+   - GitHub Actions CI workflow configured (`.github/workflows/ci.yml`) for automated type-checking (`tsc`) and test execution.
 
 ### Pending Infrastructure
 
@@ -133,8 +143,6 @@ This section details what is currently implemented in the codebase versus what r
    - Request bodies and query parameters are processed directly in controllers without validation libraries.
 3. **`src/utils/`**:
    - Shared utility helpers (e.g., custom error classes, response formatters, date manipulators) are pending.
-4. **`src/tests/`**:
-   - Test suites to be implemented.
 
 ### Planned Features
 
@@ -202,6 +210,15 @@ The PostgreSQL database schema consists of 5 core entities defined in [schema.pr
    npm run dev
    ```
    The API server will start on `http://localhost:5000` (or your configured `PORT`) and automatically launch the background [IngestionScheduler](file:///d:/automated-data-ingestion/src/schedulers/ingestion.scheduler.ts).
+
+6. **Running Automated Tests**:
+   ```bash
+   # Run all unit & integration tests once
+   npm run test:run
+
+   # Run tests in watch mode
+   npm run test
+   ```
 
 ---
 
