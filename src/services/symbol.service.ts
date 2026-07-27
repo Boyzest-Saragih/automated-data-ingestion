@@ -21,7 +21,7 @@ export class SymbolService {
   }
 
   async createSymbol(data: CreateSymbolDto) {
-    // 1. Validasi: Pastikan DataSource ada dan aktif
+    // Validasi: Pastikan DataSource ada dan aktif
     const dataSource = await this.dataSourceRepo.findById(data.dataSourceId);
 
     if (!dataSource) {
@@ -36,10 +36,10 @@ export class SymbolService {
       );
     }
 
-    // 2. Simpan Symbol via Repository
+    // Simpan Symbol via Repository
     const newSymbol = await this.symbolRepo.create(data);
 
-    // 3. Catat Audit Log
+    // Catat Audit Log
     await this.auditLogService.logSuccess(
       "CREATE_SYMBOL",
       "Symbol",
