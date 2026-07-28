@@ -6,7 +6,7 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-3178C6.svg?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![License: ISC](https://img.shields.io/badge/License-ISC-blue.svg)](https://opensource.org/licenses/ISC)
 
-A robust Node.js and TypeScript backend service designed for automated extraction, transformation, loading (ETL), and management of financial market data (OHLCV candles). The system ingests raw market data from multiple data providers (such as Binance and Yahoo Finance), standardizes the raw payloads into processed financial candle data, and executes scheduled ingestion background jobs using `node-cron`.
+A robust Node.js and TypeScript backend service designed for Automated Extraction, Transformation, Loading (ETL), and management of financial market data (OHLCV candles). The system ingests raw market data from multiple data providers (such as Binance and Yahoo Finance), standardizes the raw payloads into processed financial candle data, and executes scheduled ingestion background jobs using `node-cron`.
 
 - 🖥️ **Frontend Live App**: [https://data-ingestion-pipeline.vercel.app/](https://data-ingestion-pipeline.vercel.app/)
 - 📦 **Frontend Repository**: [https://github.com/Boyzest-Saragih/data-ingestion-pipeline](https://github.com/Boyzest-Saragih/data-ingestion-pipeline)
